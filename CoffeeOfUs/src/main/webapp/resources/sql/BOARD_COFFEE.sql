@@ -1,0 +1,27 @@
+sys as sysdba --입력후 비밀번호입력
+
+CREATE USER final IDENTIFIED BY 1234;
+GRANT CONNECT, DBA, RESOURCE TO final;
+GRANT DROP ANY TABLE TO final;
+
+
+drop table COFFEE CASCADE CONSTRAINTS;
+CREATE TABLE COFFEE(
+	COFFEE_NUM			NUMBER,			--글번호
+	COFFEE_NAME			VARCHAR2(30),	--작성자
+	COFFEE_PASS			VARCHAR2(30),	--비밀번호
+	COFFEE_SUBJECT		VARCHAR2(300),	--제목
+	COFFEE_CONTENT		VARCHAR2(4000),	--내용
+	COFFEE_FILE			VARCHAR2(50),	--첨부 파일 명(가공)30
+	COFFEE_ORIGINAL		VARCHAR2(50),	--첨부 파일 명30
+	COFFEE_DATE			DATE,			--글의 작성 날짜
+	COFFEE_READCOUNT	NUMBER,			--글의 조회수
+	COFFEE_RE_REF		NUMBER,			--답변 글 작성시 참조되는 글의 번호
+	COFFEE_RE_LEV		NUMBER,			--답변 글의 깊이
+	COFFEE_RE_SEQ		NUMBER,			--답변 글의 순서
+	PRIMARY KEY(COFFEE_NUM)	
+);
+
+insert into COFFEE values(1,'admin','1234','첫번째 게시글제목', '내용입니다.',NULL,NULL,SYSDATE,0,0,0,0);
+SELECT *FROM COFFEE;
+delete from COFFEE
