@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Boards_Coffee">
+
+<!--  1. jdbcType=VARCHAR: 첨부 파일을 추가 하지 않은 경우 에러 처리해 줍니다.
+		해당 필드가 null인 경우 jdbcType=VARCHAR로 처리하면 null로 설정됩니다.
+		number 타입일 경우는 jdbcType=INTEGER
+	  2. ① insert 전에 (order ="BEFORE")
+	  		조회(select nvl(max(COFFEE_NUM),0)+1 from COFFEE) 합니다.
+	  	 ② 조회한 값을 keyProperty="COFFEE_NUM"에서 설정한 대로
+	  	 	"COFFEE_NUM" 프로퍼티에 저장합니다.
+	  	 	(public void setCOFFEE_NUM"(int COFFEE_NUM))
+	  	 ③ insert문의 #{COFFEE_NUM}는 지금 구한 값을 COFFEEBean에서 가져옵니다.
+	  	 (public String getCOFFEE_NUM() {return COFFEE_NUM;})
+	  	 
+		 -->
+<!-- <insert id="insert" parameterType="board_coffee">
+	<selectKey resultType="int" order="BEFORE"
+				keyProperty="COFFEE_NUM">
+			select nvl(max(COFFEE_NUM),0)+1 from COFFEE
+	</selectKey>
+	insert into COFFEE
+	(COFFEE_NUM,
+	 COFFEE_NAME, COFFEE_PASS, COFFEE_SUBJECT, 
+	 COFFEE_CONTENT, COFFEE_FILE, COFFEE_ORIGINAL,
+	  COFFEE_RE_REF,
+	   COFFEE_RE_LEV, COFFEE_RE_SEQ, COFFEE_READCOUNT,
+	   COFFEE_DATE)
+		values
+		(#{COFFEE_NUM},
+		 #{COFFEE_NAME}, #{COFFEE_PASS}, #{COFFEE_SUBJECT},
+		 #{COFFEE_CONTENT}, #{COFFEE_FILE, jdbcType=VARCHAR},
+		 #{COFFEE_ORIGINAL, jdbcType=VARCHAR},
+		 #{COFFEE_NUM},
+		 #{COFFEE_RE_LEV}, #{COFFEE_RE_SEQ}, #{COFFEE_READCOUNT},
+		 sysdate)
+</insert> -->
+
+<select id="count" resultType="int">
+	select count(*)from COFFEE
+</select>
+<!-- 문법 오류
+	1.where rnum >= #{start}
+	==> 해결법
+		where rnu <![CDATA[		>=		]] #{start}
+		
+		HTML 문서는 '<', '.', '>'와 같은 마크업 문자들을 파싱해서 읽어들이는 구조입니다.
+		그래서 마크업 문자들을 원래 대로의 의미로 사용하기 위해서 '&gt;', '&lt;', '&nbsp;'등의
+		escape 문자열(escape character)을 이용해야 하는데 문장이
+		길어지는 문제점이 발생하게 됩니다. 이럴때 사용하는 것이 바로 CDATA(Character DATA) 절입니다.
+		파서는 <![CDATA[ 와 ]]> 사이의 문장을 단순한 문자데이터로 인식하게 ㅗ딥니다.
+	2. > : &gt;
+	   < : &lt;
+	   바꾸어보세요
+ -->
+
+<select id="list" parameterType="java.util.Map" resultType="board_coffee">
+	select * from
+	 (select rownum rnum, b.*
+	 from
+		(SELECT COFFEE.*, nvl(cnt,0) cnt
+		from 
+		COFFEE left outer join (select COFFEE_NUM, count(*) cnt
+									from COMMENTS_COFFEE
+									group by COFFEE_NUM) c
+		on COFFEE.COFFEE_NUM = c.COFFEE_NUM
+		order by COFFEE_RE_REF desc,
+		COFFEE_RE_SEQ asc) b
+	)
+	 where rnum &gt;= #{start} and rnum &lt;= #{end} 
+
+</select> 
+
+<!-- <update id="readCountUpdate" parameterType="int">
+	update 	COFFEE
+	set		COFFEE_READCOUNT=COFFEE_READCOUNT+1
+	where	COFFEE_NUM=#{number}
+</update>
+
+<select id="detail" parameterType="int" resultType="board_coffee">
+	select *from 
+	COFFEE where COFFEE_NUM = #{number}
+</select>
+
+<update id="reply_update" parameterType="board_coffee">
+	update 	COFFEE
+	set		COFFEE_RE_SEQ=COFFEE_RE_SEQ+1
+	where	COFFEE_RE_REF=#{COFFEE_RE_REF}
+	and		COFFEE_RE_SEQ <![CDATA[ > ]]> #{COFFEE_RE_SEQ}
+</update>
+
+COFFEE_FILE, COFFEE_ORIGINAL 필드 없어요
+<insert id="reply_insert" parameterType="board_coffee">
+	<selectKey resultType="int" order="BEFORE" keyProperty="COFFEE_NUM">
+		select nvl(max(COFFEE_NUM),0)+1 from COFFEE
+	</selectKey>
+	insert into COFFEE
+	(COFFEE_NUM,COFFEE_NAME,COFFEE_PASS, COFFEE_SUBJECT,
+	COFFEE_CONTENT, COFFEE_RE_REF, COFFEE_RE_LEV, COFFEE_RE_SEQ,
+		COFFEE_READCOUNT, COFFEE_DATE)
+		values(#{COFFEE_NUM},
+		#{COFFEE_NAME}, #{COFFEE_PASS}, #{COFFEE_SUBJECT},
+	#{COFFEE_CONTENT}, #{COFFEE_RE_REF}, #{COFFEE_RE_LEV},
+	#{COFFEE_RE_SEQ}, #{COFFEE_READCOUNT},sysdate)
+</insert>
+
+<select id="boardWriter" parameterType="map" resultType="board_coffee">
+	select * from COFFEE
+	where	 COFFEE_NUM=#{num}
+	and		 COFFEE_PASS=#{pass}
+</select>
+
+<update id="modify" parameterType="COFFEE">
+	update COFFEE
+	set
+		COFFEE_SUBJECT=#{COFFEE_SUBJECT},
+		COFFEE_CONTENT=#{COFFEE_CONTENT},
+		COFFEE_FILE=#{COFFEE_FILE, jdbcType=VARCHAR},
+		COFFEE_ORIGINAL=#{COFFEE_ORIGINAL, jdbcType=VARCHAR}
+	where COFFEE_NUM=#{COFFEE_NUM}
+</update>
+
+<delete id="delete" parameterType="board_coffee">
+	<![CDATA[
+		delete from COFFEE
+			where	COFFEE_RE_REF = #{COFFEE_RE_REF}
+			and		COFFEE_RE_LEV >=#{COFFEE_RE_LEV}
+			and 	COFFEE_RE_SEQ >=#{COFFEE_RE_SEQ}
+			and		COFFEE_RE_SEQ <=(
+									nvl((SELECT min(COFFEE_re_seq)-1
+										FROM	COFFEE
+										WHERE	COFFEE_RE_REF=#{COFFEE_RE_REF}
+										AND		COFFEE_RE_LEV=#{COFFEE_RE_LEV}
+										AND		COFFEE_RE_SEQ>#{COFFEE_RE_SEQ}),
+										(SELECT max(COFFEE_re_seq)
+										FROM	COFFEE
+										WHERE	COFFEE_RE_REF=#{COFFEE_RE_REF} ))
+										)
+	 ]]>
+</delete> -->
+
+<!-- 
+<insert id="insert_deleteFile" parameterType="String">
+	insert into delete_file
+	values(#{file})
+</insert>
+
+삭제할 파일들의 목록을 구합니다.
+	<select id="deleteFileList" resultType="String">
+		select COFFEE_file from delete_file
+	</select> 
+	-->
+</mapper>
