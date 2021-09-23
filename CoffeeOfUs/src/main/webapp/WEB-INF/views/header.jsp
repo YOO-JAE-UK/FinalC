@@ -146,7 +146,7 @@
 											</li>
 									</c:if><!-- admin이면 dropdown -->
 	                        </ul>
-                       	</c:if>
+                       	</c:if> 
                        	
                        	<c:if test="${empty id}">
 	                       	<ul style="margin-top:40px">
