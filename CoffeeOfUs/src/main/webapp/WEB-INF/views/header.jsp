@@ -40,7 +40,7 @@
 		background: #272727;
 		padding-bottom: 10px;
 	}
-	.btn{
+	.headerbtn{
 		border:1px solid white;
 		color: white;
 	}
@@ -146,22 +146,24 @@
 											</li>
 									</c:if><!-- admin이면 dropdown -->
 	                        </ul>
-                       	</c:if>
+                       	</c:if> 
                        	
                        	<c:if test="${empty id}">
-	                       	<ul>
-	                        	<li> <a href="#" class="btn">로그인</a></li>
-	                        	<li> <a href="#" class="btn">회원가입</a></li>
+	                       	<ul style="margin-top:40px">
+	                        	<li> <a href="#" class="headerbtn">로그인</a></li>
+	                        	<li> <a href="#" class="headerbtn">회원가입</a></li>
 	                        </ul>
                        	</c:if>	
                         
                        
                         </div>
-                    </div>
+                    </div> 
                     
                     <div class="col-lg-12 col-md-12">
                         <div style="text-align: center; height: 70px;">
-                               <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
+                               <a href="${pageContext.request.contextPath}/main/main">
+                               <img src="${pageContext.request.contextPath}/resources/img/logo.png"
+                                      alt="" style="margin-top:-20px"></a>
                         </div>
                     </div>
                 </div>
