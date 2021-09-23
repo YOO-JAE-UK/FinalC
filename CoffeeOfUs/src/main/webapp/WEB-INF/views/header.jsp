@@ -157,7 +157,7 @@
                         
                        
                         </div>
-                    </div>
+                    </div> 
                     
                     <div class="col-lg-12 col-md-12">
                         <div style="text-align: center; height: 70px;">
