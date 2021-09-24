@@ -47,10 +47,6 @@
 	.canvas__open{
 		margin-top: -15px;
 	}
-	img{
-		width: 200px;
-		height: 70px;
-	}
 	.cus1{
 		color: white;
 	}
@@ -81,7 +77,7 @@
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu">
         <div class="offcanvas__logo">
-            <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" ></a><!--  -->
+            <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="200px" height="70px"></a><!--  -->
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__widget">
@@ -163,7 +159,7 @@
                         <div style="text-align: center; height: 70px;">
                                <a href="${pageContext.request.contextPath}/main/main">
                                <img src="${pageContext.request.contextPath}/resources/img/logo.png"
-                                      alt="" style="margin-top:-20px"></a>
+                                      alt="" width="200px" height="70px" style="margin-top:-20px"></a>
                         </div>
                     </div>
                 </div>

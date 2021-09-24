@@ -37,10 +37,6 @@
 	.canvas__open{
 		margin-top: -15px;
 	}
-	img{
-		width: 200px;
-		height: 70px;
-	}
 
 </style>
 </head>
@@ -51,7 +47,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="footer__about">
-                        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="">
+                        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="200px" height="70px">
                         <ul>
                             <li><i class="fa fa-clock-o"></i> Mon - Fri: 6:30am - 07:45pm</li>
                             <li><i class="fa fa-clock-o"></i> Sat - Sun: 8:30am - 05:45pm</li>
