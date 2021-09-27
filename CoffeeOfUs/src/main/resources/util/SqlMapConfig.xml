@@ -4,11 +4,18 @@
     
 <configuration>
 	<typeAliases>
-		<typeAlias alias="board_coffee" type="com.naver.myhome.domain.Board_Coffee"/>
+		<typeAlias alias="board_coffee"   type="com.naver.myhome.domain.Board_Coffee"/>
+		<typeAlias alias="board_qna"   type="com.naver.myhome.domain.Board_Qna"/>
 		<typeAlias alias="comment_coffee" type="com.naver.myhome.domain.Comment_Coffee"/>
+		<typeAlias alias="comment_qna" type="com.naver.myhome.domain.Comment_Qna"/>
+		<typeAlias alias="member"         type="com.naver.myhome.domain.Member"/>
 	</typeAliases>
+	
 	<mappers>
 		<mapper resource="sql/board_coffee.xml"/>
+		<mapper resource="sql/board_qna.xml"/>
 		<mapper resource="sql/comment_coffee.xml"/>
+		<mapper resource="sql/comment_qna.xml"/>
+		<mapper resource="sql/member.xml"/>
 	</mappers>
 </configuration>
