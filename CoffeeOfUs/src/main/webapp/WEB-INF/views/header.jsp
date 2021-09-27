@@ -157,11 +157,13 @@ $(document).ready(function(){
                        	</c:if>
                        	
                        	<c:if test="${empty id}">
-	                       	<ul>
-	                        	<li> <a href="#" class="headerbtn">로그인</a></li>
-	                        	<li> <a href="#" class="headerbtn">회원가입</a></li>
-	                        </ul>
-                       	</c:if>	
+                             <ul style="margin-top:40px">
+                              <li> <a href="${pageContext.request.contextPath}/member/login" 
+                                         class="headerbtn">로그인</a></li>
+                              <li> <a href="${pageContext.request.contextPath}/member/join" 
+                                         class="headerbtn">회원가입</a></li>
+                           	</ul>
+                         </c:if>  
                         
                        
                         </div>
@@ -212,7 +214,7 @@ $(document).ready(function(){
                                         <li><a href="#">출석 게시판</a></li>
                                         <li><a href="#">추천음악 게시판</a></li>
                                         <li><a href="#">투어 게시판</a></li>
-                                        <li><a href="#">Q & A</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/board_qna/list">Q & A</a></li>
                                     </ul>
                                 </li>
                                 <li class="tour"><a href="#">투어</a>
