@@ -14,6 +14,7 @@ import java.util.Random;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,9 +70,10 @@ public class Board_Coffee_Controller {
 	//@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Board_Coffee board, HttpServletRequest request)
 			throws Exception{
-		
-		MultipartFile uploadfile = board.getUploadFile();
-		
+		//MultipartFile uploadfile,
+		MultipartFile uploadfile = board.getUploadfile();
+		board.setUSER_ID("admin");
+		board.setUSER_NICKNAME("관리자");
 		if(!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();//원래 파일명
 			board.setCOFFEE_ORIGINAL(fileName);//원래 파일명 저장
@@ -84,6 +86,8 @@ public class Board_Coffee_Controller {
 			// 바뀐 파일명으로 저장
 			board.setCOFFEE_FILE(fileDBName); 	
 		}
+		
+	
 		Board_Coffee_Service.insertBoard(board); //저장 메서드 호출
 		
 		return "redirect:list";
@@ -202,10 +206,15 @@ public class Board_Coffee_Controller {
 		map.put("limit",limit);
 		return map;
 	}
+	
+
+	
 	//detail?num=9요청시 파라미터 num의 값을 int num에 저장합니다.
 	@GetMapping(value="/detail")
 	public ModelAndView Detail(int num,ModelAndView mv,
-				HttpServletRequest request) {
+				HttpServletRequest request, HttpSession session) {
+		String admin = "admin";
+		session.setAttribute("id", admin);
 		
 		Board_Coffee board = Board_Coffee_Service.getDetail(num);
 		//board=null //error 페이지 이동 확인하고자 임의로 지정합니다.
@@ -217,7 +226,7 @@ public class Board_Coffee_Controller {
 		}else {
 			logger.info("상세보기 성공");
 			int count = commentService.getListCount(num);
-			mv.setViewName("board/board_view");
+			mv.setViewName("board_coffee/board_view");
 			mv.addObject("count",count);
 			mv.addObject("boarddata",board);
 		}			
@@ -234,7 +243,7 @@ public class Board_Coffee_Controller {
 			mv.addObject("message","게시판 답변글 가져오기 실패");
 		}else {
 			mv.addObject("boarddata",board);
-			mv.setViewName("board/board_reply");
+			mv.setViewName("board_coffee//board_reply");
 		}
 		
 		return mv;
@@ -244,6 +253,8 @@ public class Board_Coffee_Controller {
 	@PostMapping("/replyAction")
 	public ModelAndView BoardReplyAction(Board_Coffee board, ModelAndView mv,
 										 HttpServletRequest request) {
+		board.setUSER_NICKNAME("관리자");
+		board.setUSER_ID("admin");
 		int result = Board_Coffee_Service.boardReply(board);
 		if(result == 0) {
 			mv.setViewName("error/error");
@@ -277,7 +288,7 @@ public class Board_Coffee_Controller {
 		//ModelAndView 객체에 저장합니다.
 		mv.addObject("boarddata",boarddata);
 		// 글 수정 폼 페이지로 이동하기 위해 경로를 설정합니다.
-		mv.setViewName("board/board_modify");
+		mv.setViewName("board_coffee//board_modify");
 		return mv;
 	}
 	@PostMapping("/modifyAction")
@@ -295,7 +306,7 @@ public class Board_Coffee_Controller {
 			return "redirect:modifyView";
 		}
 		
-		MultipartFile uploadfile = boarddata.getUploadFile();
+		MultipartFile uploadfile = boarddata.getUploadfile();
 		//String saveFolder =request.getSession().getServletContext().getRealPath("resources") + "/upload/";
 		
 		if(check != null && !check.equals("")) {//기존파일 그대로 사용하는 경우입니다.

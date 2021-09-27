@@ -7,21 +7,22 @@ GRANT DROP ANY TABLE TO final;
 
 drop table COFFEE CASCADE CONSTRAINTS;
 CREATE TABLE COFFEE(
-	COFFEE_NUM			NUMBER,			--글번호
-	COFFEE_NAME			VARCHAR2(30),	--작성자
-	COFFEE_PASS			VARCHAR2(30),	--비밀번호
-	COFFEE_SUBJECT		VARCHAR2(300),	--제목
-	COFFEE_CONTENT		VARCHAR2(4000),	--내용
-	COFFEE_FILE			VARCHAR2(50),	--첨부 파일 명(가공)30
-	COFFEE_ORIGINAL		VARCHAR2(50),	--첨부 파일 명30
-	COFFEE_DATE			DATE,			--글의 작성 날짜
-	COFFEE_READCOUNT	NUMBER,			--글의 조회수
-	COFFEE_RE_REF		NUMBER,			--답변 글 작성시 참조되는 글의 번호
-	COFFEE_RE_LEV		NUMBER,			--답변 글의 깊이
-	COFFEE_RE_SEQ		NUMBER,			--답변 글의 순서
+	COFFEE_NUM			NUMBER NOT NULL,					--글번호
+	COFFEE_PASS			VARCHAR2(30) NOT NULL,				--비밀번호
+	COFFEE_SUBJECT		VARCHAR2(300) NOT NULL,				--제목
+	USER_ID				VARCHAR2(20) NOT NULL,				--아이디
+	USER_NICKNAME		VARCHAR2(20) NOT NULL,				--닉네임
+	COFFEE_CONTENT		VARCHAR2(4000) NOT NULL,			--내용
+	COFFEE_FILE			VARCHAR2(100),						--첨부 파일 명(가공)30
+	COFFEE_ORIGINAL		VARCHAR2(100),						--첨부 파일 명30
+	COFFEE_DATE			DATE NOT NULL,						--글의 작성 날짜
+	COFFEE_READCOUNT	NUMBER NOT NULL,					--글의 조회수
+	COFFEE_RE_REF		NUMBER,								--답변 글 작성시 참조되는 글의 번호
+	COFFEE_RE_LEV		NUMBER CHECK(COFFEE_RE_LEV IN(0,1)),--답변 글의 깊이
+	COFFEE_RE_SEQ		NUMBER,								--답변 글의 순서
 	PRIMARY KEY(COFFEE_NUM)	
 );
 
-insert into COFFEE values(1,'admin','1234','첫번째 게시글제목', '내용입니다.',NULL,NULL,SYSDATE,0,0,0,0);
+insert into COFFEE values(1,'1234','첫번째 게시글제목','admin','관리자','내용입니다.',NULL,NULL,SYSDATE,0,0,0,0);
 SELECT *FROM COFFEE;
-delete from COFFEE
+delete from COFFEE;

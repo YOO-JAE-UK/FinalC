@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>COFFEE_list</title>
+<title>COFFEE_write</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-<script src="../resources/js/list.js"></script>
+<script src="../resources/js/coffee/list.js" charset="utf-8"></script>
  <style>
    select.form-control{
          width:auto;margin-bottom:2em;display:inline-block}
@@ -22,10 +22,10 @@
 </head>
 <body>
 <jsp:include page="../header.jsp">
-		 <jsp:param name="num" value="<%= 123 %>"/>
+		 <jsp:param name="num" value="<%= 4 %>"/>
 	</jsp:include>
 
-<h1 style="text-align: center;">Beans입니다.</h1>
+<h2 style="text-align: center;">Beans입니다.</h2>
 	 <section class="upcoming-classes spad">
         <div class="container">
          <div class="row">
@@ -83,7 +83,7 @@
 				<c:forEach var="a" begin="0" end="${b.COFFEE_RE_LEV*2}" step="1">
 				&nbsp; 	
 				</c:forEach>		
-				<img src='../resources/image/line.gif'>
+				<img src='../resources/img/line.gif'>
 			</c:if>  
 			 
 			<c:if test="${b.COFFEE_RE_LEV == 0}">  <%-- 원문인 경우 --%>
@@ -99,7 +99,7 @@
 			
 		  </div>
 		</td>
-		<td><div>${b.USER_ID}</div></td>
+		<td><div>${b.USER_NICKNAME}</div></td>
 		<td><div>${b.COFFEE_DATE}</div></td>	
 		<td><div>${b.COFFEE_READCOUNT}</div></td>
 	   </tr>

@@ -9,10 +9,17 @@ create table COMMENTS_COFFEE(
 				on delete cascade
 );
 
-  drop sequence com_seq;
-create sequence com_seq;
+  drop sequence COMMENTS_COFFEE_SEQ;
+create sequence COMMENTS_COFFEE_SEQ;
 
-select *from comments;
+select *from COMMENTS_COFFEE;
+
+
+select 	count(*)
+		from	COMMENTS_COFFEE
+		where	COFFEE_NUM = 0
+
+
 
 select board_num, count(*) CNT
 from comments

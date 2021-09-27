@@ -16,7 +16,7 @@ public class Board_Coffee {
 	private int COFFEE_RE_SEQ;
 	
 	
-	private MultipartFile uploadFile;		//db없음
+	private MultipartFile  uploadfile;		//db없음
 	private String COFFEE_ORIGINAL;			//파일이름
 	private String COFFEE_FILE;				//실제저장될 파일이름
 	
@@ -110,12 +110,12 @@ public class Board_Coffee {
 		COFFEE_RE_SEQ = cOFFEE_RE_SEQ;
 	}
 
-	public MultipartFile getUploadFile() {
-		return uploadFile;
+	public MultipartFile getUploadfile() {
+		return uploadfile;
 	}
 
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
+	public void setUploadfile(MultipartFile uploadfile) {
+		this.uploadfile = uploadfile;
 	}
 
 	public String getCOFFEE_ORIGINAL() {
