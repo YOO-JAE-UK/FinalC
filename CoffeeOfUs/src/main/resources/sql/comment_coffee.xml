@@ -7,7 +7,7 @@
 	
 	<select id="count" resultType="int" parameterType="int">
 		select 	count(*)
-		from	comments
+		from	COMMENTS_COFFEE
 		where	COFFEE_NUM = #{COFFEE_NUM}
 	</select>
 
@@ -16,26 +16,26 @@
 		from ( select rownum RNUM, NUM, ID, CONTENT, REG_DATE, COFFEE_NUM
 			from(
 				select NUM, ID, CONTENT, REG_DATE, COFFEE_NUM
-				from comments
+				from COMMENTS_COFFEE
 				where COFFEE_NUM = #{COFFEE_NUM}
 				order by REG_DATE desc
 				)
 			)
-		where rnum between #{start} and #{end}
+		where RNUM between #{start} and #{end}
 	</select>
 	
 	<insert id="insert" parameterType="comment_coffee">
-		insert into comments
-		values(com_seq.nextval, #{ID}, #{CONTENT}, SYSDATE, #{COFFEE_NUM})
+		insert into COMMENTS_COFFEE
+		values(COMMENTS_COFFEE_SEQ.nextval, #{ID}, #{CONTENT}, sysdate, #{COFFEE_NUM})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
-		delete comments
+		delete COMMENTS_COFFEE
 		where NUM= #{NUM}
 	</delete>
 	
 	<update id="update" parameterType="comment_coffee">
-		update	comments
+		update	COMMENTS_COFFEE
 		set		CONTENT=#{CONTENT}
 		where	NUM = #{NUM}
 	</update>

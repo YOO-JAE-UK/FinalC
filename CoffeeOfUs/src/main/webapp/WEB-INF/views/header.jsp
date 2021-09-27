@@ -12,7 +12,7 @@
     <title>CoffeeOfUs</title>	
 
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-     <!--  <script src="../resources/js/jquery-3.6.0.js"></script> -->
+      <script src="../resources/js/jquery-3.6.0.js"></script> 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
     <!-- Google Font -->
@@ -53,18 +53,30 @@
 	li{
 		list-style: none;
 	}
-	div>ul>li::before{
-		content: none;
-	}
+
 	.header__menu > ul> li{
 		margin: 0 25px 0 25px;
 	}
 </style>
 
 <script>
-<% String num = request.getParameter("num");%>
-	var i1=<%=num%>;
-		//alert(i1+"i의 값");
+$(document).ready(function(){
+	<% String num = request.getParameter("num");%>
+	var num=<%=num%>;
+		if(num ==1){	
+			$('.coffee').addClass('active')		
+		}else if(num==2){
+			$('.event').addClass('active')
+		}else if(num==3){
+			$('.shopping').addClass('active')
+		}else if(num==4){
+			$('.community').addClass('active')
+		}else if(num==5){
+			$('.tour').addClass('active')
+		}
+})
+
+
 </script>
 </head>
 <body>
@@ -77,7 +89,7 @@
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu">
         <div class="offcanvas__logo">
-            <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="200px" height="70px"></a><!--  -->
+            <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""  width="200px" height="70px"></a><!--  -->
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__widget">
@@ -142,10 +154,10 @@
 											</li>
 									</c:if><!-- admin이면 dropdown -->
 	                        </ul>
-                       	</c:if> 
+                       	</c:if>
                        	
                        	<c:if test="${empty id}">
-	                       	<ul style="margin-top:40px">
+	                       	<ul>
 	                        	<li> <a href="#" class="headerbtn">로그인</a></li>
 	                        	<li> <a href="#" class="headerbtn">회원가입</a></li>
 	                        </ul>
@@ -153,13 +165,11 @@
                         
                        
                         </div>
-                    </div> 
+                    </div>
                     
                     <div class="col-lg-12 col-md-12">
                         <div style="text-align: center; height: 70px;">
-                               <a href="${pageContext.request.contextPath}/main/main">
-                               <img src="${pageContext.request.contextPath}/resources/img/logo.png"
-                                      alt="" width="200px" height="70px" style="margin-top:-20px"></a>
+                               <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""  width="200px" height="70px"></a>
                         </div>
                     </div>
                 </div>
@@ -174,7 +184,7 @@
                     <div class="col-lg-12 col-md-12" style="text-align: center;">
                         <nav class="header__menu ">
                             <ul>
-                                <li class="active"><a href="#">커피</a>
+                                <li class="coffee"><a href="#">커피</a>
                               	  	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/coffee/Test">커피 취향테스트</a></li>
                                         <li><a href="${pageContext.request.contextPath}/coffee/Story">커피이야기</a></li>
@@ -184,19 +194,19 @@
                                         <li><a href="${pageContext.request.contextPath}/coffee/Recipes">레시피</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">이벤트</a>
+                                <li class="event"><a href="#">이벤트</a>
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/check/check">출석 체크</a></li>
                                         <li><a href="#">룰렛 포인트</a></li>
                                         <li><a href="#">포인트 스토어</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">쇼핑검색</a>
+                                <li class="shopping"><a href="#">쇼핑검색</a>
                                 	<ul class="dropdown">
                                         <li><a href="#">상품 검색</a></li>
                                     </ul>
                                 </li>
-                                 <li><a href="#">커뮤니티</a>
+                                 <li class="community"><a href="#">커뮤니티</a>
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/board_coffee/list">커피정보게시판</a></li>
                                         <li><a href="#">출석 게시판</a></li>
@@ -205,7 +215,7 @@
                                         <li><a href="#">Q & A</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">투어</a>
+                                <li class="tour"><a href="#">투어</a>
                                     <ul class="dropdown">
                                         <li><a href="./classes-details.html">Classes Details</a></li>
                                         <li><a href="./blog-details.html">Blog Details</a></li>
@@ -225,6 +235,7 @@
  
     <!-- Header Section End -->
         <!-- Js Plugins -->
+    
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/popper.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>

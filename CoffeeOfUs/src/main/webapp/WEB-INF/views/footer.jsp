@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="footer__about">
-                        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" width="200px" height="70px">
+                        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""  width="200px" height="70px">
                         <ul>
                             <li><i class="fa fa-clock-o"></i> Mon - Fri: 6:30am - 07:45pm</li>
                             <li><i class="fa fa-clock-o"></i> Sat - Sun: 8:30am - 05:45pm</li>
@@ -116,6 +116,7 @@
     </section>
     <!-- Footer Section End -->
     <!-- Js Plugins -->
+
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.nice-select.min.js"></script>
