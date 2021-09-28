@@ -1,22 +1,32 @@
-<%--  210730.금    ajax210806.금--%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>회원관리 시스템 회원가입 페이지</title>
-<link href="${pageContext.request.contextPath }/resources/css/join.css"   type="text/css" rel="stylesheet">
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
+<title>JOIN</title>
+<!-- Css Styles -->
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/barfiller.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/style.css" type="text/css">
+<script src="../resources/js/jquery-3.6.0.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/join.css"   
+     type="text/css" rel="stylesheet">
+     
 <script>
+<% String num = request.getParameter("num");%>
+var i1=<%=num%>;
+	//alert(i1+"i의 값");
+	
+	
    $(function() {
 	   var checkid=false;
 	   var checkemail=false;
 	   $('form').submit(function() {
-		   if(!$.isNumeric($("input[name='age']").val())) {
-			   alert("나이는 숫자를 입력하세요");
-			   $("input[name='age']").val('').focus();
-			   return false;
-		   }
-		   
 		   if(!checkid){
 			   alert("사용가능한 id로 입력하세요.");
 			   $("input:eq(0)").val('').focus();
@@ -85,40 +95,85 @@
     }) //ready
 
 </script>
+<style>
+ 
+</style>
 </head>
 <body>
-    <form name="joinfrom" action="joinProcess.net" method="post">
-        <h1>회원가입</h1>
-        <hr>
-        <b>아이디</b>
+<jsp:include page="../header.jsp"></jsp:include>
+
+
+    <form name="joinfrom" action="${pageContext.request.contextPath }/member/joinProcess" method="post">
+        <h1 class="title">회원가입</h1>
+        
+        <b>사용자 ID</b>
+        <input type="button" class="idcheck" value="ID중복체크" id='idcheck' name="idcheck"><br> 
         <input type="text" name="id" placeholder="Enter id" required maxLength="12">
+		<input type="hidden" value="y"id="confirmIdcheck"> 
         <span id="message"></span>
         
         <b>비밀번호</b>
-        <input type="password" name="pass" placeholder="Enter password" required>
+        <input type="password" name="pass" 
+               placeholder="비밀번호를 입력하세요(문자,숫자,특수문자로 구성된 8~15자리입니다)" required>
+        <span id=pass1 style= "color:red"></span>
+        <b>비밀번호 확인</b>
+        <input type="password" name="pass" placeholder="비밀번호를 다시 입력하세요" required>
+        <span id=pass2 style= "color:red"></span>
         
         <b>이름</b>
         <input type="text" name="name" placeholder="Enter name"
            maxLength="5"  required>
         
-        <b>나이</b>
-        <input type="text" name="age" maxLength="2" placeholder="Enter age" required>
-        
-        <b>성별</b>
-        <div>
-            <input type="radio" name="gender" value="남" checked><span>남자</span>
-            <input type="radio" name="gender" value="여" checked><span>여자</span>
-        </div>
- 
+        <b>별명</b>
+        <input type="text" name="name" placeholder="Enter name"
+           maxLength="15"  required>
+           
         <b>이메일 주소</b>
-        <input type="text" name="email" placeholder="Enter email" maxLength="30" required>
+        <input type="text" name="email" id="email" placeholder="Enter email" maxLength="30" required>@
+        <input type="text" name="domain" id="domain" maxLength= "15" required>
+        <select name="sel">
+        <option value="">직접 입력</option>
+        <option value="naver.com">naver.com</option>
+        <option value="daum.net">daum.net</option>
+        <option value="gmail.com">gamil.com</option>
+        </select>
         <span id="email_message"></span>
         <div class="clearfix">
+        
+        <label><b>우편번호</b></label><br> 
+           <input type="text" size="5" maxLength="5" name="post1" id="post1" required> 
+           <input type="button" class="postcode" value="우편검색" id='postcode'	onclick="execDaumPostcode()"> 
+        <label><b>주소</b></label><br>
+		   <input type="text" size="50" name="address" id="address" required>
+		   <div style="margin-top: -10px; width: 101%">
+		   
+	    <label for="tel_1"><b>전화번호</b></label><br> 
+	       <input type="text" placeholder="전화번호 앞2~3자리" name="tel_1" id="tel_1" 
+	                maxLength="3" style="width: 32%" required> 
+	       <label for="tel_2"><b> - </b> </label> 
+	       <input type="text" placeholder="중간번호 4자리" name="tel_2"
+				    id="tel_2" maxLength="4" style="width: 32%" required> 
+		   <label for="tel_3"><b> - </b></label> 
+		   <input type="text" placeholder="뒤번호 4자리" name="tel_3" 
+		            id="tel_3" maxLength="4" style="width: 32%" required>
+		   <span id='span4' style="color: red"></span><br>
+	    </div>		
+				
+        
             <button type="submit" class="submitbtn">회원가입</button>
             <button type="reset" class="cancelbtn">다시작성</button>
         </div>
         
     </form>
 
+<jsp:include page="../footer.jsp"></jsp:include>
 </body>
+    <script src="../resources/js/jquery-3.3.1.min.js"></script>
+    <script src="../resources/js/popper.js"></script>
+    <script src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/jquery.nice-select.min.js"></script>
+    <script src="../resources/js/jquery.barfiller.js"></script>
+    <script src="../resources/js/jquery.slicknav.js"></script>
+    <script src="../resources/js/owl.carousel.min.js"></script>
+    <script src="../resources/js/main.js"></script>
 </html>

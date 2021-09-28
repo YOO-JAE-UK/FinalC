@@ -1,5 +1,42 @@
+.title{
+	border-bottom: 2px solid #3b3b3b;
+	margin-bottom:30px;
+	padding-bottom:10px;
+	font-size: 30px;
+}
+
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box}
+
+#email #domain {
+	width:33%;
+	
+}
+
+
+ /*
+.idcheck{
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer; 
+    width: 100%;
+    opacity: 0.9;
+	
+}
+
+.postcode{
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer; 
+    width: 100%;
+    opacity: 0.9;
+}
+*/
+ 
 
 input{border-radius:3px;border:1px solid lightgray}
 input[type=text], input[type=password] {
@@ -45,6 +82,7 @@ button:focus{
     background-color: #f44336;
 }
 
+
 .cancelbtn, .submitbtn {
   float: left;
   width: 50%;
@@ -56,6 +94,7 @@ form {
     border: 1px solid lightgray;
     width: 600px; /* Could be more or less, depending on screen size */
     padding: 16px;
+	font-family: "DM Sans", sans-serif; 	  
 }
 
 hr {
@@ -77,7 +116,9 @@ b + div{width: 100%;
     display: table; 
 }
 
-h1{text-align:center}
+h1{
+	text-align:center;
+}
 
 b {
 	width: 100%;

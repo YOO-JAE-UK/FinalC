@@ -1,14 +1,28 @@
-<%-- 21907.화 --%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>회원관리 시스템 로그인 페이지</title>
+<title>LOGIN</title>
+<!-- Css Styles -->
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/barfiller.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../resources/css/style.css" type="text/css">
+<script src="../resources/js/jquery-3.6.0.js"></script>
+
 <link href="${pageContext.request.contextPath }/resources/css/login.css"
 	type="text/css" rel="stylesheet">
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
+	
 <script>
+<% String num = request.getParameter("num");%>
+var i1=<%=num%>;
+	//alert(i1+"i의 값");
+	
 	var result = "${result}";
 	if (result == 'joinSuccess') {
 		alert("회원가입을 축하합니다.")
@@ -31,12 +45,12 @@
 
 </head>
 <body>
-<%-- <jsp:include page="../header.jsp">
---%>
+<jsp:include page="../header.jsp"></jsp:include>
+
+
 <form name="loginform" action="${pageContext.request.contextPath }/member/loginProcess"
 	method="post">
-<h1>L O G I N</h1>
-	<hr>
+<h3 class="loginfont">L O G I N</h3>
 	<div class="input_wrp">
 	<div class="idbtn">
 	  <div class="stitle">ID</div>
@@ -59,13 +73,28 @@
 	</div>
 	
 	<div class="clearfix">
+	<div class="submitbtn_wrap">
        <button type='submit' class="submitbtn">로그인</button>
+	</div>
+	<div class="join_wrap">
 	   <button type='button' class="join">회원가입</button>
 	</div>
+	</div>
 	<div class="naverlogin">
-	   <button type="button" class="naverloginbtn" style="background-color:#29d131">네이버 아이디로 로그인</button>
+	   <button type="button" class="naverloginbtn" >네이버 아이디로 로그인</button>
 	</div>
 	<a href="" style="color:black">ID/PW찾기</a>   
 </form>
+
+
+<jsp:include page="../footer.jsp"></jsp:include>
 </body>
+    <script src="../resources/js/jquery-3.3.1.min.js"></script>
+    <script src="../resources/js/popper.js"></script>
+    <script src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/jquery.nice-select.min.js"></script>
+    <script src="../resources/js/jquery.barfiller.js"></script>
+    <script src="../resources/js/jquery.slicknav.js"></script>
+    <script src="../resources/js/owl.carousel.min.js"></script>
+    <script src="../resources/js/main.js"></script>
 </html>
