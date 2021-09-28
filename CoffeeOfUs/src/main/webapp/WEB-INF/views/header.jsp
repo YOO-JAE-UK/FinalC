@@ -74,6 +74,7 @@ $(document).ready(function(){
 		}else if(num==5){
 			$('.tour').addClass('active')
 		}
+		console.log("1");
 })
 
 
@@ -198,7 +199,7 @@ $(document).ready(function(){
                                 </li>
                                 <li class="event"><a href="#">이벤트</a>
                                 	<ul class="dropdown">
-                                        <li><a href="${pageContext.request.contextPath}/check/check">출석 체크</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/event/attendCheck">출석 체크</a></li>
                                         <li><a href="#">룰렛 포인트</a></li>
                                         <li><a href="#">포인트 스토어</a></li>
                                     </ul>
