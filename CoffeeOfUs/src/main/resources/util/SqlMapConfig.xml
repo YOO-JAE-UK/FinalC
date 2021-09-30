@@ -9,6 +9,7 @@
 		<typeAlias alias="comment_coffee" type="com.naver.myhome.domain.Comment_Coffee"/>
 		<typeAlias alias="comment_qna" type="com.naver.myhome.domain.Comment_Qna"/>
 		<typeAlias alias="member"         type="com.naver.myhome.domain.Member"/>
+		<typeAlias alias="attend_check_member"         type="com.naver.myhome.domain.AttendCheckMember"/>
 	</typeAliases>
 	
 	<mappers>
@@ -17,5 +18,6 @@
 		<mapper resource="sql/comment_coffee.xml"/>
 		<mapper resource="sql/comment_qna.xml"/>
 		<mapper resource="sql/member.xml"/>
+		<mapper resource="sql/attend_check.xml"/>
 	</mappers>
 </configuration>
