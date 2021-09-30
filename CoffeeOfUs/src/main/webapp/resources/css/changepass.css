@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+.titlefont{
+	border-bottom: 2px solid #3b3b3b;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    font-size: 30px;
+    text-align:center;
+}
+
+.comtext{
+	margin-top: 7px;
+	margin-bottom: -5px;
+	font-size: 12px;
+	padding: 10px;
+}
+
+
+form {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    width: 500px; /* Could be more or less, depending on screen size */
+    padding: 16px;
+}
+
+
+input{border:1px solid lightgray}
+input[type=text], input[type=password] {
+    width: 100%;
+    height:40px;
+    padding: 10px;
+    margin: 0px 0 8px 0;
+    border-radius: 0 3px 15px -1;
+    display: inline-block;
+}
+
+
+input[type=text]:focus, input[type=password]:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    outline: none;
+}
+
+.submitbtn {
+    background-color: #1cdfde;
+    color: white;
+    padding: 7px 20px;
+    margin: 8px 0;
+    border: 1px solid #c1c1c1;
+    cursor: pointer; /* 손가락 커서 모양 */
+    width: 20%;
+    opacity: 0.9;
+    font-size: 14px;
+    float: right;
+    
+}
+.cancelbtn {
+    background-color: #a5a1a1;
+    color: white;
+    padding: 7px 20px;
+    margin: 8px 0;
+    border: 1px solid #c1c1c1;
+    cursor: pointer; /* 손가락 커서 모양 */
+    width: 20%;
+    opacity: 0.9;
+    font-size: 14px;
+    
+}
+button:nth-child(1){border-radius:3px 0 0 3px}
+button:nth-child(2){border-radius:0 3px 3px 0px}
+button:hover {
+    opacity:1;
+    background:#03a9f4;
+    color:white;
+    
+}
+button:focus{
+   outline:none;
+}
+
+
+a{color:white;text-decoration:none;}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+ 
+ h1{text-align:center}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table; 
+}
+span{vertical-align: top}
+
+
+}

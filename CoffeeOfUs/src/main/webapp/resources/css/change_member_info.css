@@ -27,11 +27,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
     cursor: pointer; 
     width: 13%;
     float: right;
-    
 }
 #email, #domain{
-	margin: 5px 2px 5px 0px;
+	margin: 5px 0 5px 0px;
 }
+	
 #email_message{
 	margin: 0 0 15px 10px;
 }
@@ -39,36 +39,23 @@ body {font-family: Arial, Helvetica, sans-serif;}
 #postcode{
     float: right;
     width:54px;
-    height: 24px;
+    height: 21px;
 }
  
 #idtext{
 	float:left;
 	width:20%;
 	margin: 0 0 -15px 15px;
-	font-size:14px;
 }
- #addtext, #imgtext{
+ #addtext, #teltext, #imgtext{
 	margin: 0px 0 0 15px;
-	font-size:14px;
 }
-#teltext{
-	margin: 0px 0 0 15px;
-	font-size:14px;
-} 
-
 #mailtext{
 	margin: -16px 0 0 15px;
-	font-size:14px;
 }
 #nicktext {
 	margin: -16px 0 0 15px;
-	font-size:14px;
 }
-#imgtext{
-	margin: -17px 0 0 15px;
-	font-size:14px;
-} 
 .nickinput {
 	margin: 0 0 20px 0;
 	width: 100%;
@@ -80,9 +67,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 #post1{
 	padding:3px;
-	margin:0 10px 0 335px;
-	width: 20%;
-	text-align: center;
+	margin:0 10px 0 275px;
+	width: 32%;
 }
 
 .user_image_choice{
@@ -99,6 +85,9 @@ input{border-radius:3px;border:1px solid lightgray}
     margin: 5px 0 22px 0;
     display: inline-block;
     font-size: 13px;
+}
+#tel_1, #tel_2, #tel_3{
+	margin: 0 0 0 0;
 }
 
 input[type=radio]{
@@ -151,9 +140,10 @@ button:focus{
   padding: 5px;
 }
 
-#joinform {
+#change_member_info {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid lightgray;
     width: 600px; /* Could be more or less, depending on screen size */
     padding: 16px;
 	font-family: "DM Sans", sans-serif; 	  
@@ -169,7 +159,7 @@ b + div{width: 100%;
     margin: 5px 0 22px 0;
     display: inline-block;
     border: none;
-    }
+    background: #f1f1f1;}
 
 /* Clear floats */
 .clearfix::after {
@@ -183,15 +173,11 @@ h1{
 }
 
 b {
+	width: 70%;
 	display: block
 }
 
-span{
-	display:inline-block;
-	margin-top:-20px;
-	font-size:10px
-	
-}
+span{display:inline-block;margin-top:-20px;font-size:10px}
 
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {

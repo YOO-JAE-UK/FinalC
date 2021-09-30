@@ -3,16 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>LOGIN</title>
-<!-- Css Styles -->
-    <link rel="stylesheet" href="../resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/barfiller.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/style.css" type="text/css">
+<title>Find Id/Pw</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 
 <link href="${pageContext.request.contextPath }/resources/css/login.css"
@@ -83,18 +74,11 @@ var i1=<%=num%>;
 	<div class="naverlogin">
 	   <button type="button" class="naverloginbtn" >네이버 아이디로 로그인</button>
 	</div>
-	<a href="" style="color:black">ID/PW찾기</a>   
+	<a href="${pageContext.request.contextPath}/member/change_member_info" 
+	   style="color:black" id="findtext">ID/PW찾기</a>   
 </form>
 
 
 <jsp:include page="../footer.jsp"></jsp:include>
 </body>
-    <script src="../resources/js/jquery-3.3.1.min.js"></script>
-    <script src="../resources/js/popper.js"></script>
-    <script src="../resources/js/bootstrap.min.js"></script>
-    <script src="../resources/js/jquery.nice-select.min.js"></script>
-    <script src="../resources/js/jquery.barfiller.js"></script>
-    <script src="../resources/js/jquery.slicknav.js"></script>
-    <script src="../resources/js/owl.carousel.min.js"></script>
-    <script src="../resources/js/main.js"></script>
 </html>

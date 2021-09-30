@@ -4,15 +4,6 @@
 <html>
 <head>
 <title>JOIN</title>
-<!-- Css Styles -->
-    <link rel="stylesheet" href="../resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/barfiller.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="../resources/css/style.css" type="text/css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/join.css"   
      type="text/css" rel="stylesheet">
@@ -38,17 +29,34 @@ var i1=<%=num%>;
 			   $("input:eq(6)").focus();
 			   return false;
 		   }
-		    
-	   }); //submit
+		   
+		   if (check == 0) {
+			   value = $('#filename').text();
+			   html = "<input type='text' value='" + value +"' name='check'>";
+			   $(this).append(html);
+		   } 
+	   }); //form submit end
 	   
-	   $("input:eq(6)").on('keyup',
+	   //mail 도메인
+	   $('#domain2').change(function(){
+			 if($('#domain2').val()==''){
+				 $('#domain').val('').focus();
+				 $('#domain').prop('readOnly',false);
+			 } else{
+				 $('#domain').val($('#domain2').val());
+				 $('#domain').prop('readOnly',true);
+			 }
+		  });
+	   
+	   
+	   $("input:eq(7)").on('keyup',
 			   function() {
 		           $("#email_message").empty();
 		           //[A-Za-Z0-9_]와 동일한 것이 \w
 		           //+는 1회 이상 반복을 의미합니다. {1,}와 동일합니다
 		           //\w+ 는 [A-Za-z0-9_]를 1개이상 사용하라는 의미입니다.
 		           var pattern = /^\w+@\w+[.]\w{3}$/;
-		           var email = $("input:eq(6)").val();
+		           var email = $("input:eq(7)").val();
 		           if (!pattern.test(email)) {
 		        	   $("#email_message").css('color', 'red')
 		        	                      .html("이메일형식이 맞지 않습니다.");
@@ -92,6 +100,34 @@ var i1=<%=num%>;
 		        	}
 		        }); //ajax end
 	    }) //id keyup end
+	    
+	    $('input[type=file]').on('change', preview);
+
+		function preview(e) {
+			// 선택한 그림의 File 객체를 취득
+			//File객체 리스트에서 첫번째 File객체를 가져옵니다.
+			var file = e.target.files[0];
+			
+			//file.type : 파일의 형식 (MIME타입 - 예) text/html)
+			if (!file.type.match('image.*')) { //파일 타입이 image인지 확인합니다.
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+			//파일을 읽기 위한 객체 생성
+			var reader = new FileReader();				
+			
+			//DataURL 형식으로 파일을 읽어옵니다. 
+			//읽어온 결과는 reader객체의 result 속성에 저장됩니다.			
+			reader.readAsDataURL(file);
+			
+			//읽기에 성공했을 때 실행되는 이벤트 핸들러	
+			reader.onload = function(e) {
+				//result:읽기 결과가 저장됩니다.
+				//reader.result 또는 e.target.result
+			$("#user_image").attr('src', e.target.result);
+			}//reader.onload end
+		}
+	    
     }) //ready
 
 </script>
@@ -103,77 +139,88 @@ var i1=<%=num%>;
 <jsp:include page="../header.jsp"></jsp:include>
 
 
-    <form name="joinfrom" action="${pageContext.request.contextPath }/member/joinProcess" method="post">
-        <h1 class="title">회원가입</h1>
+    <form name="joinfrom" id="joinform" action="${pageContext.request.contextPath }/member/joinProcess" method="post">
+        <h1 class="titlefont">회원가입</h1>
         
-        <b>사용자 ID</b>
-        <input type="button" class="idcheck" value="ID중복체크" id='idcheck' name="idcheck"><br> 
-        <input type="text" name="id" placeholder="Enter id" required maxLength="12">
+        <em style="color:red; float:left">*</em>
+        <b id="idtext">사용자 ID</b>
+        <input type="button" value="ID중복체크" id='idcheck' name="idcheck"><br> 
+        <input type="text" name="id" class="tx" placeholder="Enter id" required maxLength="12">
 		<input type="hidden" value="y"id="confirmIdcheck"> 
         <span id="message"></span>
         
-        <b>비밀번호</b>
+        <em style="color:red; float:left">*</em>
+        <b id="idtext">비밀번호</b>
         <input type="password" name="pass" 
                placeholder="비밀번호를 입력하세요(문자,숫자,특수문자로 구성된 8~15자리입니다)" required>
         <span id=pass1 style= "color:red"></span>
-        <b>비밀번호 확인</b>
+        <em style="color:red; float:left">*</em>
+        <b id="idtext">비밀번호 확인</b>
         <input type="password" name="pass" placeholder="비밀번호를 다시 입력하세요" required>
         <span id=pass2 style= "color:red"></span>
         
-        <b>이름</b>
-        <input type="text" name="name" placeholder="Enter name"
+        <em style="color:red; float:left">*</em>
+        <b id="idtext">이 름</b>
+        <input type="text" name="name" class="tx" placeholder="Enter name"
            maxLength="5"  required>
-        
-        <b>별명</b>
-        <input type="text" name="name" placeholder="Enter name"
-           maxLength="15"  required>
            
-        <b>이메일 주소</b>
-        <input type="text" name="email" id="email" placeholder="Enter email" maxLength="30" required>@
-        <input type="text" name="domain" id="domain" maxLength= "15" required>
-        <select name="sel">
+        <em style="color:red">*</em>
+        <b id="nicktext">별 명</b>
+        <input type="text" name="name" class="nickinput" placeholder="Enter nickname"
+           maxLength="15"  required><br>
+        
+        <em style="color:red">*</em>   
+        <b id="mailtext" style="width:50%">이메일 주소</b>
+        <input type="text" name="email" class="tx" id="email" style="width:33%; float:left"
+                placeholder="Enter email" maxLength="30" required>@
+        <input type="text" name="domain" class="tx" id="domain" style="width: 33%" maxLength= "15" required>
+        <select name="domain2" id="domain2">
         <option value="">직접 입력</option>
         <option value="naver.com">naver.com</option>
         <option value="daum.net">daum.net</option>
         <option value="gmail.com">gamil.com</option>
         </select>
         <span id="email_message"></span>
-        <div class="clearfix">
         
-        <label><b>우편번호</b></label><br> 
-           <input type="text" size="5" maxLength="5" name="post1" id="post1" required> 
-           <input type="button" class="postcode" value="우편검색" id='postcode'	onclick="execDaumPostcode()"> 
-        <label><b>주소</b></label><br>
-		   <input type="text" size="50" name="address" id="address" required>
+        <div class="clearfix">
+        <em style="color:red">*</em>
+        <label><b id="addtext">주소</b></label>
+           <input type="text" size="10" maxLength="10" name="post1" class="tx" id="post1"  required> 
+           <input type="button" value="우편검색" id='postcode'	onclick="execDaumPostcode()"> 
+		   <input type="text" size="50" name="address" class="tx" id="address" required>
 		   <div style="margin-top: -10px; width: 101%">
-		   
-	    <label for="tel_1"><b>전화번호</b></label><br> 
-	       <input type="text" placeholder="전화번호 앞2~3자리" name="tel_1" id="tel_1" 
+		 
+		<em style="color:red">*</em>   
+	    <label for="tel_1"><b id="teltext">연락처</b></label><br> 
+	       <input type="text" placeholder="전화번호 앞2~3자리" name="tel_1" class="tx" id="tel_1" 
 	                maxLength="3" style="width: 32%" required> 
 	       <label for="tel_2"><b> - </b> </label> 
-	       <input type="text" placeholder="중간번호 4자리" name="tel_2"
+	       <input type="text" placeholder="중간번호 4자리" name="tel_2" class="tx"
 				    id="tel_2" maxLength="4" style="width: 32%" required> 
 		   <label for="tel_3"><b> - </b></label> 
-		   <input type="text" placeholder="뒤번호 4자리" name="tel_3" 
+		   <input type="text" placeholder="뒤번호 4자리" name="tel_3" class="tx"
 		            id="tel_3" maxLength="4" style="width: 32%" required>
 		   <span id='span4' style="color: red"></span><br>
 	    </div>		
-				
+		
+		<em style="color:red">*</em>
+		<b id="imgtext">프로필 사진</b>
+		   <div class="imgcontainer">
+			<label for="user_image" class="user_image" id="imgtext"> 
+			   <input type="file" name="uploadfile" class="user_image_choice"
+				      accept="image/gif, image/jpeg, image/png" >
+				<img id="user_image" src="resources/image/default.png" alt="image" 
+				      width="130" height="130" class="avatar">
+			</label>
+		</div>
+		<br> 		
         
-            <button type="submit" class="submitbtn">회원가입</button>
-            <button type="reset" class="cancelbtn">다시작성</button>
+            <button type="reset" class="cancelbtn">← 취소</button>
+            <button type="submit" class="submitbtn">등록</button>
         </div>
         
     </form>
 
 <jsp:include page="../footer.jsp"></jsp:include>
 </body>
-    <script src="../resources/js/jquery-3.3.1.min.js"></script>
-    <script src="../resources/js/popper.js"></script>
-    <script src="../resources/js/bootstrap.min.js"></script>
-    <script src="../resources/js/jquery.nice-select.min.js"></script>
-    <script src="../resources/js/jquery.barfiller.js"></script>
-    <script src="../resources/js/jquery.slicknav.js"></script>
-    <script src="../resources/js/owl.carousel.min.js"></script>
-    <script src="../resources/js/main.js"></script>
 </html>
