@@ -109,18 +109,49 @@ public class MemberController {
 	
 	
 	// http://localhost:8088/myhome4/member/join
-		// 회원가입 폼 이동
+	// 회원가입 폼 이동
 		@RequestMapping(value = "/join", method = RequestMethod.GET)
 		public String join() {
 			return "member/joinForm"; // WEB-INF/views/member/joinForm.jsp
 		}
 		
 		
+	// 아이디 찾기
+		@RequestMapping(value = "/findId", method = RequestMethod.GET)
+		public String findId() {
+			return "member/findidForm"; // WEB-INF/views/member/findidForm.jsp
+		}
 		
+	// 비밀번호 재확인
+		@RequestMapping(value = "/passcheck", method = RequestMethod.GET)
+		public String passcheck() {
+			return "member/passcheck"; // WEB-INF/views/member/passcheck.jsp
+		}
 		
-
+	// 비밀번호 변경
+		@RequestMapping(value = "/changepass", method = RequestMethod.GET)
+		public String changepass() {
+			return "member/changepass"; // WEB-INF/views/member/changepass.jsp
+		}
 	
+	// 회원정보 변경
+		@RequestMapping(value = "/change_member_info", method = RequestMethod.GET)
+		public String change_member_info() {
+			return "member/change_member_info"; // WEB-INF/views/member/change_member_info.jsp
+		}
 	
+	// 회원 탈퇴
+		@RequestMapping(value = "/drop_member", method = RequestMethod.GET)
+		public String drop_member() {
+			return "member/drop_member"; // WEB-INF/views/member/drop_member.jsp
+		}
+		
+	// 회원의 개인 정보 
+		@RequestMapping(value = "/member_info", method = RequestMethod.GET)
+		public String member_info() {
+			return "member/member_info"; // WEB-INF/views/member/member_info.jsp
+		}
+		
 	
 
 }

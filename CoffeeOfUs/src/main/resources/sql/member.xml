@@ -4,18 +4,36 @@
 
 <mapper namespace="Members">
 
-<!-- <select id ="idcheck" resultType="member" parameterType="String">
-	select * from member where id = #{id}
-</select>
-
+<!--  -->
 <insert id="insert" parameterType="member">
 
 		insert into member
 		values
-		(#{id},#{password},#{name},#{age},#{gender},#{email})
+		(#{USER_ID},#{USER_PASS},#{USER_PASS},#{USER_NAME},
+		 #{USER_NICKNAME},#{USER_EMAIL},#{USER_ADDRESS},
+		 #{USER_PHONE},#{USER_IMG})
 
 </insert>
 
+<!-- 아이디 체크 -->
+ <select id ="idcheck" resultType="member" parameterType="String">
+	select * from member where id = #{USER_ID}
+</select>
+
+<!-- 패스워드 체크 -->
+<!--  <select id ="passcheck" resultType=""
+-->
+
+<!-- 아이디 중복 체크 -->
+
+
+
+
+
+
+
+
+<!--
 
 
 <select id="getSearchList" parameterType="map" resultType="member">
@@ -64,9 +82,9 @@
        gender = #{gender} , email = #{email}
   where id = #{id}        
 </update>
-
-
  -->
+
+
 
 
 </mapper>
