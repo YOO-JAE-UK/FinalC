@@ -29,6 +29,7 @@ center: { lat: -33.8688, lng: 151.2195 },
 zoom: 13,
 mapTypeId: "roadmap",
 });
+
 //Create the search box and link it to the UI element.
 const input = document.getElementById("pac-input");
 const searchBox = new google.maps.places.SearchBox(input);
@@ -93,6 +94,9 @@ var start =place.formatted_address.indexOf(" ")+1; //띄워쓰기포함된 4가 
 var end =place.formatted_address.indexOf(" ",start); //8리턴
 
  $("#do").text(place.formatted_address.substring(start, end));
+
+$("#location").attr("value",place.geometry.location); //(37.5186305, 126.7903892)  결과값()포함
+
 });
 map.fitBounds(bounds);
 
@@ -120,7 +124,8 @@ map.fitBounds(bounds);
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-9" style="background: #e8e8e8; border-radius: 15px; height: 1000px;">
                 	
-  
+  <form>
+  <input type="text" id="location">
   <div id="product-img">
    <%--  <img src="${pageContext.request.contextPath}/resources/img/attach.png" alt="Nike" title="Nike" class="nike-logo"/> --%>
     
@@ -159,19 +164,19 @@ map.fitBounds(bounds);
 		      <div class="star-input"> 
 		      <!-- <p class="score"><b>0</b>점</p>  -->
 		      	<span class="input"> 
-		     		<input type="radio" name="star-input" value="1" id="p1">
+		     		<input type="radio" name="TOUR_GRADE" value="1" id="p1">
 		     		<label for="p1">1</label>
-		     		<input type="radio" name="star-input" value="0.5" id="p1_2">
+		     		<input type="radio" name="TOUR_GRADE" value="0.5" id="p1_2">
 		     		<label for="p1_2">0.5</label>
-		     		<input type="radio" name="star-input" value="2" id="p2"> 
+		     		<input type="radio" name="TOUR_GRADE" value="2" id="p2"> 
 		     		<label for="p2">2</label> 
-		     		<input type="radio" name="star-input" value="1.5" id="p2_2"> 
+		     		<input type="radio" name="TOUR_GRADE" value="1.5" id="p2_2"> 
 		     		<label for="p2_2">1.5</label> 
-		     		<input type="radio" name="star-input" value="3" id="p3"> 
+		     		<input type="radio" name="TOUR_GRADE" value="3" id="p3"> 
 		     		<label for="p3">3</label> 
-		     		<input type="radio" name="star-input" value="2.5" id="p3_2"> 
+		     		<input type="radio" name="TOUR_GRADE" value="2.5" id="p3_2"> 
 		     		<label for="p3_2">2.5</label> 
-		     		<input type="radio" name="star-input" value="4" id="p4"> 
+		     		<input type="radio" name="TOUR_GRADE" value="4" id="p4"> 
 		     		<label for="p4">4</label> 
 		     		<input type="radio" name="star-input" value="3.5" id="p4_2"> 
 		     		<label for="p4_2">3.5</label> 
@@ -187,12 +192,12 @@ map.fitBounds(bounds);
 		      </div>
     </div>
      <div>
-	     <label style="margin-bottom: 0px;">제목 :</label><br>
-	     <input class="underline" type="text" name="TOUR_SUBJECT" placeholder="Enter Subject">
-     </div>
-     <div style="margin-bottom: 40px;">
     	<label style="margin-bottom: 0px;">카페이름 :</label><br>
      	<input class="underline" type="text" name="TOUR_NAME" placeholder="Enter Cafename">
+     </div>
+     <div  style="margin-bottom: 40px;">
+	     <label style="margin-bottom: 0px;">제목 :</label><br>
+	     <input class="underline" type="text" name="TOUR_SUBJECT" placeholder="Enter Subject">
      </div>
      <h4 class="clearfix">후기</h4>
    		<textarea name="TOUR_CONTENT" rows="25" style="width: 100%"></textarea>
@@ -203,33 +208,33 @@ map.fitBounds(bounds);
  	<div style="margin: 20px 0 0 5px; font-size: 13pt"><b>맛</b></div>
  	<div id="bar1"></div>
 	<div id="tastediv">
-		<div id="taste_one" class="choose_name">매우나쁨</div><input type="radio" name="taste" id="one1">
-		<div id="taste_two" class="choose_name">나쁨</div><input type="radio" name="taste" id="two1">
-		<div id="taste_three" class="choose_name">보통</div><input type="radio" name="taste" id="three1">
-		<div id="taste_four" class="choose_name">좋음</div><input type="radio" name="taste" id="four1">
-		<div id="taste_five" class="choose_name">매우좋음</div><input type="radio" name="taste" id="five1">
+		<div id="taste_one" class="choose_name">매우나쁨</div><input type="radio" name="TOUR_TASTE" id="one1" value="1">
+		<div id="taste_two" class="choose_name">나쁨</div><input type="radio" name="TOUR_TASTE" id="two1" value="2">
+		<div id="taste_three" class="choose_name">보통</div><input type="radio" name="TOUR_TASTE" id="three1" value="3">
+		<div id="taste_four" class="choose_name">좋음</div><input type="radio" name="TOUR_TASTE" id="four1" value="4">
+		<div id="taste_five" class="choose_name">매우좋음</div><input type="radio" name="TOUR_TASTE" id="five1" value="5">
 	</div>
 	
 	
 	<div style="margin: 0px 0 0 5px; font-size: 13pt"><b>분위기</b></div>
  	<div id="bar2"></div>
 	<div id="tastediv">
-		<div id="atmosphere_one" class="choose_name">매우나쁨</div><input type="radio" name="taste" id="one2">
-		<div id="atmosphere_two" class="choose_name">나쁨</div><input type="radio" name="taste" id="two2">
-		<div id="atmosphere_three" class="choose_name">보통</div><input type="radio" name="taste" id="three2">
-		<div id="atmosphere_four" class="choose_name">좋음</div><input type="radio" name="taste" id="four2">
-		<div id="atmosphere_five" class="choose_name">매우좋음</div><input type="radio" name="taste" id="five2">
+		<div id="atmosphere_one" class="choose_name">매우나쁨</div><input type="radio" name="TOUR_ATMOSPHERE" id="one2" value="1">
+		<div id="atmosphere_two" class="choose_name">나쁨</div><input type="radio" name="TOUR_ATMOSPHERE" id="two2" value="2">
+		<div id="atmosphere_three" class="choose_name">보통</div><input type="radio" name="TOUR_ATMOSPHERE" id="three2" value="3">
+		<div id="atmosphere_four" class="choose_name">좋음</div><input type="radio" name="TOUR_ATMOSPHERE" id="four2" value="4">
+		<div id="atmosphere_five" class="choose_name">매우좋음</div><input type="radio" name="TOUR_ATMOSPHERE" id="five2" value="5">
 	</div>
 	
 	
 	<div style="margin: 0px 0 0 5px; font-size: 13pt"><b>서비스</b></div>
  	<div id="bar3"></div>
 	<div id="tastediv">
-		<div id="service_one" class="choose_name">매우나쁨</div><input type="radio" name="taste" id="one3">
-		<div id="service_two" class="choose_name">나쁨</div><input type="radio" name="taste" id="two3">
-		<div id="service_three" class="choose_name">보통</div><input type="radio" name="taste" id="three3">
-		<div id="service_four" class="choose_name">좋음</div><input type="radio" name="taste" id="four3">
-		<div id="service_five" class="choose_name">매우좋음</div><input type="radio" name="taste" id="five3">
+		<div id="service_one" class="choose_name">매우나쁨</div><input type="radio" name="TOUR_SERVICE" id="one3" value="1">
+		<div id="service_two" class="choose_name">나쁨</div><input type="radio" name="TOUR_SERVICE" id="two3" value="2">
+		<div id="service_three" class="choose_name">보통</div><input type="radio" name="TOUR_SERVICE" id="three3" value="3">
+		<div id="service_four" class="choose_name">좋음</div><input type="radio" name="TOUR_SERVICE" id="four3" value="4">
+		<div id="service_five" class="choose_name">매우좋음</div><input type="radio" name="TOUR_SERVICE" id="five3" value="5">
 	</div>
  	
  	<div style="margin-top: 40px;">
@@ -237,8 +242,9 @@ map.fitBounds(bounds);
  		<button style="float:right;" class="btn btn-primary btn-lg">작성완료</button>
  	</div>
  	</div><!-- 오른쪽 content 자리 -->
-                	
+</form>              	
                 </div><!-- 12끝 -->
+
          </div><!--     <div class="row"> end -->
         </div><!-- container end -->
      </section>
