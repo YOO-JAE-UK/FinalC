@@ -12,6 +12,8 @@ public interface MemberService {
 	
 	public int isId(String id);
 	
+	public int isEmail(String email);
+	
 	public Member member_info(String id);
 	
 	public void delete(String id);

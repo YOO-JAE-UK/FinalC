@@ -74,7 +74,7 @@ var i1=<%=num%>;
 	<div class="naverlogin">
 	   <button type="button" class="naverloginbtn" >네이버 아이디로 로그인</button>
 	</div>
-	<a href="${pageContext.request.contextPath}/member/change_member_info" 
+	<a href="${pageContext.request.contextPath}/member/member_info" 
 	   style="color:black" id="findtext">ID/PW찾기</a>   
 </form>
 

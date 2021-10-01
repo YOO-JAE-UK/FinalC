@@ -22,6 +22,7 @@
 <% String num = request.getParameter("num");%>
 	var i1=<%=num%>;
 		//alert(i1+"i의 값");
+		
 </script>
 </head>
 <body>
