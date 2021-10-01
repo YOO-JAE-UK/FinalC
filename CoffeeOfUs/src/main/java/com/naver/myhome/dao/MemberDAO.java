@@ -21,6 +21,11 @@ public class MemberDAO {
 		return sqlSession.selectOne("Members.idcheck", id);//member.xml주소
 	}
 	
+	public Member isEmail(String email) {
+									//member.xml의 네임스페이스 Members 에서 id 값이 emailcheck를 쓰고, email정보를 거기로 보낸다  
+		return sqlSession.selectOne("Members.emailcheck", email);//member.xml주소
+	}
+	
 	public int insert(Member m) {
 		return sqlSession.insert("Members.insert", m);
 	}

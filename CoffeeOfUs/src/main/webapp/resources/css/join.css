@@ -4,69 +4,68 @@
 	padding-bottom:10px;
 	font-size: 30px;
 }
-
+#wap{
+	margin: 5px 0 0 0;
+}
+#id, #pw1, #pw2{
+	margin: 0 0 0 0;
+}
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box}
 
-#domain2{
- float:right;
- display:inline-block !important;
- border:solid 1px lightgray !important;
- width:31% !important;
- border-radius:3px !important;
- height:40px !important;
- margin: 5px 0 0 0;
- }
+#message, #pass1, #pass2{
+	margin: 0 0 0 8px;
+}
+
 .nice-select{
  display:none !important;
 } 
 
-#idcheck{
-    padding: 3px 13px;
-    border: 1px solid lightgrey;
-    cursor: pointer; 
-    width: 13%;
-    float: right;
-    
-}
-#email, #domain{
-	margin: 5px 2px 5px 0px;
+#email{
+	margin: 0px 2px 0px 0px;
+	background-color:white !import
 }
 #email_message{
 	margin: 0 0 15px 10px;
+}
+#tel_message{
+	margin: 0 0 15px 10px;
+}
+#inputtel{
+	margin: 0px 0 -20px 0;
 }
 
 #postcode{
     float: right;
     width:54px;
-    height: 24px;
+    height: 27px;
 }
  
 #idtext{
 	float:left;
 	width:20%;
-	margin: 0 0 -15px 15px;
+	margin: 1px 8px -3px 15px;
 	font-size:14px;
 }
  #addtext, #imgtext{
-	margin: 0px 0 0 15px;
+	margin: -14px 0 -29px 15px;
 	font-size:14px;
 }
 #teltext{
-	margin: 0px 0 0 15px;
+	margin: 5px 0 -7px 10px;
 	font-size:14px;
 } 
 
 #mailtext{
-	margin: -16px 0 0 15px;
+	margin: -14px 0 0 19px;
 	font-size:14px;
 }
 #nicktext {
-	margin: -16px 0 0 15px;
+	margin: -16px 0 0 19px;
 	font-size:14px;
 }
 #imgtext{
-	margin: -17px 0 0 15px;
+	margin: -13px 0 0 19px;
 	font-size:14px;
 } 
 .nickinput {
@@ -80,15 +79,17 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 #post1{
 	padding:3px;
-	margin:0 10px 0 335px;
+	margin:0 10px 3px 390px;
 	width: 20%;
 	text-align: center;
 }
 
 .user_image_choice{
-	margin: 17px 0 10px -13px;
-	
+	margin: 0px 0 10px -26px;
 }
+#img_wap{
+    margin :-10px 0px 0px 0px;	
+}	
 
 
 
@@ -96,7 +97,7 @@ input{border-radius:3px;border:1px solid lightgray}
 .tx, input[type=password] {
     width: 100%;
     padding: 10px;
-    margin: 5px 0 22px 0;
+    margin: 1px 0 22px 0;
     display: inline-block;
     font-size: 13px;
 }
