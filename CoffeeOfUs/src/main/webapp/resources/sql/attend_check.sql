@@ -9,7 +9,7 @@ create table attend_check(
 	
 );
 insert into member values('a','1234','강문','rkdans25','jw890825@gmail.com','11111','안양시','010-1111-1111','i.png','1',sysdate)
-insert into attend_check values ('a','2021-08-10')
+insert into attend_check values ('a','2021-08-08')
 delete from ATTEND_CHECK where id='a'
 select * from attend_check
 select * from member
