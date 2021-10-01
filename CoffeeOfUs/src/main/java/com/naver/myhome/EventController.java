@@ -73,26 +73,40 @@ public class EventController {
 	public  HashMap<String,Object> isCheck(@RequestParam("id") String id){
 		 
 		Date today = new Date();
-	 	 SimpleDateFormat format= new SimpleDateFormat("YYY-MM-DD");
+	 	 SimpleDateFormat format= new SimpleDateFormat("YYYY-MM-dd");
 		String attenddate= (String)format.format(today);
 		
-		
+		logger.info("attend:" + attenddate);
 		AttendCheckMember member = eventservice.isCheck(id,attenddate);
 		
 		HashMap<String,Object> map= new HashMap<String,Object>();
-		map.put("map",member);
+		map.put("member",member);
 		return map;
 		
 	}
 	@ResponseBody
 	@RequestMapping(value="/attendCount",method=RequestMethod.POST)
 	public  HashMap<String,Object> attendCount(@RequestParam("id") String id,
-			@RequestParam("yearMonth") String yearMonth){
-		 	
-		int count = eventservice.attendCount(id,yearMonth);
+			@RequestParam("year") String year,
+			@RequestParam("month") String month){
+		 int nyear= Integer.parseInt(year);
+		 int nmonth=Integer.parseInt(month);
+		 String start="";
+		 String end="";
+		   if(nmonth<10) {
+			 start= nyear + "-" + "0"+nmonth + "-" +"01";			 
+			 end=  nyear + "-" + "0"+nmonth + "-" +"31";
+		   }else {
+			   start= nyear + "-" + nmonth + "-" +"01";			 
+				 end=  nyear + "-" + nmonth + "-" +"31";
+		   }
+		 logger.info("start:" + start);	
+		 logger.info("end:" + end);
+		int count = eventservice.attendCount(id,start,end);
 		
+		logger.info("count:" + count);
 		HashMap<String,Object> map= new HashMap<String,Object>();
-		map.put("map",count);
+		map.put("count",count);
 		return map;
 		
 	}
