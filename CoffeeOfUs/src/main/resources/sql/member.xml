@@ -4,21 +4,27 @@
 
 <mapper namespace="Members">
 
+<!-- 아이디 체크 -->
+ <select id ="idcheck" resultType="member" parameterType="String">
+	select * from member where user_id = #{id}
+</select>
+
+<!-- 이메일 체크 -->
+ <select id ="emailcheck" resultType="member" parameterType="String">
+	select * from member where user_email = #{email}
+</select>
+
 <!--  -->
 <insert id="insert" parameterType="member">
 
 		insert into member
 		values
-		(#{USER_ID},#{USER_PASS},#{USER_PASS},#{USER_NAME},
+		(#{USER_ID},#{USER_PASS},#{USER_NAME},
 		 #{USER_NICKNAME},#{USER_EMAIL},#{USER_ADDRESS},
 		 #{USER_PHONE},#{USER_IMG})
 
 </insert>
 
-<!-- 아이디 체크 -->
- <select id ="idcheck" resultType="member" parameterType="String">
-	select * from member where id = #{USER_ID}
-</select>
 
 <!-- 패스워드 체크 -->
 <!--  <select id ="passcheck" resultType=""

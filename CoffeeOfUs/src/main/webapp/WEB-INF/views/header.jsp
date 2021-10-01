@@ -49,7 +49,24 @@
 	}
 	.cus1{
 		color: white;
+		position :absolute;
+		top: 30px;
+		right: 70px;
+		font-size: 13px;
+		width:140px;
 	}
+.cus2{
+ border: 1px solid white;
+ color: white;
+ border-radius: 3px;
+ margin-right: 10px;
+ font-size: 13px;
+ width: 40px;
+ text-align: center;
+ position : absolute;
+ top:27px;
+ right: 5px;
+}
 	li{
 		list-style: none;
 	}
@@ -57,6 +74,9 @@
 	.header__menu > ul> li{
 		margin: 0 25px 0 25px;
 	}
+	
+
+	
 </style>
 
 <script>
@@ -75,6 +95,7 @@ $(document).ready(function(){
 			$('.tour').addClass('active')
 		}
 		console.log("1");
+		
 })
 
 
@@ -135,27 +156,29 @@ $(document).ready(function(){
                     
                     <div class="col-lg-12 col-md-12">
                         <div class="header__top__widget" >
-                       	<c:if test="${!empty id}">
-                       		<ul style="float: right;">
-	                        	<li> <a href="#" class="cus1">${id} 님(로그아웃)</a>&nbsp;</li>
-	                        	<li> <a href="#" class="cus1">내정보</a>&nbsp;</li>
-	                        	
-		                        	<c:if test="${id=='admin'}">
-										<!-- Dropdown -->
-							                <li class=" dropdown" style="float: right;"><a
-											class="nav-link dropdown-toggle" href="#" id="navbardrop"
-											data-toggle="dropdown"> 관리자 </a>
-											<div class="dropdown-menu">
-											<ul>
-												<li><a class="dropdown-item" href="#">회원정보</a></li>
-												<li><a class="dropdown-item" href="#">게시판</a></li>	
-											</ul>
-												
-											</div>
-											</li>
-									</c:if><!-- admin이면 dropdown -->
-	                        </ul>
-                       	</c:if>
+                          <c:if test="${!empty id}">
+                             <ul style="float: right;">
+                              <li> <a href="${pageContext.request.contextPath}/member/logout" 
+	                        	        class="cus1">${id} 님(로그아웃)</a> </li>
+	                           <li> <a href="${pageContext.request.contextPath}/member/member_info" 
+	                        	        class="cus2">My</a> </li>
+                              
+                                 <c:if test="${id=='admin'}">
+                              <!-- Dropdown -->
+                                     <li class=" dropdown" style="float: right;"><a
+                                 class="nav-link dropdown-toggle" href="#" id="navbardrop"
+                                 data-toggle="dropdown"> 관리자 </a>
+                                 <div class="dropdown-menu">
+                                 <ul>
+                                    <li><a class="dropdown-item" href="#">회원정보</a></li>
+                                    <li><a class="dropdown-item" href="#">게시판</a></li>   
+                                 </ul>
+                                    
+                                 </div>
+                                 </li>
+                           </c:if><!-- admin이면 dropdown -->
+                           </ul>
+                          </c:if>
                        	
                        	<c:if test="${empty id}">
                              <ul style="margin-top:40px">
@@ -173,6 +196,8 @@ $(document).ready(function(){
                     <div class="col-lg-12 col-md-12">
                         <div style="text-align: center; height: 70px;">
                                <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""  width="200px" height="70px"></a>
+                        
+                        
                         </div>
                     </div>
                 </div>

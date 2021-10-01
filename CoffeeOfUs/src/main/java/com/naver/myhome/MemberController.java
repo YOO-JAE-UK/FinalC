@@ -47,12 +47,14 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	
-	  @Autowired private MemberService memberservice;
+	  @Autowired 
+	  private MemberService memberservice;
 	  
 	 /* @Autowired private PasswordEncoder passwordEncoder;
 	 */
+	
 	/*
-	 * @Autowired private 
+	 * @Autowired private
 	 * SendMail sendMail;
 	 */
 
@@ -99,8 +101,8 @@ public class MemberController {
 					savecookie.setMaxAge(0);
 				}
 				response.addCookie(savecookie);
-				//return "redirect:/board/write";
-				return "redirect:/board/list";
+				//return "redirect:/main/main";
+				return "redirect:/main/main";  //jsp
 			} else {
 				rattr.addFlashAttribute("result", result);
 				return "redirect:login";
@@ -114,6 +116,29 @@ public class MemberController {
 		public String join() {
 			return "member/joinForm"; // WEB-INF/views/member/joinForm.jsp
 		}
+		
+		
+	// 회원가입폼에서 아이디 검사
+		@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
+		// 파라미터 값과 String id 변수 이름이 같으면 생략가능 (delete에 생략함)
+		public void idcheck(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
+			int result = memberservice.isId(id);
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.print(result);
+		}	
+		
+	// 회원가입폼에서 이메일 검사
+		@RequestMapping(value = "/emailcheck", method = RequestMethod.GET)
+		public void emailcheck(@RequestParam("email") String email, HttpServletResponse response) throws Exception {
+			int result = memberservice.isEmail(email);
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.print(result);
+		}	
+		
+		
+		
 		
 		
 	// 아이디 찾기
@@ -151,7 +176,18 @@ public class MemberController {
 		public String member_info() {
 			return "member/member_info"; // WEB-INF/views/member/member_info.jsp
 		}
+    
 		
+		
+		
+		
+		
+	//로그아웃
+		@RequestMapping(value = "/logout", method = RequestMethod.GET)
+		public String loginout(HttpSession session) {
+			session.invalidate();
+			return "redirect:login";
+		}
 	
 
 }

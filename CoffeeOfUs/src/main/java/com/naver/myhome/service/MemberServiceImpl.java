@@ -23,6 +23,13 @@ public class MemberServiceImpl implements MemberService {
 		return (rmember==null) ? -1 : 1;  //-1은 아이디가 존재하지 않는 경우
 		                                  //1은 아이디가 존재하는 경우
 	}
+	
+	@Override
+	public int isEmail(String email) {
+		Member rmember = dao.isId(email);
+		return (rmember==null) ? -1 : 1;  //-1은 이메일이 존재하지 않는 경우
+										  //1은 이메일이 존재하는 경우
+	}
 
 	@Override
 	public int insert(Member m) {
