@@ -38,10 +38,11 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public int attendCount(String id, String yearMonth) {
+	public int attendCount(String id, String start,String end) {
 		HashMap<String,Object> map= new HashMap<String,Object>(); 
 		map.put("id", id);
-		map.put("yearMonth",yearMonth);
+		map.put("start",start);
+		map.put("end",end);
 		return dao.attendCount(map);
 	}
 

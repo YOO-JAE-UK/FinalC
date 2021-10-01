@@ -22,7 +22,8 @@
  </select>
  
  <select id="attendCount" parameterType="Map" resultType="int">
-    select count(*) from attend_check where id=#{id} and attenddate=#{yearMonth}
+    select count(*) from attend_check where id=#{id} and 
+       attenddate between #{start} and #{end}
      
  </select>
 </mapper>
