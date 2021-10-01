@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Boards_Qna">
+
+<!--  1. jdbcType=VARCHAR: 첨부 파일을 추가 하지 않은 경우 에러 처리해 줍니다.
+		해당 필드가 null인 경우 jdbcType=VARCHAR로 처리하면 null로 설정됩니다.
+		number 타입일 경우는 jdbcType=INTEGER
+	  2. ① insert 전에 (order ="BEFORE")
+	  		조회(select nvl(max(QNA_NUM),0)+1 from BOARD_QNA) 합니다.
+	  	 ② 조회한 값을 keyProperty="QNA_NUM"에서 설정한 대로
+	  	 	"QNA_NUM" 프로퍼티에 저장합니다.
+	  	 	(public void setQNA_NUM"(int QNA_NUM))
+	  	 ③ insert문의 #{QNA_NUM}는 지금 구한 값을 QNAean에서 가져옵니다.
+	  	 (public String getQNA_NUM() {return QNA_NUM;})
+	  	 
+		 -->
+<!-- <insert id="insert" parameterType="board_qna">
+	<selectKey resultType="int" order="BEFORE"
+				keyProperty="QNA_NUM">
+			select nvl(max(QNA_NUM),0)+1 from BOARD_QNA
+	</selectKey>
+	insert into BOARD_QNA
+	(QNA_NUM,
+	 QNA_NAME, QNA_PASS, QNA_SUBJECT, 
+	 QNA_CONTENT, QNA_FILE, QNA_ORIGINAL,
+	  QNA_RE_REF,
+	   QNA_RE_LEV, QNA_RE_SEQ, QNA_READCOUNT,
+	   QNA_DATE)
+		values
+		(#{QNA_NUM},
+		 #{QNA_NAME}, #{QNA_PASS}, #{QNA_SUBJECT},
+		 #{QNA_CONTENT}, #{QNA_FILE, jdbcType=VARCHAR},
+		 #{QNA_ORIGINAL, jdbcType=VARCHAR},
+		 #{QNA_NUM},
+		 #{QNA_RE_LEV}, #{QNA_RE_SEQ}, #{QNA_READCOUNT},
+		 sysdate)
+</insert> -->
+
+<select id="count" resultType="int">
+	select count(*)from BOARD_QNA
+</select>
+<!-- 문법 오류
+	1.where rnum >= #{start}
+	==> 해결법
+		where rnu <![CDATA[		>=		]] #{start}
+		
+		HTML 문서는 '<', '.', '>'와 같은 마크업 문자들을 파싱해서 읽어들이는 구조입니다.
+		그래서 마크업 문자들을 원래 대로의 의미로 사용하기 위해서 '&gt;', '&lt;', '&nbsp;'등의
+		escape 문자열(escape character)을 이용해야 하는데 문장이
+		길어지는 문제점이 발생하게 됩니다. 이럴때 사용하는 것이 바로 CDATA(Character DATA) 절입니다.
+		파서는 <![CDATA[ 와 ]]> 사이의 문장을 단순한 문자데이터로 인식하게 ㅗ딥니다.
+	2. > : &gt;
+	   < : &lt;
+	   바꾸어보세요
+ -->
+
+<select id="list" parameterType="java.util.Map" resultType="board_qna">
+	select * from
+	 (select rownum rnum, b.*
+	 from
+		(SELECT BOARD_QNA.*, nvl(cnt,0) cnt
+		from 
+		BOARD_QNA left outer join (select QNA_NUM, count(*) cnt
+									from COMMENTS_QNA
+									group by QNA_NUM) c
+		on BOARD_QNA.QNA_NUM = c.QNA_NUM
+		order by QNA_RE_REF desc,
+		QNA_RE_SEQ asc) b
+	)
+	 where rnum &gt;= #{start} and rnum &lt;= #{end} 
+
+</select> 
+
+<!-- <update id="readCountUpdate" parameterType="int">
+	update 	BOARD_QNA
+	set		QNA_READCOUNT=QNA_READCOUNT+1
+	where	QNA_NUM=#{number}
+</update>
+
+<select id="detail" parameterType="int" resultType="board_qna">
+	select *from 
+	BOARD_QNA where QNA_NUM = #{number}
+</select>
+
+<update id="reply_update" parameterType="board_qna">
+	update 	BOARD_QNA
+	set		QNA_RE_SEQ=QNA_RE_SEQ+1
+	where	QNA_RE_REF=#{QNA_RE_REF}
+	and		QNA_RE_SEQ <![CDATA[ > ]]> #{QNA_RE_SEQ}
+</update>
+
+QNA_FILE, QNA_ORIGINAL 필드 없어요
+<insert id="reply_insert" parameterType="board_qna">
+	<selectKey resultType="int" order="BEFORE" keyProperty="QNA_NUM">
+		select nvl(max(QNA_NUM),0)+1 from QNA
+	</selectKey>
+	insert into BOARD_QNA
+	(QNA_NUM,QNA_NAME,QNA_PASS, QNA_SUBJECT,
+	QNA_CONTENT, QNA_RE_REF, QNA_RE_LEV, QNA_RE_SEQ,
+		QNA_READCOUNT, QNA_DATE)
+		values(#{QNA_NUM},
+		#{QNA_NAME}, #{QNA_PASS}, #{QNA_SUBJECT},
+	#{QNA_CONTENT}, #{QNA_RE_REF}, #{QNA_RE_LEV},
+	#{QNA_RE_SEQ}, #{QNA_READCOUNT},sysdate)
+</insert>
+
+<select id="boardWriter" parameterType="map" resultType="board_qna">
+	select * from BOARD_QNA
+	where	 QNA_NUM=#{num}
+	and		 QNA_PASS=#{pass}
+</select>
+
+<update id="modify" parameterType="QNA">
+	update BOARD_QNA
+	set
+		QNA_SUBJECT=#{QNA_SUBJECT},
+		QNA_CONTENT=#{QNA_CONTENT},
+		QNA_FILE=#{QNA_FILE, jdbcType=VARCHAR},
+		QNA_ORIGINAL=#{QNA_ORIGINAL, jdbcType=VARCHAR}
+	where QNA_NUM=#{QNA_NUM}
+</update>
+
+<delete id="delete" parameterType="board_qna">
+	<![CDATA[
+		delete from BOARD_QNA
+			where	QNA_RE_REF = #{QNA_RE_REF}
+			and		QNA_RE_LEV >=#{QNA_RE_LEV}
+			and 	QNA_RE_SEQ >=#{QNA_RE_SEQ}
+			and		QNA_RE_SEQ <=(
+									nvl((SELECT min(QNA_re_seq)-1
+										FROM	BOARD_QNA
+										WHERE	QNA_RE_REF=#{QNA_RE_REF}
+										AND		QNA_RE_LEV=#{QNA_RE_LEV}
+										AND		QNA_RE_SEQ>#{QNA_RE_SEQ}),
+										(SELECT max(QNA_re_seq)
+										FROM	BOARD_QNA
+										WHERE	QNA_RE_REF=#{QNA_RE_REF} ))
+										)
+	 ]]>
+</delete> -->
+
+<!-- 
+<insert id="insert_deleteFile" parameterType="String">
+	insert into delete_file
+	values(#{file})
+</insert>
+
+삭제할 파일들의 목록을 구합니다.
+	<select id="deleteFileList" resultType="String">
+		select QNA_file from delete_file
+	</select> 
+	-->
+</mapper>
