@@ -1,36 +1,30 @@
 $(document).ready(function() {
-	
+	var check = 0;
 	//submit 버튼 클릭할 때 이벤트 부분
-	/*
 	$("form").submit(function(){
 		
-		if($.trim($("input").eq(1).val()) == ""){
-			alert("비밀번호를 입력하세요");
-			$("input:eq(1)").focus();
-			return false;
+		/*
+			이곳이 적용되는 경우
+			1. 파일 첨부를 변경하지 않은 경우
+			파일첨부를 변경하지 않으면 $('#filevalue').text()의 파일명을
+			파라미터 'check'라는 이름으로 form에 추가하여 전송합니다.
+			
+			2. 파일첨부의 remove 이미지를 클릭해서 파일을 제거하고 파일첨부를 변경하지 않은 경우
+			이때 value의 값은 ''입니다.
+		 */
+		if(check == 0){
+			value = $('#filevalue').text();
+			html = "<input type= 'text' value='" + value + "' name='check'>";
+			$(this).append(html);
 		}
-		if($.trim($("input").eq(2).val()) == ""){
-			alert("제목을 입력하세요");
-			$("input:eq(2)").focus();
-			return false;
-		}
-		if($.trim($("textarea").val()) == ""){
-			alert("내용을 입력하세요");
-			$("textarea").focus();
-			return false;
-		}
-	})//submit end
-	
-	
-*/
-	//지도
-	
+	});//submit end
 	
 
 	/* 파일업로드 */
 	
 	
 	$("#upfile").change(function() {
+		check++;
 		console.log($(this).val()) //c:\fakepath\upload.png
 		var inputfile = $(this).val().split('\\');
 		$('#filevalue').text(inputfile[inputfile.length - 1]);
@@ -94,6 +88,7 @@ $(document).ready(function() {
 			//result:읽기 결과가 저장됩니다.
 			//reader.result 또는 e.target.result
 		$("#cafe_image").attr('src', e.target.result);
+		check++;
 		}//reader.onload end
 	});
 
@@ -140,8 +135,55 @@ $(document).ready(function() {
 	starRating();
 	
 	
+	//bar
+	if($("#one1").prop("checked")){
+		$("#bar1").css("background","linear-gradient(to right,gray, black)").css("width","8%")
+	}else if($("#two1").prop("checked")){
+		$("#bar1").css("background","linear-gradient(to right,gray, black)").css("width","28%")
+	}else if($("#three1").prop("checked")){
+		$("#bar1").css("background","linear-gradient(to right,gray, black)").css("width","48%")
+	}else if($("#four1").prop("checked")){
+		$("#bar1").css("background","linear-gradient(to right,gray, black)").css("width","68%")
+	}else if($("#five1").prop("checked")){
+		$("#bar1").css("background","linear-gradient(to right,gray, black)").css("width","98%");
+	}
+
+		
+		
+	/* bar2 */
+	
+	if($("#one2").prop("checked")){
+		$("#bar2").css("background","linear-gradient(to right,gray, black)").css("width","8%")
+	}else if($("#two2").prop("checked")){
+		$("#bar2").css("background","linear-gradient(to right,gray, black)").css("width","28%")
+	}else if($("#three2").prop("checked")){
+		$("#bar2").css("background","linear-gradient(to right,gray, black)").css("width","48%")
+	}else if($("#four2").prop("checked")){
+		$("#bar2").css("background","linear-gradient(to right,gray, black)").css("width","68%")
+	}else if($("#five2").prop("checked")){
+		$("#bar2").css("background","linear-gradient(to right,gray, black)").css("width","98%");
+	}
+	
+	
+	
+	/* bar3 */
+	
+	if($("#one3").prop("checked")){
+		$("#bar3").css("background","linear-gradient(to right,gray, black)").css("width","8%")
+	}else if($("#two3").prop("checked")){
+		$("#bar3").css("background","linear-gradient(to right,gray, black)").css("width","28%")
+	}else if($("#three3").prop("checked")){
+		$("#bar3").css("background","linear-gradient(to right,gray, black)").css("width","48%")
+	}else if($("#four3").prop("checked")){
+		$("#bar3").css("background","linear-gradient(to right,gray, black)").css("width","68%")
+	}else if($("#five3").prop("checked")){
+		$("#bar3").css("background","linear-gradient(to right,gray, black)").css("width","98%");
+	}
+	
 	
 	//bar
+	
+	
 	
 	$("#taste_one").click(function(){
 		$("#bar1").css("background","linear-gradient(to right,gray, black)").css("width","8%")

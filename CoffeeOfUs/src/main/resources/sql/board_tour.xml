@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Boards_Tour">
+
+ <insert id="insert" parameterType="board_tour">
+	<selectKey resultType="int" order="BEFORE"
+				keyProperty="TOUR_NUM">
+			select nvl(max(TOUR_NUM),0)+1 from BOARD_TOUR
+	</selectKey>
+	insert into BOARD_TOUR
+	(TOUR_NUM,
+	 USER_ID, USER_NICKNAME, TOUR_ADDRESS, TOUR_NAME,
+	 TOUR_SUBJECT, TOUR_CONTENT, TOUR_LATNG,
+	 TOUR_FILE, TOUR_ORIGINAL, TOUR_DATE,
+	   TOUR_GRADE, TOUR_TASTE, TOUR_ATMOSPHERE,
+	   TOUR_SERVICE, TOUR_READCOUNT, TOUR_ADMIN)
+		values
+		(#{TOUR_NUM},
+		 #{USER_ID}, #{USER_NICKNAME}, #{TOUR_ADDRESS},#{TOUR_NAME}, 
+		 #{TOUR_SUBJECT}, #{TOUR_CONTENT}, #{TOUR_LATNG},
+		 #{TOUR_FILE, jdbcType=VARCHAR}, #{TOUR_ORIGINAL, jdbcType=VARCHAR}, sysdate,
+		 #{TOUR_GRADE}, #{TOUR_TASTE}, #{TOUR_ATMOSPHERE},
+		 #{TOUR_SERVICE},0, 0
+		)
+</insert>
+
+<insert id="insert_admin" parameterType="board_tour">
+	<selectKey resultType="int" order="BEFORE"
+				keyProperty="TOUR_NUM">
+			select nvl(max(TOUR_NUM),0)+1 from BOARD_TOUR
+	</selectKey>
+	insert into BOARD_TOUR
+	(TOUR_NUM,
+	 USER_ID, USER_NICKNAME, TOUR_ADDRESS, TOUR_NAME,
+	 TOUR_SUBJECT, TOUR_CONTENT, TOUR_LATNG,
+	 TOUR_FILE, TOUR_ORIGINAL, TOUR_DATE,
+	   TOUR_GRADE, TOUR_TASTE, TOUR_ATMOSPHERE,
+	   TOUR_SERVICE, TOUR_READCOUNT, TOUR_ADMIN)
+		values
+		(#{TOUR_NUM},
+		 #{USER_ID}, #{USER_NICKNAME}, #{TOUR_ADDRESS},#{TOUR_NAME}, 
+		 #{TOUR_SUBJECT}, #{TOUR_CONTENT}, #{TOUR_LATNG},
+		 #{TOUR_FILE, jdbcType=VARCHAR}, #{TOUR_ORIGINAL, jdbcType=VARCHAR}, sysdate,
+		 #{TOUR_GRADE}, #{TOUR_TASTE}, #{TOUR_ATMOSPHERE},
+		 #{TOUR_SERVICE},0, 1
+		)
+</insert>
+<select id="count" resultType="int">
+	select count(*)from BOARD_TOUR
+</select>
+<!-- 문법 오류
+	1.where rnum >= #{start}
+	==> 해결법
+		where rnu <![CDATA[		>=		]] #{start}
+		
+		HTML 문서는 '<', '.', '>'와 같은 마크업 문자들을 파싱해서 읽어들이는 구조입니다.
+		그래서 마크업 문자들을 원래 대로의 의미로 사용하기 위해서 '&gt;', '&lt;', '&nbsp;'등의
+		escape 문자열(escape character)을 이용해야 하는데 문장이
+		길어지는 문제점이 발생하게 됩니다. 이럴때 사용하는 것이 바로 CDATA(Character DATA) 절입니다.
+		파서는 <![CDATA[ 와 ]]> 사이의 문장을 단순한 문자데이터로 인식하게 ㅗ딥니다.
+	2. > : &gt;
+	   < : &lt;
+	   바꾸어보세요
+ -->
+
+<select id="list" parameterType="java.util.Map" resultType="board_tour">
+	select * from
+	 (select rownum rnum, b.*
+		from BOARD_TOUR b
+		order by TOUR_NUM desc)
+	 where rnum &gt;= #{start} and rnum &lt;= #{end} 
+
+</select> 
+
+<update id="readCountUpdate" parameterType="int">
+	update 	BOARD_TOUR
+	set		TOUR_READCOUNT=TOUR_READCOUNT+1
+	where	TOUR_NUM=#{number}
+</update>
+
+<select id="detail" parameterType="int" resultType="board_tour">
+	select *from 
+	BOARD_TOUR where TOUR_NUM = #{number}
+</select>
+
+
+ <update id="modify" parameterType="board_tour">
+	update BOARD_TOUR
+	set
+		TOUR_ADDRESS=#{TOUR_ADDRESS},
+		TOUR_NAME=#{TOUR_NAME},
+		TOUR_SUBJECT=#{TOUR_SUBJECT},
+		TOUR_CONTENT=#{TOUR_CONTENT},
+		TOUR_LATNG=#{TOUR_LATNG},
+		TOUR_FILE=#{TOUR_FILE, jdbcType=VARCHAR},
+		TOUR_ORIGINAL=#{TOUR_ORIGINAL, jdbcType=VARCHAR},
+		TOUR_GRADE=#{TOUR_GRADE},
+		TOUR_TASTE=#{TOUR_TASTE},
+		TOUR_ATMOSPHERE=#{TOUR_ATMOSPHERE},
+		TOUR_SERVICE=#{TOUR_SERVICE}
+	where TOUR_NUM=#{TOUR_NUM}
+</update> 
+
+<!-- <delete id="delete" parameterType="board_coffee">
+	<![CDATA[
+		delete from COFFEE
+			where	TOUR_RE_REF = #{TOUR_RE_REF}
+			and		TOUR_RE_LEV >=#{TOUR_RE_LEV}
+			and 	TOUR_RE_SEQ >=#{TOUR_RE_SEQ}
+			and		TOUR_RE_SEQ <=(
+									nvl((SELECT min(TOUR_re_seq)-1
+										FROM	COFFEE
+										WHERE	TOUR_RE_REF=#{TOUR_RE_REF}
+										AND		TOUR_RE_LEV=#{TOUR_RE_LEV}
+										AND		TOUR_RE_SEQ>#{TOUR_RE_SEQ}),
+										(SELECT max(TOUR_re_seq)
+										FROM	COFFEE
+										WHERE	TOUR_RE_REF=#{TOUR_RE_REF} ))
+										)
+	 ]]>
+</delete>  -->
+
+
+<insert id="insert_deleteFile" parameterType="String">
+	insert into delete_file
+	values(#{file})
+</insert> 
+
+<!-- 삭제할 파일들의 목록을 구합니다. 
+	<select id="deleteFileList" resultType="String">
+		select TOUR_file from delete_file
+	</select> 
+	 -->
+	 <select id="list_map" parameterType="String" resultType="board_tour">
+			SELECT TOUR_NAME, AVG(TOUR_GRADE) TOUR_GRADE
+			FROM  BOARD_TOUR
+			WHERE TOUR_ADDRESS LIKE '%'||#{sido}||'%'
+			GROUP BY TOUR_NAME
+	 </select>
+	 
+	 <select id="detail_one" parameterType="String" resultType="board_tour">
+			SELECT * FROM BOARD_TOUR
+				WHERE TOUR_ADMIN = 
+						(SELECT MAX(TOUR_ADMIN) 
+							FROM BOARD_TOUR
+								WHERE TOUR_NAME = #{name}
+						)
+									AND TOUR_NUM= 
+									(SELECT MIN(TOUR_NUM)
+								 			FROM BOARD_TOUR
+												WHERE TOUR_ADMIN = 
+															(SELECT MAX(TOUR_ADMIN) 
+																FROM BOARD_TOUR
+																	WHERE TOUR_NAME = #{name}
+															)
+																		AND  TOUR_NAME = #{name}
+									)
+	 </select>
+	 
+	 <select id="isname" parameterType="String" resultType="String">
+	 		SELECT *FROM BOARD_TOUR
+	 		WHERE TOUR_ADMIN = 1
+	 			AND TOUR_NAME=#{TOUR_NAME}
+	 </select>
+</mapper>

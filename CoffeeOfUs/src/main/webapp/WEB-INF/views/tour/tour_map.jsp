@@ -5,8 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Story</title>
+<jsp:include page="../header.jsp">
+	<jsp:param name="num" value="<%=5%>" />
+</jsp:include>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script src="../resources/js/d3.min.js"></script>
+
+
+   <!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
 	.dg-map-area{
   float: left;
@@ -27,8 +40,117 @@ background: white;;
   float: left;
   height: 540px;
 }
+  .nav-sidebar{
+  	padding-top: 30px;
+  }
+  
+  .list_map_title{
+  			width: 100%;
+  	height: 40px;
+  	font-size: 13pt;
+  	background: black;
+  	color:white;
+  	text-align: center;
+  	padding-top: 8px;
+  }
+  .list_each{
+  	border: 1px solid black;
+  	height: 30px;
+  }
+  .list_map_left,  .list_map_right{
+  	height: 30px;
+  	font-size: 11pt;
+  	    padding-top: 3px;
+  	
+  }
+  .list_map_left{
+  	width: 70%;
+  	float: left;
+  }
+    .list_map_right{
+  	width: 30%;
+  	float: right;
+  	text-align: right;
+  }	
+  
+  .detail_map_img{
+  margin: 20px;
+   width: 190px;
+    height: 130px;
+     border: 1px solid black;
+  }
+  
+  /* sidbar */
+  
+  
+
+.sidebar {
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+	height: 100%;
+	overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+	display: block;
+	color: black;
+	padding: 20px;
+	position: relative;
+	top: 100px;
+	text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+	background-color: #37586f;
+	color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:not(.active ):hover {
+	background-color: #9e9e9e;
+	color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+	margin-left: 200px;
+	padding: 1px 16px;
+	height: 1000px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+	.sidebar {
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
+	.sidebar a {
+		float: left;
+	}
+	div.content {
+		margin-left: 0;
+	}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+	.sidebar a {
+		text-align: center;
+		float: none;
+	}
+}
 </style>
 <script>
+var result="${message}";
+if(result == 'exist'){
+	alert("이미 존재하는 게시글 입니다.")
+}
+
 $(".dg-map svg").mouseover(function(event) {
     var _path = event.target;
     var city_name = _path.id;
@@ -44,15 +166,14 @@ $(".dg-map svg").mouseover(function(event) {
   function go_branch(city_do) {
     var Arr = Array("sejong","chungnam","jeju","gyeongnam","gyeongbuk","jeonbuk","chungbuk","gangwon","gyeonggi","jeonnam","ulsan","busan","daegu","daejeon","incheon","seoul","gwangju");
     var strArr = Array("세종특별자치시","충청남도","제주특별자치도","경상남도","경상북도","전라북도","충청북도","강원도","경기도","전라남도","울산광역시","부산광역시","대구광역시","대전광역시","인천광역시","서울특별시","광주광역시");
-    //alert(city_do);
     var idx = Arr.indexOf(city_do);
-    
+	  $('#detail_map').hide();
+	  
     $('polyline').css("fill","white");//세종을제외한
     $('path').css("fill","white") //세종
     var mapCondition = strArr[idx];
     if (mapCondition == '세종특별자치시') {
       $('#sejong').css("fill", "#cbc3ac");
-      alert("세종!");
     }else if (mapCondition == '충청남도') {
       $('#chungnam').css("fill", "#cbc3ac");
     }else if (mapCondition =='제주특별자치도') {
@@ -88,34 +209,94 @@ $(".dg-map svg").mouseover(function(event) {
     }
     //alert(strArr[idx]);
     //location.href="./branches.php?stx="+strArr[idx];
-  }
+    	  $('#list_map').show();
+    $.ajax({
+			type : "get",
+			url : "list_map",
+			data : {"sido" : mapCondition, 
+			},
+			dataType:"json",
+			success : function(data){
+				//alert(JSON.stringify(data))
+				console.log(JSON.stringify(data))
+				$("#list_map").empty();
+				output= "";
+				output += "<div class='list_map_title'>" + data.sido +"</div>";
+				  $("#list_map").append(output);
+					$(data.list_map).each(function() {
+						output= "";
+					  output += "<div class='list_each'><div class='list_map_left' >"+ this.tour_NAME +"</div><div class='list_map_right'>"+this.tour_GRADE+"</div></div>";
+					  $("#list_map").append(output);
+				});//each function() end
+			}//success
+		})//ajax end
+  }//go_branch end
+  
+  //"#list_map"
+	  $(document).on("click",".list_map_left",function(e){
+		var etext = $(this).text();
+	  $('#detail_map').show();
+	  $("#detail_map").empty();
+		 
+	  $.ajax({
+			type : "get",
+			url : "list_map_detail_one",
+			data : {"name" : etext,
+			},
+			dataType:"json",
+			success : function(data){			
+					  output= "";	
+					   output += "<img class='detail_map_img' src='get_img?name="+data.list_map_detail.tour_FILE+"'>";
+					   output += "<div>"+data.list_map_detail.tour_SUBJECT+"</div>"
+					   output += "<div>"+data.list_map_detail.tour_CONTENT+"</div>"
+					  $("#detail_map").append(output);
+					  
+			}//success
+		})//ajax end
+	  
+	  
+	  })
+	  //컨텐츠 이외에  클릭했을때
+ $(document).click(function (e) {
+	 if(!$("#map_main").has(e.target).length){
+		 $('#list_map').hide();
+		  $('#detail_map').hide();
+		   $('polyline').css("fill","white");//세종을제외한
+		    $('path').css("fill","white") //세종
+		 
+	 }
+			 
+	  })
+
 
   /*가맹점 지도 색칠*/
   $(document).ready(function(){
-  
+	  $('#list_map').hide();
+	  $('#detail_map').hide();
+	  
+	  $("#add_admin").click(function(){
+		  location.href = "tour_board_write_admin";
+	  })
+	 
+	
   })
 </script>
 
 </head>
 <body>
-<jsp:include page="../header.jsp">
-		 <jsp:param name="num" value="<%= 123 %>"/>
-	</jsp:include>
-<h1 style="text-align: center;">Beans입니다.</h1>
-	 <section class="upcoming-classes spad">
-        <div class="container">
-         <div class="row">
-                 <div class="col-xs-12 col-sm-12 col-md-3">
-                	<ul>
-                		<li>취향 테스트</li>
-                		<li>커피 이야기</li>
-                		<li>커피 용어</li>
-                		<li>원두</li>
-                		<li>머신</li>
-                		<li>레시피</li>
-                	</ul>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-9">
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="sidebar">
+				<a class="active" href="tour_map">시 도 별지도</a> 
+				<a href="tour_board_list">투어 후기 리스트</a>
+
+			</div>
+		</div>
+		<div class="container calendar-container col-sm-7"
+			style="position: relative; left: -5%; margin-top:30px;">
+			
+			 <div id="map_main" style="width: 100%; height: 100%; z-index: 99">
+                <div style="text-align: center; margin-bottom: 50px;"><h2><b><font color="#ED4C6B">Tour_Map</font></b></h2></div>
                 	<div class="dg-map dg-map-in" style="float: left">
   <svg x="0" y="0" width="300" height="400" viewBox="0 0 800 1200" >
     <!-- Add the polygon element. -->
@@ -154,32 +335,22 @@ $(".dg-map svg").mouseover(function(event) {
     <path id="sejong" onclick="go_branch('sejong')" d="m 309.28023,486.01769 -7.03,-4.811 -3.025,-4.724 -1.554,-6.834 0.817,-7.381 0.736,-8.568 -5.314,-2.874 -6.213,-8.321 1.799,-5.547 -0.817,-7.454 -3.434,-3.467 2.289,-4.507 6.049,-0.347 11.608,7.281 5.722,-0.173 0.654,2.947 h 2.126 l -0.654,5.374 -3.597,2.6 1.635,4.161 2.616,3.294 v 5.547 l 4.414,1.907 5.632,2.508 2.271,2.85 -1.199,7.167 1.199,2.773 -2.734,1.624 0.676,5.695 -2.247,5.813 -4.905,5.374 -5.068,0.173 -2.452,-2.08 z"  style="fill:#ffffff;stroke:#c0c0c0"/>
   </svg>
 </div>
-<div style="width: 230px; height: 300px; float: left; border: 1px solid black">
-	<table>
-		<tr>
-			<th>강원도</th>
-		</tr>
-		<tr>
-			<td>카페피트</td>
-		</tr>
+<div style="width: 230px; height: 300px; float: left; border: 1px solid black" id="list_map">
 
-	</table>
 </div>
-<div style="width: 230px; height: 300px; float: left; margin-left:20px; border: 1px solid black">
-	<div style="margin: 20px; width: 190px; height: 130px; border: 1px solid black">img</div>
+<div style="width: 230px; height: 300px; float: left; margin-left:20px; border: 1px solid black" id="detail_map">
 	<div style="margin: 20px; text-align: center;">
-		<div>카페피트</div>
-		<div>open: 09:00~18:00</div>
+
 	</div>
-</div>
+</div><!-- detail map end -->
+					</div>
+					<button style="position: absolute; top:90%;left:100%" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
+		</div><!-- 7 end -->
+		
+			
+		
+	</div>
 
-
-                </div><!--  <div class="col-xs-12 col-sm-12 col-md-9"> -->
-         </div><!--     <div class="row"> end -->
-        </div><!-- container end -->
-     </section>
-     
-     <!-- footer -->
-     <jsp:include page="../footer.jsp" />
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>
