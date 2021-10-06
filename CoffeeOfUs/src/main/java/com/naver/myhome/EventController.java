@@ -78,7 +78,7 @@ public class EventController {
 		
 		logger.info("attend:" + attenddate);
 		AttendCheckMember member = eventservice.isCheck(id,attenddate);
-		
+	
 		HashMap<String,Object> map= new HashMap<String,Object>();
 		map.put("member",member);
 		return map;
@@ -86,29 +86,73 @@ public class EventController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/attendCount",method=RequestMethod.POST)
-	public  HashMap<String,Object> attendCount(@RequestParam("id") String id,
+	public  HashMap<String,Integer> attendCount(@RequestParam("id") String id,
 			@RequestParam("year") String year,
 			@RequestParam("month") String month){
-		 int nyear= Integer.parseInt(year);
-		 int nmonth=Integer.parseInt(month);
-		 String start="";
-		 String end="";
-		   if(nmonth<10) {
-			 start= nyear + "-" + "0"+nmonth + "-" +"01";			 
-			 end=  nyear + "-" + "0"+nmonth + "-" +"31";
-		   }else {
-			   start= nyear + "-" + nmonth + "-" +"01";			 
-				 end=  nyear + "-" + nmonth + "-" +"31";
-		   }
-		 logger.info("start:" + start);	
-		 logger.info("end:" + end);
-		int count = eventservice.attendCount(id,start,end);
+		if(Integer.parseInt(month)<10) {
+			month= "0"+ month;
+		}
+		
+		String date= year+"-"+month;
+		 logger.info("yearMonth:" + date);	
+		
+		int count = eventservice.attendCount(id,date);
 		
 		logger.info("count:" + count);
-		HashMap<String,Object> map= new HashMap<String,Object>();
+		HashMap<String,Integer> map= new HashMap<String,Integer>();
 		map.put("count",count);
 		return map;
 		
 	}
 	
+	
+	//roulette
+	
+	@RequestMapping(value = "/roulette")
+	//@RequestMapping(value="/wrtie",method=RequestMethod.GET)
+	public String rouletteGame(){
+		return "event/roulette";    
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getRandomNum",method=RequestMethod.POST)
+	public  HashMap<String,Integer> getRandomNum(@RequestParam("id") String id,
+			@RequestParam("point") int rpoint){
+	
+		int num =0;
+		int point=0;
+		num=(int)(Math.random()*100+1);
+		if(num>6&&num<34) {
+			num=1;
+			point=rpoint + 10;		
+		}else if(num>50&&num<64) {
+			num=2;
+			point=rpoint+20;
+		}else if(num>65&&num<79) {
+			num=3;
+			point=rpoint+30;
+		}else if(num>80&&num<90) {
+			num=4;
+			point=rpoint+50;
+		}else if(num>91&&num<95){
+			num=5;
+			point=rpoint+80;
+		}else if(num>35&&num<49){
+			num=6;
+			point=rpoint+15;
+		}else if(num>0&&num<5){
+			num=7;
+			point=rpoint;
+		}else if(num>96&&num<101){
+			num=8;
+			point=rpoint+100;
+		}
+		int a=eventservice.addPoint(id,point);
+		logger.info("addPoint="+a);
+		
+		HashMap<String,Integer> map= new HashMap<String,Integer>();
+		map.put("rnum",num);	
+		return map;
+		
+  }	
 }
