@@ -12,7 +12,9 @@ public interface EventService {
 
 	public  AttendCheckMember  isCheck(String id,String attenddate);
 
-	public int attendCount(String id, String start,String end);
+	public int attendCount(String id, String date);
+
+	public int addPoint(String id, int point);
 
 }
  
