@@ -45,5 +45,24 @@
 		    최대 업로드 가능한 바이트 크기, -1은 제한이 없음을 의미, 기본값은 -1 -->
 		
 		
+		<!-- 회원가입 메일 인증 -->
+		<!-- 프로퍼티 파일을 이용해서 값을 주입하는 방법 
+	      <util:properties>를 이용해서 properties 타입의 빈으로 만듭니다.  -->
+    <util:properties id="mailinfo" location="classpath:pro/mail.properties"/>
+    <!--  ${mailinfo['id']}
+             mailinfo 빈에서 키(id)의 값을 가져옵니다.
+     -->    
+     <bean id="mailSender"
+        class="org.springframework.mail.javamail.JavaMailSenderImpl">
+           <property name="host" value="smtp.naver.com"/>
+           <property name="port" value="587" />
+           <property name="username" value="#{mailinfo['id']}"/>
+           <property name="password" value="#{mailinfo['password']}"/>
+           <property name="javaMailProperties">
+                <props> <prop key="mail.smtp.auth">true</prop>
+           </props>
+           </property> 
+        </bean>
+		
 		
 </beans>

@@ -12,15 +12,32 @@
 <script> 
 
 $(function() {
-	$(".change_member_info").click(function() {
-		location.href = "${pageContext.request.contextPath}/member/change_member_info";   //controller주소
+	$(".update").click(function() {
+		location.href = "${pageContext.request.contextPath}/member/update?id=${id}";   //controller주소
 	});
 })
 $(function() {
 	$(".change_pass").click(function() {
-		location.href = "${pageContext.request.contextPath}/member/changepass";   //controller주소
+		location.href = "${pageContext.request.contextPath}/member/changepass?id=${id}";   //controller주소
 	});
 })
+$(function() {
+	$(".dropbtn").click(function() {
+		location.href = "${pageContext.request.contextPath}/member/drop_member?id=${id}";   //controller주소
+	});
+})
+
+/* //이미지 보기
+ $(function preview(e){
+	var reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = function(e){
+		
+	}
+} */ 
+
+
+
 
 </script>
 <style>
@@ -36,27 +53,35 @@ $(function() {
 		<h3 class="titlefont">회원 정보</h3>
 		<div class="input_wrp">
 			<div class="comtext">사용자 ID</div>
-			   <div class="show">${m.USER_ID}</div><%-- Member.java클래스의 getUSER_ID()메서드 호출 --%>
+			<div class="infotext">${m.USER_ID}</div>
+			   <div class="showinfo"></div><%-- Member.java클래스의 getUSER_ID()메서드 호출 --%>
 			<div class="comtext">별 명</div>
-			   <div class="show">${m.USER_NICKNAME}</div>
+			<div class="infotext">${m.USER_NICKNAME}</div>
+			   <div class="showinfo"></div>
 			<div class="comtext">이메일 주소</div>
-			   <div class="show">${m.USER_EMAIL}</div>
+			<div class="infotext">${m.USER_EMAIL}</div>
+			   <div class="showinfo"></div>
 			<div class="comtext">주 소</div>
-			   <div class="showsujo">${m.USER_ADDRESS}</div>
+			<div class="infotext">${m.USER_ADDRESS}</div>
+			   <div class="showinfojuso"></div>
 			<div class="comtext">연 락 처</div>
-			   <div class="show">${m.USER_PHONE}</div>
+			<div class="infotext">${m.USER_PHONE}</div>
+			   <div class="showinfo"></div>
 			<div class="comtext">프로필 사진</div>
-			   <div class="showimg">${m.USER_IMG}</div>
+			<img src="get_img?name=${m.USER_FILE}" alt="user_image"  class="user_image">
+			
+			
+			   <div class="showinfoimg"></div>
 		</div>
 			
 			
 			
 
 	<div class="clearfix">
-       <button type='reset' class="cancelbtn">← 취소</button>
-	   <button type='button' class="change_member_info">회원정보 변경</button>
+       <button type='reset' class="cancelbtn" onClick="history.go(-1)">← 취소</button>
+	   <button type='button' class="update">회원정보 변경</button>
 	   <button type='button' class="change_pass">비밀번호 변경</button>
-	   <button type='submit' class="submitbtn">탈퇴</button>
+	   <button type='button' class="dropbtn">탈퇴</button>
 	</div>
 	
 	</form>

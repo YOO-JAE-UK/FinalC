@@ -57,7 +57,8 @@
 		</div>
 
 	<div class="clearfix">
-       <button type='reset' class="cancelbtn">← 취소</button>
+       <button type='reset' class="cancelbtn"
+       			onClick="history.go(-1)">← 취소</button>
 	   <button type='submit' class="submitbtn">등록</button>
 	</div>
 	

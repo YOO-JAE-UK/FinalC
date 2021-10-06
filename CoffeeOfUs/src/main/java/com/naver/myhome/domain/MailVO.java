@@ -1,10 +1,10 @@
 package com.naver.myhome.domain;
 
 public class MailVO {
-	private String from="2021234@naver.com"; //�������� ���̹� ���̵� 
+	private String from="coffee_project@naver.com"; //인증받은 네이버 아이디 
 	private String to;
-	private String subject="ȸ�� ������ ���ϵ帳�ϴ�. - ����";
-	private String content="ȸ�� ������ ���ϵ帳�ϴ�. - ����";
+	private String subject="Coffee Of Us 회원 가입 인증 메일입니다. ";
+	private String content="회원 가입을 축하드립니다. 로그인 하세요. ";
 	
 	
 	public String getFrom() {
