@@ -1,8 +1,25 @@
 package com.naver.myhome.domain;
 
 public class AttendCheckMember {
-	String id;
-	String attenddate;
+	private String id;
+	private String attenddate;
+	private String status;
+	private int   point;
+	
+	
+	
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getId() {
 		return id;
 	}

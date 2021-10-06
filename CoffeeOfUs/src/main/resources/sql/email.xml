@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Email">
+
+<insert id="emailinsert" parameterType="Map">
+   insert into email (id, email, emailkey)
+   values(#{id}, #{user_email}, #{key})
+</insert>
+
+<select id="emailverify" resultType="email" parameterType="Map" >
+   select * from email
+   where email = #{email} and emailkey = #{key} 
+</select>
+
+<update id="updateKey" parameterType="String">
+   update  email set keycheck = 1 
+   where email = #{email}
+</update>
+
+<select id="verifyKeyCheck" parameterType="String" resultType="email">
+   select * from email where id=#{id} and keycheck=1 
+
+</select>
+
+</mapper>

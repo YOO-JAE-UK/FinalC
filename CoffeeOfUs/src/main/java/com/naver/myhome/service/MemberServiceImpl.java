@@ -1,4 +1,3 @@
-//210907.화
 package com.naver.myhome.service;
 
 import java.util.HashMap;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.dao.MemberDAO;
+import com.naver.myhome.domain.Email;
 import com.naver.myhome.domain.Member;
 
 @Service
@@ -26,10 +26,18 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int isEmail(String email) {
-		Member rmember = dao.isId(email);
+		Member rmember = dao.isEmail(email);
 		return (rmember==null) ? -1 : 1;  //-1은 이메일이 존재하지 않는 경우
 										  //1은 이메일이 존재하는 경우
 	}
+	
+	@Override
+	public int isNickname(String nickname) {
+		Member rmember = dao.isNickname(nickname);
+		return (rmember==null) ? -1 : 1;  //-1은 닉네임이 존재하지 않는 경우
+										  //1은 닉네임이 존재하는 경우
+	}
+
 
 	@Override
 	public int insert(Member m) {
@@ -89,6 +97,37 @@ public class MemberServiceImpl implements MemberService {
 			map.put("search_word", "%" + search_word + "%");
 		}
 		return dao.getSearchListCount(map);
+	}
+
+	@Override
+	public int email_insert(String id,String user_email, String key) {
+		
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("user_email", user_email);
+		map.put("key", key);
+		map.put("id", id);
+		return dao.insert_email(map);
+		
+	}
+
+	@Override
+	public Email emailverify(String email, String key) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("email", email);
+		map.put("key", key);
+		return dao.emailverify(map);
+	}
+
+	@Override
+	public void updateKey(String email) {
+		dao.updateKey(email);
+		
+	}
+
+	@Override
+	public int verifyKeyCheck(String id) {
+		Email email=dao.verifyKeyCheck(id);
+		return (email != null) ? 1 : 0;
 	}
 
 	

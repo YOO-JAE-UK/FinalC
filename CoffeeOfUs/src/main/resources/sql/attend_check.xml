@@ -6,7 +6,7 @@
 <mapper namespace="attend_check">
 	
  <insert id="insert" parameterType="String" >
-   insert into attend_check values(#{id},TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+   insert into attend_check (id,attenddate) values(#{id},TO_CHAR(SYSDATE,'YYYY-MM-DD'))
  
  
  </insert>
@@ -17,13 +17,19 @@
  </select>
  
  <select id="isCheck" parameterType="Map" resultType="attend_check_member">
-    select * from attend_check where id=#{id} and attenddate=#{attenddate}
+    select * from attend_check where id=#{id} and TO_CHAR(attenddate,'YYYY-MM-DD')= #{attenddate}
      
  </select>
  
  <select id="attendCount" parameterType="Map" resultType="int">
     select count(*) from attend_check where id=#{id} and 
-       attenddate between #{start} and #{end}
+      TO_CHAR(attenddate,'YYYY-MM') = #{date}
      
  </select>
+ <update id="addPoint" parameterType="Map">
+     update ATTEND_CHECK set status='Y', point= point where id=#{id} 
+     
+     and attenddate=TO_CHAR(sysdate,'YYYY-MM-DD')
+ 
+ </update>
 </mapper>

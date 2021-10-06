@@ -35,5 +35,10 @@ public class eventDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("attend_check.attendCount",map);
 	}
+
+	public int addPoint(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("attend_check.addPoint",map);
+	}
 	
 }
