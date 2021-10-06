@@ -5,7 +5,6 @@
 <head>
 <title>Find Id/Pw</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-
 <link href="${pageContext.request.contextPath }/resources/css/login.css"
 	type="text/css" rel="stylesheet">
 	
@@ -13,7 +12,7 @@
 <% String num = request.getParameter("num");%>
 var i1=<%=num%>;
 	//alert(i1+"i의 값");
-	
+	var mailresult="${mailresult}"
 	var result = "${result}";
 	if (result == 'joinSuccess') {
 		alert("회원가입을 축하합니다.")
@@ -21,6 +20,11 @@ var i1=<%=num%>;
 		alert("비밀번호가 일치하지 않습니다.")
 	} else if (result == '-1') {
 		alert("아이디가 존재하지 않습니다.")
+	}  else if (result == 'emailSuccess'){
+		alert("회원가입 이메일이 전송되었습니다. 확인해주세요.")
+	} else if(mailresult=='0'){
+		alert("메일 링크를 클릭하여 메일 인증을 해주세요.")
+		
 	}
 
 	$(function() {
@@ -74,7 +78,7 @@ var i1=<%=num%>;
 	<div class="naverlogin">
 	   <button type="button" class="naverloginbtn" >네이버 아이디로 로그인</button>
 	</div>
-	<a href="${pageContext.request.contextPath}/member/member_info" 
+	<a href="${pageContext.request.contextPath}/member/findId" 
 	   style="color:black" id="findtext">ID/PW찾기</a>   
 </form>
 

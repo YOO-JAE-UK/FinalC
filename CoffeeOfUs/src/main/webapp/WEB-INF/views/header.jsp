@@ -50,22 +50,26 @@
 	.cus1{
 		color: white;
 		position :absolute;
-		top: 30px;
 		right: 70px;
-		font-size: 13px;
+		font-size: 15px;
 		width:140px;
+		margin-top: 20px;
 	}
 .cus2{
  border: 1px solid white;
  color: white;
  border-radius: 3px;
  margin-right: 10px;
- font-size: 13px;
+ font-size: 15px;
  width: 40px;
  text-align: center;
  position : absolute;
- top:27px;
  right: 5px;
+ margin-top: 16px;
+}
+#navbardrop{
+ margin-top: 27px;
+ font-size: 11pt;
 }
 	li{
 		list-style: none;
@@ -160,8 +164,8 @@ $(document).ready(function(){
                              <ul style="float: right;">
                               <li> <a href="${pageContext.request.contextPath}/member/logout" 
 	                        	        class="cus1">${id} 님(로그아웃)</a> </li>
-	                           <li> <a href="${pageContext.request.contextPath}/member/member_info" 
-	                        	        class="cus2">My</a> </li>
+	                           <li> <a href="${pageContext.request.contextPath}/member/member_info?id=${id}" 
+	                        	        class="cus2" >My</a> </li>
                               
                                  <c:if test="${id=='admin'}">
                               <!-- Dropdown -->
@@ -170,7 +174,7 @@ $(document).ready(function(){
                                  data-toggle="dropdown"> 관리자 </a>
                                  <div class="dropdown-menu">
                                  <ul>
-                                    <li><a class="dropdown-item" href="#">회원정보</a></li>
+                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/list">회원정보</a></li>
                                     <li><a class="dropdown-item" href="#">게시판</a></li>   
                                  </ul>
                                     
@@ -195,7 +199,8 @@ $(document).ready(function(){
                     
                     <div class="col-lg-12 col-md-12">
                         <div style="text-align: center; height: 70px;">
-                               <a href="${pageContext.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""  width="200px" height="70px"></a>
+                               <a href="${pageContext.request.contextPath}/main/main">
+                               <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""  width="200px" height="70px"></a>
                         
                         
                         </div>
@@ -245,10 +250,8 @@ $(document).ready(function(){
                                 </li>
                                 <li class="tour"><a href="#">투어</a>
                                     <ul class="dropdown">
-                                        <li><a href="./classes-details.html">Classes Details</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                        <li><a href="./pricing.html">Pricing</a></li>
-                                        <li><a href="./faq.html">Faq</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/tour/tour_map">시 도별 지도</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/tour/tour_board_list">투어 후기리스트</a></li>
                                     </ul>
                                 </li>
                             </ul>

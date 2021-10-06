@@ -14,53 +14,57 @@
 	select * from member where user_email = #{email}
 </select>
 
+<!-- 닉네임 체크 -->
+ <select id ="nicknamecheck" resultType="member" parameterType="String">
+	select * from member where user_nickname = #{nickname}
+</select>
+
 <!--  -->
 <insert id="insert" parameterType="member">
 
-		insert into member
+		insert into member(USER_ID, USER_PASS, USER_NAME, 
+		            USER_NICKNAME, USER_EMAIL, USER_ADDRESS_POST, USER_ADDRESS,
+		            USER_PHONE, USER_IMG, USER_CHECK)
 		values
 		(#{USER_ID},#{USER_PASS},#{USER_NAME},
-		 #{USER_NICKNAME},#{USER_EMAIL},#{USER_ADDRESS},
-		 #{USER_PHONE},#{USER_IMG})
+		 #{USER_NICKNAME},#{USER_EMAIL},#{USER_ADDRESS_POST},#{USER_ADDRESS},
+		 #{USER_PHONE},#{USER_IMG}, '0')
 
-</insert>
+</insert>  
 
+<delete id="delete" parameterType="String">
+   delete from member where USER_ID = #{id}
+</delete>
 
-<!-- 패스워드 체크 -->
-<!--  <select id ="passcheck" resultType=""
--->
-
-<!-- 아이디 중복 체크 -->
-
-
-
-
-
-
-
-
-<!--
+<!--            마이바티스 환경설정에서 정한 member
+<update id="update" parameterType="member">
+   update member
+   set USR_NAME = #{name}, age = #{age} ,
+        gender = #{gender} , email = #{email}
+   where id = #{id}        
+</update> -->
 
 
+
+<!--관리자 회원 목록 보기  -->
 <select id="getSearchList" parameterType="map" resultType="member">
 
 	select * 
 	from (select rownum rnum, b.*
 			from (select *
 			       from member
-			     where id !='admin'
+			     where USER_ID !='admin'
 				  <include refid="search_"/>
-				order by id
+				order by USER_ID
 			)b	
 	)
 	where rnum &gt;=#{start} and rnum  &lt;= #{end}
 </select>
 
- 파마미터 타입은 DAO에서 두번째  리졸트타입은 DAO에서 반환형           
 <select id="searchCount" parameterType="map" resultType="int">
-   select count(*)
-   from member
-   where id != 'admin'
+    select count(*)
+    from member
+    where USER_ID != 'admin'
    <include refid="search_"/>
 </select>
 
@@ -70,25 +74,19 @@
 		<choose>
 		   <when test="search_field=='id'">id</when>
 		   <when test="search_field=='name'">name</when>
-		   <when test="search_field=='age'">age</when>
+		   <when test="search_field=='nickname'">nickname</when>
 		   <when test="search_field=='gender'">gender</when>
 	    </choose>
 	     like #{search_word}
    </if>
 </sql>
 
-<delete id="delete" parameterType="String">
-  delete from member where id = #{id}
-</delete>
 
-           마이바티스 환경설정에서 정한 member
-<update id="update" parameterType="member">
-  update member
-  set name = #{name}, age = #{age} ,
-       gender = #{gender} , email = #{email}
-  where id = #{id}        
-</update>
- -->
+
+
+
+
+
 
 
 

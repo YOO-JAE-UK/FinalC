@@ -4,110 +4,95 @@
 	padding-bottom:10px;
 	font-size: 30px;
 }
-#wap{
-	margin: 5px 0 0 0;
-}
-#id{
-	margin: 0 0 0 0;
-	padding: 17px;
-    font-size: 13px;
-}
-#pw1, #pw2{
-	margin: 0 0 0 0;
-}
+
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box}
 
-#message, #pass1, #pass2{
-	margin: 0 0 0 8px;
+#emem{
+	margin: 0 0 0 -132px;
 }
-
+ 
 .nice-select{
  display:none !important;
 } 
 
-#email{
-	margin: 0px 2px 0px 0px;
-	background-color:white !import
+#idcheck{
+    padding: 3px 13px;
+    border: 1px solid lightgrey;
+    cursor: pointer; 
+    width: 13%;
+    float: right;
 }
-#nickname_message{
-	margin: 0 0 10px 0;
+#email, #domain{
+	margin: 5px 0 5px 0px;
 }
+	
 #email_message{
 	margin: 0 0 15px 10px;
-}
-#tel_message{
-	margin: 0 0 15px 10px;
-}
-#inputtel{
-	margin: 0px 0 -20px 0;
 }
 
 #postcode{
     float: right;
-    width:54px;
-    height: 27px;
+    width:73px;
+    height: 25px;
 }
  
 #idtext{
 	float:left;
-	width:75%;
-	margin: 1px 8px -3px 15px;
-	font-size:14px;
+	width:20%;
+	margin: 0 0 -15px 15px;
 }
- #addtext, #imgtext{
-	margin: -14px 0 -29px 15px;
-	font-size:14px;
+ #addtext{
+	margin: -15px 0 -20px 15px;
 }
-#teltext{
-	margin: 5px 0 -7px 10px;
-	font-size:14px;
-} 
-
+#teltext, #imgtext{
+	margin: -14px 0 -5px 16px;
+	width: 83%;
+}
 #mailtext{
-	margin: -14px 0 0 19px;
-	font-size:14px;
+	margin: -16px 0 0 15px;
 }
 #nicktext {
-	margin: -16px 0 0 19px;
-	font-size:14px;
+	margin: -16px 0 0 15px;
 }
-#imgtext{
-	margin: -13px 0 0 19px;
-	font-size:14px;
-} 
 .nickinput {
-	margin: 0 0 0 0;
+	margin: 0 0 20px 0;
 	width: 100%;
 	height: 40px;
 	padding: 10px;
 	font-size: 13px;
 }
-
+#add_wap{
+	margin: -10px 0 5px 0;
+}
 
 #post1{
 	padding:3px;
-	margin:0 10px 3px 390px;
-	width: 20%;
-	text-align: center;
+	margin:0 1px 0 367px;
+	width: 21%;
 }
 
 .user_image_choice{
-	margin: 0px 0 10px -26px;
+	margin: 17px 0 10px -13px;
+}
+#tel_wap{
+	margin: 0 0 7px 0;
 }
 #img_wap{
-    margin :-10px 0px 0px 0px;	
-}	
-
+	margin: 20px 0 7px 0;
+}
 
 
 input{border-radius:3px;border:1px solid lightgray}
 .tx, input[type=password] {
     width: 100%;
     padding: 10px;
-    margin: 1px 0 22px 0;
+    margin: 5px 0 22px 0;
     display: inline-block;
     font-size: 13px;
+}
+#tel_1, #tel_2, #tel_3{
+	margin: 0 0 0 0;
 }
 
 input[type=radio]{
@@ -160,9 +145,10 @@ button:focus{
   padding: 5px;
 }
 
-#joinform {
+#update {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid lightgray;
     width: 600px; /* Could be more or less, depending on screen size */
     padding: 16px;
 	font-family: "DM Sans", sans-serif; 	  
@@ -178,7 +164,7 @@ b + div{width: 100%;
     margin: 5px 0 22px 0;
     display: inline-block;
     border: none;
-    }
+    background: #f1f1f1;}
 
 /* Clear floats */
 .clearfix::after {
@@ -192,19 +178,19 @@ h1{
 }
 
 b {
+	width: 70%;
 	display: block
 }
 
-span{
-	display:inline-block;
-	margin-top:-20px;
-	font-size:10px
-	
-}
+span{display:inline-block;margin-top:-20px;font-size:10px}
 
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
     .cancelbtn, .signupbtn {
        width: 100%;
     }
+    
+input{
+	font-size: 15px;
+}    
 }

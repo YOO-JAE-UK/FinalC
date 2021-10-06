@@ -18,8 +18,15 @@ public class Member {
 	private String USER_IMG;
 	private String USER_CHECK;
 	private String USER_LASTLOGIN;
+	private String USER_FILE;
 	
 	
+	public String getUSER_FILE() {
+		return USER_FILE;
+	}
+	public void setUSER_FILE(String uSER_FILE) {
+		USER_FILE = uSER_FILE;
+	}
 	public String getUSER_ID() {
 		return USER_ID;
 	}
