@@ -17,28 +17,34 @@
 	  	 (public String getCOFFEE_NUM() {return COFFEE_NUM;})
 	  	 
 		 -->
-<!-- <insert id="insert" parameterType="board_coffee">
+ <insert id="insert" parameterType="board_coffee">
 	<selectKey resultType="int" order="BEFORE"
 				keyProperty="COFFEE_NUM">
 			select nvl(max(COFFEE_NUM),0)+1 from COFFEE
 	</selectKey>
 	insert into COFFEE
 	(COFFEE_NUM,
-	 COFFEE_NAME, COFFEE_PASS, COFFEE_SUBJECT, 
+	 COFFEE_PASS, COFFEE_SUBJECT, USER_ID, USER_NICKNAME,
 	 COFFEE_CONTENT, COFFEE_FILE, COFFEE_ORIGINAL,
-	  COFFEE_RE_REF,
-	   COFFEE_RE_LEV, COFFEE_RE_SEQ, COFFEE_READCOUNT,
-	   COFFEE_DATE)
+	 COFFEE_DATE, COFFEE_READCOUNT, COFFEE_RE_REF,
+	   COFFEE_RE_LEV, COFFEE_RE_SEQ)
 		values
 		(#{COFFEE_NUM},
-		 #{COFFEE_NAME}, #{COFFEE_PASS}, #{COFFEE_SUBJECT},
+		 #{COFFEE_PASS}, #{COFFEE_SUBJECT}, #{USER_ID},#{USER_NICKNAME}, 
 		 #{COFFEE_CONTENT}, #{COFFEE_FILE, jdbcType=VARCHAR},
 		 #{COFFEE_ORIGINAL, jdbcType=VARCHAR},
-		 #{COFFEE_NUM},
-		 #{COFFEE_RE_LEV}, #{COFFEE_RE_SEQ}, #{COFFEE_READCOUNT},
-		 sysdate)
-</insert> -->
-
+		  sysdate, #{COFFEE_READCOUNT}, 
+		  #{COFFEE_NUM}, 0, 0
+		)
+</insert>
+<!-- values
+		(#{COFFEE_NUM},
+		 #{COFFEE_PASS}, #{COFFEE_SUBJECT},#{USER_ID},#{USER_NICKNAME}
+		 #{COFFEE_CONTENT}, #{COFFEE_FILE, jdbcType=VARCHAR},
+		 #{COFFEE_ORIGINAL, jdbcType=VARCHAR},
+		  sysdate, #{COFFEE_READCOUNT}, 
+		  #{COFFEE_NUM}, #{COFFEE_RE_LEV}, #{COFFEE_RE_SEQ}
+		) -->
 <select id="count" resultType="int">
 	select count(*)from COFFEE
 </select>
@@ -74,7 +80,7 @@
 
 </select> 
 
-<!-- <update id="readCountUpdate" parameterType="int">
+<update id="readCountUpdate" parameterType="int">
 	update 	COFFEE
 	set		COFFEE_READCOUNT=COFFEE_READCOUNT+1
 	where	COFFEE_NUM=#{number}
@@ -85,35 +91,41 @@
 	COFFEE where COFFEE_NUM = #{number}
 </select>
 
-<update id="reply_update" parameterType="board_coffee">
+  <update id="reply_update" parameterType="board_coffee">
 	update 	COFFEE
 	set		COFFEE_RE_SEQ=COFFEE_RE_SEQ+1
 	where	COFFEE_RE_REF=#{COFFEE_RE_REF}
 	and		COFFEE_RE_SEQ <![CDATA[ > ]]> #{COFFEE_RE_SEQ}
-</update>
+</update> 
 
-COFFEE_FILE, COFFEE_ORIGINAL 필드 없어요
-<insert id="reply_insert" parameterType="board_coffee">
+<!-- COFFEE_FILE, COFFEE_ORIGINAL 필드 없어요 -->
+ <insert id="reply_insert" parameterType="board_coffee">
 	<selectKey resultType="int" order="BEFORE" keyProperty="COFFEE_NUM">
 		select nvl(max(COFFEE_NUM),0)+1 from COFFEE
 	</selectKey>
 	insert into COFFEE
-	(COFFEE_NUM,COFFEE_NAME,COFFEE_PASS, COFFEE_SUBJECT,
-	COFFEE_CONTENT, COFFEE_RE_REF, COFFEE_RE_LEV, COFFEE_RE_SEQ,
-		COFFEE_READCOUNT, COFFEE_DATE)
-		values(#{COFFEE_NUM},
-		#{COFFEE_NAME}, #{COFFEE_PASS}, #{COFFEE_SUBJECT},
-	#{COFFEE_CONTENT}, #{COFFEE_RE_REF}, #{COFFEE_RE_LEV},
-	#{COFFEE_RE_SEQ}, #{COFFEE_READCOUNT},sysdate)
-</insert>
+	(COFFEE_NUM,
+	 COFFEE_PASS, COFFEE_SUBJECT, USER_ID, USER_NICKNAME,
+	 COFFEE_CONTENT, COFFEE_FILE, COFFEE_ORIGINAL,
+	 COFFEE_DATE, COFFEE_READCOUNT, COFFEE_RE_REF,
+	   COFFEE_RE_LEV, COFFEE_RE_SEQ)
+		values
+		(#{COFFEE_NUM},
+		 #{COFFEE_PASS}, #{COFFEE_SUBJECT}, #{USER_ID},#{USER_NICKNAME}, 
+		 #{COFFEE_CONTENT}, #{COFFEE_FILE, jdbcType=VARCHAR},
+		 #{COFFEE_ORIGINAL, jdbcType=VARCHAR},
+		  sysdate, #{COFFEE_READCOUNT}, 
+		  #{COFFEE_RE_REF}, #{COFFEE_RE_LEV}, #{COFFEE_RE_SEQ}
+		)
+</insert> 
 
-<select id="boardWriter" parameterType="map" resultType="board_coffee">
+ <select id="boardWriter" parameterType="map" resultType="board_coffee">
 	select * from COFFEE
 	where	 COFFEE_NUM=#{num}
 	and		 COFFEE_PASS=#{pass}
 </select>
 
-<update id="modify" parameterType="COFFEE">
+ <update id="modify" parameterType="board_coffee">
 	update COFFEE
 	set
 		COFFEE_SUBJECT=#{COFFEE_SUBJECT},
@@ -121,9 +133,9 @@ COFFEE_FILE, COFFEE_ORIGINAL 필드 없어요
 		COFFEE_FILE=#{COFFEE_FILE, jdbcType=VARCHAR},
 		COFFEE_ORIGINAL=#{COFFEE_ORIGINAL, jdbcType=VARCHAR}
 	where COFFEE_NUM=#{COFFEE_NUM}
-</update>
+</update> 
 
-<delete id="delete" parameterType="board_coffee">
+<!-- <delete id="delete" parameterType="board_coffee">
 	<![CDATA[
 		delete from COFFEE
 			where	COFFEE_RE_REF = #{COFFEE_RE_REF}
@@ -140,17 +152,17 @@ COFFEE_FILE, COFFEE_ORIGINAL 필드 없어요
 										WHERE	COFFEE_RE_REF=#{COFFEE_RE_REF} ))
 										)
 	 ]]>
-</delete> -->
+</delete>  -->
 
-<!-- 
-<insert id="insert_deleteFile" parameterType="String">
+
+<!-- <insert id="insert_deleteFile" parameterType="String">
 	insert into delete_file
 	values(#{file})
-</insert>
+</insert> -->
 
-삭제할 파일들의 목록을 구합니다.
+<!-- 삭제할 파일들의 목록을 구합니다. 
 	<select id="deleteFileList" resultType="String">
 		select COFFEE_file from delete_file
 	</select> 
-	-->
+	 -->
 </mapper>
