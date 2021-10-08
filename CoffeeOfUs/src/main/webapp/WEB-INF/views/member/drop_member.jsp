@@ -21,7 +21,7 @@
 <jsp:include page="../header.jsp"></jsp:include>
 
 
-	<form name="drop_member" action="${pageContext.request.contextPath }/member/drop_member"
+	<form name="drop_member" id="drop_member" action="${pageContext.request.contextPath }/member/drop_member"
 		method="get">
 		<h3 class="titlefont">회원 탈퇴</h3>
 		<div class="input_wrp">

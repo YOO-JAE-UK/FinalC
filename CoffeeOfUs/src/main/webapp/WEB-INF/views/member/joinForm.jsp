@@ -23,7 +23,10 @@ var i1=<%=num%>;
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 
-    <form name="joinfrom" id="joinform" action="${pageContext.request.contextPath }/member/joinProcess" method="post">
+    <form name="joinfrom" id="joinform" 
+    action="${pageContext.request.contextPath }/member/joinProcess" 
+    method="post"
+    enctype="multipart/form-data" >
         <h1 class="titlefont">회원가입</h1>
         
         <div id="wap">
@@ -99,7 +102,7 @@ var i1=<%=num%>;
 		<b id="imgtext">프로필 사진</b>
 		   <div class="imgcontainer">
 			<label for="user_image" class="user_image" id="imgtext"> 
-			   <input type="file" name="USER_IMG" class="user_image_choice"
+			   <input type="file" name="uploadfile" class="user_image_choice"
 				      accept="image/gif, image/jpeg, image/png" >
 				<img id="user_image" src="resources/image/default.png" alt="image" 
 				      width="130" height="130" class="avatar">

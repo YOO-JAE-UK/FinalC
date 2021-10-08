@@ -43,7 +43,7 @@ var i1=<%=num%>;
 <jsp:include page="../header.jsp"></jsp:include>
 
 
-<form name="loginform" action="${pageContext.request.contextPath }/member/loginProcess"
+<form name="loginform" id="loginform" action="${pageContext.request.contextPath }/member/loginProcess"
 	method="post">
 <h3 class="loginfont">L O G I N</h3>
 	<div class="input_wrp">

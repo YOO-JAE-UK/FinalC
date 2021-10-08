@@ -48,7 +48,7 @@ $(function() {
 <jsp:include page="../header.jsp"></jsp:include>
 
  <c:set var="m" value="${memberinfo}"/>
-	<form name="member_info" action="${pageContext.request.contextPath }/member/member_info"
+	<form name="member_info" id="member_info" action="${pageContext.request.contextPath }/member/member_info"
 		method="get">
 		<h3 class="titlefont">회원 정보</h3>
 		<div class="input_wrp">
@@ -69,7 +69,6 @@ $(function() {
 			   <div class="showinfo"></div>
 			<div class="comtext">프로필 사진</div>
 			<img src="get_img?name=${m.USER_FILE}" alt="user_image"  class="user_image">
-			
 			
 			   <div class="showinfoimg"></div>
 		</div>

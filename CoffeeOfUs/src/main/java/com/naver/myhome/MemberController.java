@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -17,14 +18,17 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -63,7 +67,11 @@ public class MemberController {
 	
 	  @Autowired 
 	  private SendMail sendMail;
-	 
+	  
+	  //savefolder.properties에서 작성한 savefoldername 속성의 값을 String svaeFolder에 주입합니다.
+	  @Value("${savefoldername}")
+	  private String saveFolder;
+	  
 
 	/*
 	 * @CookieValue(value="saveid", required=false) Cookie readCookie 
@@ -140,59 +148,150 @@ public class MemberController {
 	
 	
 	// 회원가입처리
-	@RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
-	public String joinProcess(Member member, 
-	   @RequestParam("tel_1") String tel1,
-	   @RequestParam("tel_2") String tel2,
-	   @RequestParam("tel_3") String tel3,
-	   RedirectAttributes rattr, 
-	   Model model, 
-	   HttpServletRequest request) throws Exception {
+		@RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
+		public String joinProcess(Member member, 
+		   @RequestParam("tel_1") String tel1,
+		   @RequestParam("tel_2") String tel2,
+		   @RequestParam("tel_3") String tel3,
+		   RedirectAttributes rattr, 
+		   Model model, 
+		   HttpServletRequest request) throws Exception {
+			
+			MultipartFile uploadfile = member.getUploadfile();
+			
+			if(!uploadfile.isEmpty()) {
+				String fileName = uploadfile.getOriginalFilename();//원래 파일명
+				member.setUSER_IMG(fileName);//원래 파일명 저장
+				String saveFolder = 
+						request.getSession().getServletContext().getRealPath("resources")
+						+ "/upload/";
+				String fileDBName = fileDBName(fileName, saveFolder);
+				logger.info("fileDBName = " + fileDBName);
+				
+				// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+				uploadfile.transferTo(new File(saveFolder + fileDBName));
+				
+				// 바뀐 파일명으로 저장
+				member.setUSER_FILE(fileDBName);
+			}
+			
+			
+			
+			String user_phone=tel1+"-" + tel2+"-"+tel3;
+			
+			member.setUSER_PHONE(user_phone);
+			//비밀번호 암호화 추가
+			//String encPassword = passwordEncoder.encode(member.getUSER_PASS());
+			//logger.info(encPassword);
+			//member.setUSER_PASS(encPassword);
+			int result = memberservice.insert(member);
+			
+			String key = getKey(50,false);
+			int mail_result=memberservice.email_insert(member.getUSER_ID(),member.getUSER_EMAIL(),key);
+			
+			// result=0;
+		/*
+		 * 스프링에서 제공하는 RedirectAttributes는 기존의 Servlet에서 사용되던 response.sendRedirect()를
+		 * 사용할 때와 동일한 용도로 사용합니다. 리다이렉트로 전송하면 파라미터를 전달하고자 할 때 addAttribute()나
+		 * addFlashAtribute()를 사용합니다. 예) response.sendRedirect("/test?result=1"); =>
+		 * rattr.addAttribute("result",1)"
+		 */
+				
+		// 삽입이 된 경우
+			if (result == 1 && mail_result==1) {
+				MailVO vo = new MailVO();
+				vo.setTo(member.getUSER_EMAIL());
+				vo.setContent(new StringBuffer()
+						.append("아이디는 : " + member.getUSER_ID() + "입니다." + "<br>" )
+						.append("비밀번호는 : " + member.getUSER_PASS() +"입니다." + "<br>" )
+						.append("이름은 : " + member.getUSER_NAME() + "입니다." + "<br>" )
+						.append("닉네임은 : " + member.getUSER_NICKNAME() + "입니다." + "<br>" )
+				        .append("<a href='http://localhost:8088/myhome/member/emailConfirm?email=")
+				        .append(member.getUSER_EMAIL()).append("&key=").append(key)
+				        .append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString()); 
+				sendMail.sendMail(vo);
+				
+				rattr.addFlashAttribute("result", "emailSuccess");
+				return "redirect:login";
+			} else {
+				model.addAttribute("url", request.getRequestURL());
+				model.addAttribute("message", "회원 가입 실패");
+				return "error/error";
+			}
+		}	
 		
-		String user_phone=tel1+"-" + tel2+"-"+tel3;
-		
-		member.setUSER_PHONE(user_phone);
-		//비밀번호 암호화 추가
-		//String encPassword = passwordEncoder.encode(member.getUSER_PASS());
-		//logger.info(encPassword);
-		//member.setUSER_PASS(encPassword);
-		int result = memberservice.insert(member);
-		
-		String key = getKey(50,false);
-		int mail_result=memberservice.email_insert(member.getUSER_ID(),member.getUSER_EMAIL(),key);
-		
-		// result=0;
+		/*
+		 * 스프링 컨테이너는 매개변수 Board객첵를 생성하고
+		 * Board객체의 setter 메서드들을 호출하여 사용자 입력값을 설정합니다.
+		 * 매개변수의 이름과 setter의 property가 일치하면 됩니다.
+		 */
 	/*
-	 * 스프링에서 제공하는 RedirectAttributes는 기존의 Servlet에서 사용되던 response.sendRedirect()를
-	 * 사용할 때와 동일한 용도로 사용합니다. 리다이렉트로 전송하면 파라미터를 전달하고자 할 때 addAttribute()나
-	 * addFlashAtribute()를 사용합니다. 예) response.sendRedirect("/test?result=1"); =>
-	 * rattr.addAttribute("result",1)"
+	 * @PostMapping("/add") //@RequestMapping(vale="/add/,method=RequestMethod.POST)
+	 * public String add(Member member, HttpServletRequest request) throws Exception
+	 * {
+	 * 
+	 * MultipartFile uploadfile = member.getUploadfile();
+	 * 
+	 * if(!uploadfile.isEmpty()) { String fileName =
+	 * uploadfile.getOriginalFilename();//원래 파일명 member.setUSER_IMG(fileName);//원래
+	 * 파일명 저장 String saveFolder =
+	 * request.getSession().getServletContext().getRealPath("resources") +
+	 * "/upload/"; String fileDBName = fileDBName(fileName, saveFolder);
+	 * logger.info("fileDBName = " + fileDBName);
+	 * 
+	 * // transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+	 * uploadfile.transferTo(new File(saveFolder + fileDBName));
+	 * 
+	 * // 바뀐 파일명으로 저장 member.setUSER_FILE(fileDBName); }
+	 * 
+	 * MemberService.insert(m); //저장메서드 호출
+	 * 
+	 * return "redirect:list"; }
 	 */
-			
-	// 삽입이 된 경우
-		if (result == 1 && mail_result==1) {
-			MailVO vo = new MailVO();
-			vo.setTo(member.getUSER_EMAIL());
-			vo.setContent(new StringBuffer()
-					.append("아이디는 : " + member.getUSER_ID() + "입니다." + "<br>" )
-					.append("비밀번호는 : " + member.getUSER_PASS() +"입니다." + "<br>" )
-					.append("이름은 : " + member.getUSER_NAME() + "입니다." + "<br>" )
-					.append("닉네임은 : " + member.getUSER_NICKNAME() + "입니다." + "<br>" )
-			        .append("<a href='http://localhost:8088/myhome/member/emailConfirm?email=")
-			        .append(member.getUSER_EMAIL()).append("&key=").append(key)
-			        .append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString()); 
-			sendMail.sendMail(vo);
-			
-			rattr.addFlashAttribute("result", "emailSuccess");
-			return "redirect:login";
-		} else {
-			model.addAttribute("url", request.getRequestURL());
-			model.addAttribute("message", "회원 가입 실패");
-			return "error/error";
-		}
-	}	
 	
-	 public String getKey(int size, boolean lowerCheck) {
+	private String fileDBName(String fileName, String saveFolder) {
+		// 새로운 폴더 이름 : 오늘 년+월+일
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR); // 오늘 년도 구합니다.
+		int month = c.get(Calendar.MONTH) + 1; // 오늘 월 구합니다.
+		int date = c.get(Calendar.DATE); // 오늘 일 구합니다.
+
+		String homedir = saveFolder + year + "-" + month + "-" + date;
+		logger.info(homedir);
+		File path1 = new File(homedir);
+		if (!(path1.exists())) {
+			path1.mkdir(); // 새로운 폴더를 생성
+		}
+
+		// 난수를 구합니다.
+		Random r = new Random();
+		int random = r.nextInt(100000000);
+
+		/**** 확장자 구하기 시작 ****/
+		int index = fileName.lastIndexOf(".");
+		// 문자열에서 특정 문자열의 위치 값(index)를 반환합니다.
+		// indexOf가 처음 발견되는 문자열에 대한 index를 반환하는 반면,
+		// lastIndexOf는 마지막으로 발견되는 문자열의 index를 반환합니다.
+		// (파일명에 점에 여러개 있을 경우 맨 마지막에 발견되는 문자열의 위치를 리턴합니다.)
+		logger.info("index = " + index);
+
+		String fileExtension = fileName.substring(index + 1);
+		logger.info("fileExtension = " + fileExtension);
+		/**** 확장자 구하기 끝 ****/
+
+		// 새로운 파일명
+		String refileName = "bbs" + year + month + date + random + "." + fileExtension;
+		logger.info("refileName = " + refileName);
+
+		// 오라클 디비에 저장될 파일 명
+		// File.separatoror => /
+		String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
+		logger.info("fileDBName =" + fileDBName);
+		return fileDBName;
+	}
+	
+    //이메일 인증키
+	public String getKey(int size, boolean lowerCheck) {
 	       int rsize = size;
 	       boolean rlowerCheck = lowerCheck;
 	        return init(rsize, rlowerCheck);
@@ -215,6 +314,7 @@ public class MemberController {
 	        }
 	        return sb.toString();
 	    }
+	  
 	  
 	// 회원가입폼에서 닉네임 중복 검사
 	@RequestMapping(value = "/nicknamecheck", method = RequestMethod.GET)
@@ -342,7 +442,7 @@ public class MemberController {
 		                              // 서비스인플 의 update(Member m)에 들어감
 		int result = memberservice.update(member);
 		if (result == 1) {
-			rattr.addFlashAttribute("result", "updateSucess");
+			rattr.addFlashAttribute("result", "updateSuccess");
 			return "redirect:/board/list";
 		} else {
 			model.addAttribute("url", request.getRequestURL());
@@ -378,12 +478,12 @@ public class MemberController {
 		return "member/drop_member"; // WEB-INF/views/member/drop_member.jsp
 	}
 		
-	// 삭제
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String member_delete(String id) {
-		memberservice.delete(id);
-		return "redirect:list";
-	}
+	// 회원 탈퇴
+//	@RequestMapping(value = "/drop_member", method = RequestMethod.GET)
+//	public String drop_member (String id) {
+//		memberservice.delete(id);
+//		return "redirect:list";
+//	}
 		
 		
 	//로그아웃

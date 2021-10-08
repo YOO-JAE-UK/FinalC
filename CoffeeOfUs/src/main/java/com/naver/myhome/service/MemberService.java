@@ -18,7 +18,7 @@ public interface MemberService {
 	
 	public Member member_info(String id); //개인정보
 	
-	public void delete(String id);  //게시글 삭제 
+	public void delete(String id);  //회원 탈퇴 
 	
 	public int update(Member m); // 회원정보 수정
 	

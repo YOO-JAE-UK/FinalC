@@ -112,8 +112,8 @@ $(function() {
 <jsp:include page="../header.jsp"></jsp:include>
  <c:set var="m" value="${memberinfo}"/>
 
-	<form name="update" id="update" action="${pageContext.request.contextPath }/member/change_member_info"
-		method="get" style="font-size: 15px">
+	<form name="update" id="update" action="${pageContext.request.contextPath }/member/update"
+		method="get" style="font-size: 15px" enctype="multipart/form-data">
 		<h1 class="titlefont">회원정보 변경</h1>
         
         <em style="color:red" id="emem">*</em>
@@ -142,7 +142,8 @@ $(function() {
         <div id="add_wap">
         <em style="color:red">*</em>
         <b id="addtext">주소</b>
-           <input type="text" size="10" maxLength="10" name="USER_ADDRESS_POST" class="tx" id="post1"  value="${m.USER_ADDRESS_POST}" required> 
+           <input type="text" size="10" maxLength="10" name="USER_ADDRESS_POST" class="tx" id="post1" 
+                    value="${m.USER_ADDRESS_POST}" required> 
            <input type="button" value="우편검색" id='postcode'	onclick="execDaumPostcode()"> 
 		   <input type="text" size="50" name="USER_ADDRESS" class="tx" id="address" value="${m.USER_ADDRESS}" required>
 		   <div style="margin-top: -10px; width: 101%"> </div>
@@ -152,7 +153,7 @@ $(function() {
 		<em style="color:red">*</em>   
 	    <label for="tel_1"><b id="teltext">연락처</b></label><br> 
 	       <input type="text"  name="tel_1" class="tx" id="tel_1" 
-	                maxLength="3" value="${m.USER_PHONE}" required> 
+	                maxLength="14" value="${m.USER_PHONE}" required> 
 	    </div>		
 		
 		<div id="img_wap">
@@ -160,10 +161,10 @@ $(function() {
 		<b id="imgtext">프로필 사진</b>
 		   <div class="imgcontainer"  style="background-color:white !important">
 			<label for="user_image" class="user_image" id="imgtext"> 
-			   <input type="file" name="USER_IMG" class="user_image_choice"
+			   <input type="file" name="uploadfile" class="user_image_choice"
 				      accept="image/gif, image/jpeg, image/png" >
-				<img id="user_image" src="resources/image/default.png" alt="image" 
-				      width="130" height="130" class="avatar">
+				<img id="user_image" src="get_img?name=${m.USER_FILE}" alt="image" 
+				      width="130" height="130" class="avatar" >
 			</label>
 		   </div>
 		</div>
@@ -171,13 +172,12 @@ $(function() {
         
             <button type="reset" class="cancelbtn"
                     onClick="history.go(-1)">← 취소</button>
-            <button type="submit" class="submitbtn">등록</button>
+            <button type="submit" class="submitbtn">수정</button>
             <!-- 글쓰기list.js 참고하기 location -->
         </div>
         
     </form>
 	
-	</form>
 
 
 <jsp:include page="../footer.jsp"></jsp:include>

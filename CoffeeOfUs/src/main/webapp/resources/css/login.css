@@ -62,6 +62,8 @@ button {
 }
 button:nth-child(1){border-radius:3px 0 0 3px}
 button:nth-child(2){border-radius:0 3px 3px 0px}
+button[type=submit]:nth-child(2){ width: 20% !important;
+				height:88% !important}
 button:hover {
     opacity:1;
     background:#9ca29d;
@@ -107,18 +109,19 @@ button:focus{
 
 a{color:white;text-decoration:none;}
 
-form {
+#loginform {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    width: 500px; /* Could be more or less, depending on screen size */
+    width: 600px; /* Could be more or less, depending on screen size */
     padding: 16px;
+    font-family: "DM Sans", sans-serif;
 }
 
 hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
 }
- 
+
  h1{text-align:center}
 
 /* Clear floats */
