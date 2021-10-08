@@ -54,6 +54,12 @@ public class EventServiceImpl implements EventService {
 		return dao.addPoint(map);
 	}
 
+	@Override
+	public int getPoint(String id) {
+		
+		return dao.getPoint(id);
+	}
+
 	
 
 }

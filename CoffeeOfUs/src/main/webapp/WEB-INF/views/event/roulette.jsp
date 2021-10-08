@@ -160,13 +160,13 @@ div.content {
 </style>
 </head>
 <body>
-	<input id="id" type="hidden" value='a'>
+	<input id="id" type="hidden" value='b'>
 
 	<div class="row">
 		<div class="col-sm-3">
 			<div class="sidebar">
 				<a href="attendCheck">출 석 체 크</a> <a class="active" href="#news">룰
-					렛 게 임</a> <a href="#contact">포 인 트 스 토 어</a>
+					렛 포 인 트</a> <a href="#contact">포 인 트 스 토 어</a>
 
 			</div>
 		</div>
@@ -195,14 +195,14 @@ div.content {
 		</div>
 		<div class="col-sm-3 point" style="float: left;position:relative;top:20px;right:50px">
 		   	
-			<div id="point" >현재 포인트</div>
-			<div id="mypoint" >0&nbsp;P</div>
+			<div id="point" >My 포인트</div>
+			<div id="mypoint" >${point}&nbsp;P</div>
 		   							
 		</div>
 
 	</div>
-
-
+	
+	<script src="../resources/js/event/roulette.js" charset="utf-8"></script>
 	<jsp:include page="../footer.jsp" />
 </body>
 <script

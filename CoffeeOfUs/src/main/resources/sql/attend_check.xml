@@ -6,7 +6,11 @@
 <mapper namespace="attend_check">
 	
  <insert id="insert" parameterType="String" >
-   insert into attend_check (id,attenddate) values(#{id},TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+   insert into attend_check(num,id,attenddate,point) values(event_seq.nextval,#{id},
+                              TO_CHAR(SYSDATE,'YYYY-MM-DD'),
+                               nvl((select point from attend_check
+                                   where num=(select nvl(max(num),0)
+                                   from ATTEND_CHECK where id=#{id})),0))
  
  
  </insert>
@@ -27,9 +31,16 @@
      
  </select>
  <update id="addPoint" parameterType="Map">
-     update ATTEND_CHECK set status='Y', point= point where id=#{id} 
+     update ATTEND_CHECK set status='Y', point=#{point} where id=#{id} 
      
      and attenddate=TO_CHAR(sysdate,'YYYY-MM-DD')
  
  </update>
+ 
+ <select id="getPoint" parameterType="String" resultType="int">
+   select nvl(max(point),0) from attend_check where id=#{id}
+      				and num=(select nvl(max(num),0)
+                                   from ATTEND_CHECK where id=#{id})
+ 
+ </select>
 </mapper>

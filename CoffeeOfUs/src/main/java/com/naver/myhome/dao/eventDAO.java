@@ -38,7 +38,12 @@ public class eventDAO {
 
 	public int addPoint(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("attend_check.addPoint",map);
+		return sqlSession.update("attend_check.addPoint",map);
+	}
+
+	public int getPoint(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("attend_check.getPoint",id);
 	}
 	
 }
