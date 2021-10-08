@@ -277,7 +277,10 @@ $(".dg-map svg").mouseover(function(event) {
 	  $("#add_admin").click(function(){
 		  location.href = "tour_board_write_admin";
 	  })
-	 
+	  
+	  $("#manage_list").click(function(){
+		  location.href = "tour_board_manage_list";
+	  })
 	
   })
 </script>
@@ -295,7 +298,7 @@ $(".dg-map svg").mouseover(function(event) {
 		<div class="container calendar-container col-sm-7"
 			style="position: relative; left: -5%; margin-top:30px;">
 			
-			 <div id="map_main" style="width: 100%; height: 100%; z-index: 99">
+			 <div id="map_main" style="width: 100%; height: 100%; z-index: 99;">
                 <div style="text-align: center; margin-bottom: 50px;"><h2><b><font color="#ED4C6B">Tour_Map</font></b></h2></div>
                 	<div class="dg-map dg-map-in" style="float: left">
   <svg x="0" y="0" width="300" height="400" viewBox="0 0 800 1200" >
@@ -343,8 +346,13 @@ $(".dg-map svg").mouseover(function(event) {
 
 	</div>
 </div><!-- detail map end -->
+					
+					</div><!-- map_main끝 -->
+					<div style="position: absolute; top:90%;left:80%; width: 200px;">
+						<button style="float: right;margin-right: 10px;" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
+						<button style="float: right;margin-right: 10px;" id="manage_list" type="button" class="btn btn-info">관리자 글관리</button>
+						
 					</div>
-					<button style="position: absolute; top:90%;left:100%" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
 		</div><!-- 7 end -->
 		
 			

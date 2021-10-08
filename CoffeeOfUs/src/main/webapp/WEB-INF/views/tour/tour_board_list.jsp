@@ -21,7 +21,15 @@
 <jsp:include page="../header.jsp">
 	<jsp:param name="num" value="<%=5%>" />
 </jsp:include>
+<script> 
+var result="${message}";
+if(result == 'deleteFail'){
+	alert("삭제 실패!");
+}else if(result == 'deleteSuccess'){
+	alert("삭제 성공!");
+}
 
+</script>
 
 <style>
  video {
@@ -121,69 +129,13 @@ div.content {
 
 			</div>
 		</div>
-		<div class="container calendar-container col-sm-7"
+		<div class="container calendar-container col-sm-7" id="ajax_content"
 			style="position: relative; left: -5%; margin-top:30px;">
 			
-			<div style="text-align: center;"><h2><b><font color="#ED4C6B">Tour_List</font></b></h2></div>
-<c:if test="${listcount > 0 }">							  
-  </c:if><%-- <c:if test="${listcount > 0 }"> end --%>
-  <font size=3 style="margin-left: 15px; margin-bottom: 20px">글 개수 : ${listcount}</font>		
-					       <div class="container mt-2">
-							  <div class="row">
-			<c:set var="num" value="${listcount-(page-1)*limit}"/>	
-			<c:forEach var="b" items="${boardlist}">	
-							    <div class="col-md-3 col-sm-7">
-							      <div class="card card-block" style="margin-bottom: 30px;">
-				 <div>																					
-																					<c:set var="tour_num" value="${tour_num+1}"/>
-							      <p class="card-title text-right" style="float:left; text-align: center;">NO.<c:out value="${listcount-tour_num+1}"/></p>
-							    <p class="card-title text-left" style="float:right; text-align: center;">조회수 : ${b.TOUR_READCOUNT }</p>
-				 </div>
-							 <div style="width: 100%; height: 150px;"> 
-							    
-							     <c:if test="${empty b.TOUR_FILE}">
-							    <a href="detail?num=${b.TOUR_NUM}" style="color: black"> 
-							    	<img src="${pageContext.request.contextPath}/resources/img/cafe_default.jpg" alt="cafe_image" title="cafe_image" class="shoe fade-in one" id="cafe_image" width="100%" height="100%"/> 
-								</a>
-								</c:if>
-								
-							<%-- 	<c:set var="cafe_image" value="${boarddata.TOUR_FILE}"/> --%>
-							                    <c:if test="${!empty b.TOUR_FILE}">
-							                    <a href="detail?num=${b.TOUR_NUM}" style="color: black"> 
-							                    	<img src="get_img?name=${b.TOUR_FILE}" alt="cafe_image"  class="shoe fade-in one" width="100%" height="100%">
-							   					</a>
-							   					</c:if>
-							     
-							     
-							  </div>     
-							        <h5 class="card-title mt-3 mb-3" style="text-align: center;">
-							        	<a href="detail?num=${b.TOUR_NUM}" style="color: black"> 
-											 <c:out value="${b.TOUR_SUBJECT}"  escapeXml="true"/> 
-										</a>
-							        </h5>
-							        <hr style="margin-top: 0px;">
-							        <p class="card-text over" style="height: 60px"> 카페이름 : ${b.TOUR_NAME}</p>
-							        <p class="card-text">날짜 : ${b.TOUR_DATE.substring(0,10)}</p>
-							        <p class="card-text over">닉네임 : ${b.USER_NICKNAME}</p> 
-								  </div>
-								</div> <!-- "col-md-3 col-sm-6" end -->
-			</c:forEach>
-	
-	
-<%-- 게시글이 없는 경우--%>
-					<c:if test="${listcount == 0 }">
-						<font size=5>등록된 글이 없습니다.</font>
-					</c:if>	
-	
-	
-							  </div> <!-- row end -->
-							 </div>	<!-- <div class="container mt-2"> -->
-					
-					<button type="button" class="btn btn-info float-right">글 쓰 기</button>
-			
-			<div class="col-sm-2">
-			</div>
-		</div>
+				<!-- 이부분이 작성될 부분입니다.@@ -->
+				
+		</div><!-- <div class="container calendar-container col-sm-7" -->
+		
 	</div>
 
 	<jsp:include page="../footer.jsp" />

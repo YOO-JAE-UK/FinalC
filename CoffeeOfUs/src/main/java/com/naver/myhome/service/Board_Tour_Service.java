@@ -2,7 +2,6 @@ package com.naver.myhome.service;
 
 import java.util.List;
 
-import com.naver.myhome.domain.Board_Coffee;
 import com.naver.myhome.domain.Board_Tour;
 
 public interface Board_Tour_Service {
@@ -11,7 +10,7 @@ public interface Board_Tour_Service {
 	public void add(Board_Tour board);
 
 	//투어 게시판 불러오기
-	public List<Board_Tour> getBoardList(int page, int limit);
+	public List<Board_Tour> getBoardList(int page);
 
 	//투어 총게시글수
 	public int getListCount();
@@ -25,8 +24,6 @@ public interface Board_Tour_Service {
 	// 투어 글 수정
 	public int boardModify(Board_Tour modifyboard);
 
-	//수정후 -원래있던 파일 테이블에 올림 (나중에 삭제)
-	public int insert_deleteFile(String before_file);
 
 	//ajax list_map 가져오기
 	public List<Board_Tour> getBoardList(String sido);
@@ -38,5 +35,16 @@ public interface Board_Tour_Service {
 
 	//관리자모드 map 등록
 	public String isname(String tour_NAME);
+
+	public List<Board_Tour> getManage_List(int page, int limit);
+ 
+	//글 삭제
+	public int boardDelete(int num);
+	
+	//수정후 -원래있던 파일 테이블에 올림 (나중에 삭제)
+	public int insert_deleteFile(String before_file);
+		
+	//삭제할 파일 리스트 가져오기
+	public List<String> getDeleteFileList();
 	
 }

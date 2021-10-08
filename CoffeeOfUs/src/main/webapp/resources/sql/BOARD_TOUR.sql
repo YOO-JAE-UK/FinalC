@@ -44,12 +44,14 @@ SELECT * FROM BOARD_TOUR
 							WHERE TOUR_ADMIN = 
 										(SELECT MAX(TOUR_ADMIN) 
 											FROM BOARD_TOUR
-												WHERE TOUR_NAME = '왈츠와 닥터만')
-													AND  TOUR_NAME = '왈츠와 닥터만'
+												WHERE TOUR_NAME = 'cafe')
+													AND  TOUR_NAME = 'cafe'
 				)
 
 				SELECT *FROM BOARD_TOUR
 	 		WHERE TOUR_ADMIN = 1
-	 			AND TOUR_NAME='왈츠와 닥터만';
+	 			AND TOUR_NAME='cafe';
+	 			--
+	 			delete from BOARD_TOUR where TOUR_NUM=8;
+	 			--
 	 			
-	 			delete from BOARD_TOUR where TOUR_NUM=9;

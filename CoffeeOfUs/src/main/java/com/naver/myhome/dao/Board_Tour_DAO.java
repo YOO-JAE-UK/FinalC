@@ -29,6 +29,10 @@ public class Board_Tour_DAO {
 			return sqlSession.selectList("Boards_Tour.list",map);
 		}
 
+		public List<Board_Tour> getManage_List(HashMap<String, Integer> map) {
+			return sqlSession.selectList("Boards_Tour.manage_list",map);
+		}
+		
 		public Board_Tour getDetail(int num) {
 			return sqlSession.selectOne("Boards_Tour.detail",num);
 		}
@@ -45,9 +49,6 @@ public class Board_Tour_DAO {
 			return sqlSession.update("Boards_Tour.modify",modifyboard);
 		}
 
-		public int insert_deleteFile(String before_file) {
-			return sqlSession.insert("Boards_Tour.insert_deleteFile",before_file);
-		}
 
 		public List<Board_Tour> getBoardList(String sido) {
 			return sqlSession.selectList("Boards_Tour.list_map",sido);
@@ -59,7 +60,19 @@ public class Board_Tour_DAO {
 		public String getIsName(String tour_NAME) {
 			return sqlSession.selectOne("Boards_Tour.isname",tour_NAME);
 		}
+		public int boardDelete(int num) {
+			return sqlSession.delete("Boards_Tour.delete",num);
+		}
+		
+		public int insert_deleteFile(String before_file) {
+			return sqlSession.insert("Boards_Tour.insert_deleteFile",before_file);
+		}
 
+		public List<String> getDeleteFileList() {
+			return sqlSession.selectList("Boards_Tour.deleteFileList");
+		}
+		
+		
 		
 		
 }
