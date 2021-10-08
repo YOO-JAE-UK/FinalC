@@ -52,7 +52,7 @@
 		position :absolute;
 		right: 70px;
 		font-size: 15px;
-		width:140px;
+		width:141px;
 		margin-top: 20px;
 	}
 .cus2{
@@ -230,7 +230,7 @@ $(document).ready(function(){
                                 <li class="event"><a href="#">이벤트</a>
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/event/attendCheck">출석 체크</a></li>
-                                        <li><a href="#">룰렛 포인트</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/event/roulette">룰렛 포인트</a></li>
                                         <li><a href="#">포인트 스토어</a></li>
                                     </ul>
                                 </li>

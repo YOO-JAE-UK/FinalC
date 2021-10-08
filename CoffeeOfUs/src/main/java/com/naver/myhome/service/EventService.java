@@ -16,5 +16,7 @@ public interface EventService {
 
 	public int addPoint(String id, int point);
 
+	public int getPoint(String id);
+
 }
  
