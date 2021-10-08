@@ -27,7 +27,7 @@ $(function() {
 			 if(rdata.listcount > 0){
 				  $("#comment table").show() //문서가 로딩될 때 hide() 했던 부분을 보이게 합니다.(1)
 				  $("#comment tbody").empty();
-				  $(rdata.list).each(function() {z
+				  $(rdata.list).each(function() {
 					  output='';
 					  img = '';
 					  if($("#loginid").val() == this.id){

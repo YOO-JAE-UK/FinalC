@@ -1,7 +1,5 @@
 package com.naver.myhome;
 
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -110,7 +107,6 @@ public class TourController {
 			board.setTOUR_FILE(fileDBName); 	
 		}
 		String result= Board_Tour_Service.isname(board.getTOUR_NAME());
-		System.out.println(result);
 		if(result!=null) { //등록된 글이 있다 =
 			rattr.addFlashAttribute("message","exist");
 			return "redirect:tour_map";
@@ -166,10 +162,10 @@ public class TourController {
 			return fileDBName;
 		}
 		
+		//관리자 list관리 1만 관리하게 
+		@GetMapping(value="/tour_board_manage_list")
 		
-		
-		@GetMapping(value="/tour_board_list")
-		public ModelAndView boardList(
+		public ModelAndView tour_board_manage_list(
 				@RequestParam(value="page",defaultValue = "1",required=false) int page,
 				ModelAndView mv) {
 			int limit =10; //한 화면에 출력할 레코드 갯수
@@ -188,9 +184,9 @@ public class TourController {
 			if(endpage > maxpage)
 				endpage = maxpage;
 			
-			List<Board_Tour> boardlist = Board_Tour_Service.getBoardList(page, limit);// 리스트를 받아옴
+			List<Board_Tour> boardlist = Board_Tour_Service.getManage_List(page, limit);// 리스트를 받아옴
 					
-					mv.setViewName("tour/tour_board_list");
+					mv.setViewName("tour/tour_board_manage_list");
 					mv.addObject("page",page);
 					mv.addObject("maxpage",maxpage);
 					mv.addObject("startpage",startpage);
@@ -200,8 +196,6 @@ public class TourController {
 					mv.addObject("limit",limit);
 			return mv;
 		}	
-		
-		
 		
 		//ajax 
 		@ResponseBody
@@ -213,6 +207,45 @@ public class TourController {
 			map.put("list_map", boardlist);
 			map.put("sido",sido);
 			
+			return map;
+		}
+		
+		@RequestMapping(value = "/tour_board_list", method = RequestMethod.GET)
+		public String tour_board_list() {
+				return "tour/tour_board_list";
+		}
+		//ajax 스크롤내려서 확인하기 미완성
+		@ResponseBody
+		@GetMapping(value="/tour_board_list1")
+		public Map<String, Object> boardListAjax(
+				@RequestParam(value="page",defaultValue = "1",required=false) int page
+				) {
+			
+			int listcount = Board_Tour_Service.getListCount(); //관리자(1)빼고 총 리스트 수를 받아옴 
+			int limit =  (page*4)+4;
+				//총 페이지 수
+			//int maxpage = (listcount + limit -1) / limit;
+			
+				//현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등 ...) 지금은 필요없음
+			//int startpage =((page - 1) / 10) *10 +1;
+			
+				//현재 페이지에 보여줄 마지막 페이지 수(10, 20, 30 등...) 지금은 피료없음
+			//int endpage = startpage +10 - 1;
+			
+			//if(endpage > maxpage)					//지금은 피룡업승ㅁ
+			//	endpage = maxpage;
+			
+			List<Board_Tour> boardlist = Board_Tour_Service.getBoardList(page);// 리스트를 받아옴
+					
+			Map<String, Object> map = new HashMap<String,Object>();
+			
+			map.put("page",page);
+		//	map.put("maxpage",maxpage);
+		//	map.put("startpage",startpage);
+		//	map.put("endpage",endpage);
+			map.put("listcount",listcount);
+			map.put("boardlist",boardlist);
+			map.put("limit",limit);
 			return map;
 		}
 		
@@ -361,6 +394,26 @@ public class TourController {
 			return url;
 		}
 		
+		
+		@PostMapping("/delete")
+		public String BoardDeleteAction(int num,
+				 RedirectAttributes rattr
+				) throws Exception{
+			
+			int result = Board_Tour_Service.boardDelete(num);
+			
+			// 삭제 처리 실패한 경우
+			if(result==0) {
+				logger.info("게시판 삭제 실패");
+				rattr.addFlashAttribute("message","deleteFail");
+				return "redirect:tour_board_list";
+			}
+			
+			// 삭제 처리 성공한 경우  -글 목록 보기 요청을 전송하는 부분입니다.
+			logger.info("게시판 삭제 성공");
+			rattr.addFlashAttribute("message","deleteSuccess");
+			return "redirect:tour_board_list";
+		}
 		
 		
 		

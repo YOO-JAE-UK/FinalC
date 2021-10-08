@@ -93,6 +93,13 @@ $(document).ready(function(){
 	$("#board_tour_modify_btn").click(function(){
 		location.href="tour_board_modifyView?num="+${boarddata.TOUR_NUM};
 	});
+	$("#modal_submit").on("click", function() {
+		var modal_submit = $("#tour_answer").val();
+		
+		if(modal_submit!="삭제하겠습니다."){
+			return false;
+		}
+	})
 })
 
 
@@ -123,7 +130,6 @@ function initMap() {
 </head>
 <body>
 <body>
-	<input id="id" type="hidden" value='a'>
 
 	<div class="row">
 		<div class="col-sm-3">
@@ -246,6 +252,11 @@ function initMap() {
  	<div style="margin-top: 40px;">
  		<button style="float:left; margin-top:13px" class="btn btn-light" onclick="history.go(-1)">취소</button>
  		<button style="float:right; margin-top:13px" class="btn btn-primary" id=board_tour_modify_btn>수정</button>
+ 		
+ 		<a href="#">
+			<button style="float:right; margin-top:13px; margin-right:10px;" id="board_tour_delete_btn"  class="btn btn-danger" data-toggle="modal" data-target="#myModal">삭제</button>
+		</a>
+ 		
  	</div>
  	</div><!-- 오른쪽 content 자리 -->  
 			
@@ -255,10 +266,34 @@ function initMap() {
 	</div>
 
 	<jsp:include page="../footer.jsp" />
+	
+	<%--modal 시작 --%>
+			<div class="modal" id="myModal">
+			 <div class="modal-dialog">
+			  <div class="modal-content">
+			   <%-- Modal body --%>
+			   <div class="modal-body">
+			   	<form name="deleteForm" action="delete" method="post" id="deleteForm">
+			   	<%-- http://localhost:8088/Board/BoardDetailAcion.bo?num=22
+			   		주소를 보면 num을 파라미터로 넘기고 있습니다.
+			   		이 값을 가져와서 ${param.num}를 사용
+			   		또는 ${boarddata.board_num} 
+			   	--%>
+			   	<input type="hidden" name="num" id="board_num" value="${param.num}"> <!-- name이 num이였음 -->
+			   	<div class="form-group">
+			   		<label for="pwd">삭제할려면 "삭제하겠습니다." 를 입력하세요</label>
+			   		<input type="text"
+			   			class="form-control" placeholder="Enter text"
+			   			name="tour_answer" id="tour_answer">
+			   	</div>
+			   	<button type="submit" class="btn btn-primary" id="modal_submit">전송</button>
+			   	<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+			   	</form>
+			   </div><!-- class="modal-body" -->
+			  </div><!-- class="modal-content" -->
+			 </div><!-- class="modal-dialog" -->
+			</div><!-- class="modal end"  <div class="modal" id="myModal">-->
+	
 </body>
-<script>
 
-
-
-</script>
 </html>

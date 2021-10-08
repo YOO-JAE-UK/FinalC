@@ -31,6 +31,7 @@
          <div class="row">
                  <div class="col-xs-12 col-sm-12 col-md-3">
                 	<ul>
+                	<li><a href="${pageContext.request.contextPath}/tour/test">이거</a></li>
                 		<li>커피 정보게시판</li>
                 		<li>출석 게시판</li>
                 		<li>추천 음악게시판</li>
@@ -116,7 +117,7 @@
 			 </c:if>
 			 <c:if test="${page > 1 }">			
 				<li class="page-item">
-				   <a href="BoardList.bo?page=${page-1}" 
+				   <a href="list?page=${page-1}" 
 				      class="page-link">이전&nbsp;</a>
 				</li> 
 			 </c:if>
@@ -129,7 +130,7 @@
 				</c:if>
 				<c:if test="${a != page }">
 				    <li class="page-item">
-					   <a href="BoardList.bo?page=${a}" 
+					   <a href="list?page=${a}" 
 					      class="page-link">${a}</a>
 				    </li>	
 				</c:if>
@@ -142,7 +143,7 @@
 			</c:if>
 			<c:if test="${page < maxpage }">
 			  <li class="page-item">
-				<a href="BoardList.bo?page=${page+1}" 
+				<a href="list?page=${page+1}" 
 				   class="page-link">&nbsp;다음</a>
 			  </li>	
 			</c:if>
