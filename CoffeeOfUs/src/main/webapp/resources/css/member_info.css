@@ -86,7 +86,7 @@
 }
 
 
-form {
+#member_info {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     width: 500px; /* Could be more or less, depending on screen size */
@@ -112,6 +112,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 button:nth-child(1){border-radius:3px 0 0 3px}
 button:nth-child(2){border-radius:0 3px 3px 0px}
+button[type=submit] {height:88% !important}
 button:hover {
     opacity:1;
     background:#8f8f8f;

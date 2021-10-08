@@ -24,16 +24,18 @@
 
 		insert into member(USER_ID, USER_PASS, USER_NAME, 
 		            USER_NICKNAME, USER_EMAIL, USER_ADDRESS_POST, USER_ADDRESS,
-		            USER_PHONE, USER_IMG, USER_CHECK)
+		            USER_PHONE, USER_FILE, USER_IMG, USER_CHECK)
 		values
 		(#{USER_ID},#{USER_PASS},#{USER_NAME},
 		 #{USER_NICKNAME},#{USER_EMAIL},#{USER_ADDRESS_POST},#{USER_ADDRESS},
-		 #{USER_PHONE},#{USER_IMG}, '0')
+		 #{USER_PHONE}, #{USER_FILE, jdbcType=VARCHAR}, #{USER_IMG, jdbcType=VARCHAR}, '0')
 
 </insert>  
 
 <delete id="delete" parameterType="String">
-   delete from member where USER_ID = #{id}
+   delete from member 
+   where USER_ID = #{id}
+   and USER_PASS =#{pass}
 </delete>
 
 <!--            마이바티스 환경설정에서 정한 member

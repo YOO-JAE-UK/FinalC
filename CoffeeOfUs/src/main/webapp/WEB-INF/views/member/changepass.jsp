@@ -21,7 +21,7 @@
 <jsp:include page="../header.jsp"></jsp:include>
 
 
-	<form name="changepassForm" action="${pageContext.request.contextPath }/member/changepass"
+	<form name="changepassForm" id="changepassForm" action="${pageContext.request.contextPath }/member/changepass"
 		method="get">
 		<h3 class="titlefont">비밀번호 변경</h3>
 		<div class="input_wrp">
