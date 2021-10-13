@@ -37,6 +37,8 @@
 	.canvas__open{
 		margin-top: -15px;
 	}
+	
+
 
 </style>
 

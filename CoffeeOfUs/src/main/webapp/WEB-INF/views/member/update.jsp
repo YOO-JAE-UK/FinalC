@@ -13,14 +13,14 @@
 
 $(function() {
 	
-	$("input:eq(4)").on('keyup',
+	$("input:eq(5)").on('keyup',
 	function() {
 		$("#email_message").empty();
 		//[A-Za-Z0-9_]와 동일한 것이 \w
 		//+는 1회 이상 반복을 의미합니다. {1,}와 동일합니다
 		//\w+ 는 [A-Za-z0-9_]를 1개이상 사용하라는 의미입니다.
 		var pattern = /^\w+@\w+[.]\w{3}$/;
-		var email = $("input:eq(4)").val();
+		var email = $("input:eq(5)").val();
 		if (!pattern.test(email)) {
 			$("#email_message").css('color', 'red')
 		                       .html("이메일형식이 맞지 않습니다.");
@@ -36,7 +36,7 @@ $(function() {
 	   $('form').submit(function() {
 		   if(!checkemail) {
 			   alert("email 형식을 확인하세요");
-			   $("input:eq(6)").focus();
+			   $("input:eq(7)").focus();
 			   return false;
 		   }
 			   
@@ -112,8 +112,9 @@ $(function() {
 <jsp:include page="../header.jsp"></jsp:include>
  <c:set var="m" value="${memberinfo}"/>
 
-	<form name="update" id="update" action="${pageContext.request.contextPath }/member/update"
-		method="get" style="font-size: 15px" enctype="multipart/form-data">
+	<form name="update" id="update" action="${pageContext.request.contextPath }/member/updateProcess"
+		method="post" style="font-size: 15px" enctype="multipart/form-data">
+		<input type="hidden" name="USER_FILE" value="${m.USER_FILE}">    
 		<h1 class="titlefont">회원정보 변경</h1>
         
         <em style="color:red" id="emem">*</em>
@@ -152,7 +153,7 @@ $(function() {
 		 <div id="tel_wap">
 		<em style="color:red">*</em>   
 	    <label for="tel_1"><b id="teltext">연락처</b></label><br> 
-	       <input type="text"  name="tel_1" class="tx" id="tel_1" 
+	       <input type="text"  name="USER_PHONE" class="tx" id="tel_1" 
 	                maxLength="14" value="${m.USER_PHONE}" required> 
 	    </div>		
 		

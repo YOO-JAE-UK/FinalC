@@ -43,7 +43,8 @@ $(function() {
 		        	   checknick=false;
 		        	   return;
 	            }
-						
+				
+		         //닉네임
 	  			 $.ajax({
        				url :"nicknamecheck",
        				data : {"nickname" : nickname},
@@ -248,6 +249,7 @@ $(function() {
 	    
 }) //ready
     
+//주소
 function execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {

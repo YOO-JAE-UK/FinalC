@@ -66,14 +66,17 @@ public class Board_Qna_Controller {
 
 	@PostMapping("/add")
 	// @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(Board_Qna board, HttpServletRequest request) throws Exception {
+	public String add(Board_Qna board, HttpServletRequest request)
+			throws Exception {
 
 		MultipartFile uploadfile = board.getUploadFile();
-
+		
 		if (!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();// 원래 파일명
 			board.setQNA_ORIGINAL(fileName);// 원래 파일명 저장
-			// String saveFolder =request.getSession().getServletContext().getRealPath("resources")+ "/upload/";
+			String saveFolder =
+					request.getSession().getServletContext().getRealPath("resources")
+					+ "/upload/";
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName = " + fileDBName);
 
@@ -201,7 +204,7 @@ public class Board_Qna_Controller {
 	// detail?num=9요청시 파라미터 num의 값을 int num에 저장합니다.
 	@GetMapping(value = "/detail")
 	public ModelAndView Detail(int num, ModelAndView mv, HttpServletRequest request) {
-
+		
 		Board_Qna board = Board_Qna_Service.getDetail(num);
 		// board=null //error 페이지 이동 확인하고자 임의로 지정합니다.
 		if (board == null) {
@@ -212,7 +215,7 @@ public class Board_Qna_Controller {
 		} else {
 			logger.info("상세보기 성공");
 			int count = commentService.getListCount(num);
-			mv.setViewName("board/board_view");
+			mv.setViewName("board_qna/board_view");
 			mv.addObject("count", count);
 			mv.addObject("boarddata", board);
 		}
@@ -220,7 +223,8 @@ public class Board_Qna_Controller {
 	}
 
 	@GetMapping("replyView")
-	public ModelAndView BoardReplyView(int num, ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView BoardReplyView(int num, ModelAndView mv, 
+										HttpServletRequest request) {
 		Board_Qna board = Board_Qna_Service.getDetail(num);
 		if (board == null) {
 			mv.setViewName("error/error");
@@ -228,7 +232,7 @@ public class Board_Qna_Controller {
 			mv.addObject("message", "게시판 답변글 가져오기 실패");
 		} else {
 			mv.addObject("boarddata", board);
-			mv.setViewName("board/board_reply");
+			mv.setViewName("board_qna/board_reply");
 		}
 
 		return mv;
@@ -270,7 +274,7 @@ public class Board_Qna_Controller {
 		// ModelAndView 객체에 저장합니다.
 		mv.addObject("boarddata", boarddata);
 		// 글 수정 폼 페이지로 이동하기 위해 경로를 설정합니다.
-		mv.setViewName("board/board_modify");
+		mv.setViewName("board_qna/board_modify");
 		return mv;
 	}
 
@@ -339,7 +343,7 @@ public class Board_Qna_Controller {
 						  
 			//수정 성공한 경우
 			//파일 삭제를 위해 추가한 부분 
-			//수정 전에 파일이 있꼬 새로운 파일을 선택한 경우는 삭제할 목록을 테이블에 추가합니다. 
+			//수정 전에 파일이 있고 새로운 파일을 선택한 경우는 삭제할 목록을 테이블에 추가합니다. 
 			if(!before_file.equals("") && !before_file.equals(boarddata.getQNA_FILE())) {
 				Board_Qna_Service.insert_deleteFile(before_file); 
 			} 

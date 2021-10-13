@@ -1,12 +1,13 @@
 package com.naver.myhome.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.naver.myhome.domain.Email;
 import com.naver.myhome.domain.Member;
 
 public interface MemberService {
-	public int isId(String id, String pass); //아이디 중복 확인
+	public int isId(String id, String pass); // 로그인 처리
 	
 	public int insert(Member m); //회원가입 정보 삽입
 	
@@ -21,6 +22,10 @@ public interface MemberService {
 	public void delete(String id);  //회원 탈퇴 
 	
 	public int update(Member m); // 회원정보 수정
+	
+	public String passcheck(Member m); //비밀번호 확인 
+	
+	public int changepass(String id,String newpass); //비밀번호 변경
 	
 	public List<Member> getSearchList(int index, String search_word,
 			                         int page, int limit);

@@ -5,8 +5,16 @@
 <mapper namespace="Members">
 
 <!-- 아이디 체크 -->
- <select id ="idcheck" resultType="member" parameterType="String">
-	select * from member where user_id = #{id}
+<select id ="idcheck" resultType="member" parameterType="String">
+	select * from member 
+	where user_id = #{id}
+</select>
+
+<!-- 비밀번호 체크 -->
+<select id ="passcheck" resultType="member" parameterType="String">
+	select * from member 
+	where user_id = #{id} 
+	and user_pass = #{pass}
 </select>
 
 <!-- 이메일 체크 -->
@@ -19,7 +27,7 @@
 	select * from member where user_nickname = #{nickname}
 </select>
 
-<!--  -->
+<!-- 회원 가입 -->
 <insert id="insert" parameterType="member">
 
 		insert into member(USER_ID, USER_PASS, USER_NAME, 
@@ -32,19 +40,29 @@
 
 </insert>  
 
+<!-- 회원 탈퇴 -->
 <delete id="delete" parameterType="String">
    delete from member 
    where USER_ID = #{id}
-   and USER_PASS =#{pass}
+   
 </delete>
 
-<!--            마이바티스 환경설정에서 정한 member
+<!-- 회원정보 수정 -->
 <update id="update" parameterType="member">
    update member
-   set USR_NAME = #{name}, age = #{age} ,
-        gender = #{gender} , email = #{email}
-   where id = #{id}        
-</update> -->
+   set USER_NAME = #{USER_NAME}, USER_NICKNAME = #{USER_NICKNAME} ,
+       USER_EMAIL = #{USER_EMAIL} , USER_ADDRESS_POST = #{USER_ADDRESS_POST},
+       USER_ADDRESS =#{USER_ADDRESS}, USER_PHONE = #{USER_PHONE},
+       USER_FILE = #{USER_FILE}, USER_IMG = #{USER_IMG}
+   where USER_ID = #{USER_ID}        
+</update> 
+
+<!-- 비밀번호 변경 -->
+<update id="modify" parameterType="map">
+	update member
+	set USER_PASS = #{newpass}
+	where USER_ID = #{id}
+</update>
 
 
 
@@ -82,7 +100,6 @@
 	     like #{search_word}
    </if>
 </sql>
-
 
 
 

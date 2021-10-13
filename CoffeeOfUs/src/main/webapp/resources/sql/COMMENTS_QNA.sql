@@ -2,7 +2,7 @@ drop table COMMENTS_QNA CASCADE CONSTRAINTS;
 
 create table COMMENTS_QNA(
 	NUM			number		primary key,
-	ID			varchar2(30), --references member2(id),
+	ID			varchar2(30), --references member(id),
 	CONTENT		varchar2(200),
 	REG_DATE	date,
 	QNA_NUM	number references BOARD_QNA(QNA_NUM)

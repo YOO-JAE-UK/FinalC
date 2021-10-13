@@ -5,35 +5,70 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QNA_list</title>
+<title>QNA_board_list</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-<script src="../resources/js/list.js"></script>
+<script src="../resources/js/qna/list.js" charset="utf-8"></script>
  <style>
    select.form-control{
          width:auto;margin-bottom:2em;display:inline-block}
-   .rows{text-align:right;}
+   .rows{text-align:right; font-size: 15px;}
    .gray{color:gray}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(1){width:8%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(2){width:50%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(3){width:14%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(4){width:17%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(5){width:11%}
+  
+  .form-control{
+  	width: 10px !important;
+  	height: 21px !important;
+  }
+  .current{
+  	position: absolute;
+    top: -10px;
+    left: 12px;
+  }
+  .container{
+   	font-size: 15px;
+   }
+   
+   #float-right{
+   	font-size: 15px;
+    width: 7%;
+    height: 30px;
+   }
+   
+   #title{
+   text-align: center;
+   margin-top: 50px;
+   margin-bottom: -31px;
+   }
  </style>
 </head>
 <body>
 <jsp:include page="../header.jsp">
-		 <jsp:param name="num" value="<%= 123 %>"/>
+		 <jsp:param name="num" value="<%= 4 %>"/>
 	</jsp:include>
 
-<h1 style="text-align: center;">QNA</h1>
-	
-					        	 <%-- 게시글이 있는 경우--%> 
-								<c:if test="${listcount > 0 }">
-								 <table class="table table-striped">
+<h2  id="title">QNA 게시판</h2>
+     <section class="upcoming-classes spad">
+        <div class="container">
+         <div class="row">
+			
+         <span>줄보기</span>
+		 <select class="form-control" id="viewcount">
+			<option value="1">1</option>
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="7">7</option>
+			<option value="10" selected>10</option>
+		 </select>	
+		<%-- 게시글이 있는 경우--%> 
+		<c:if test="${listcount > 0 }">
+		<table class="table table-striped">
    <thead>
 	<tr>
-	   <th colspan="3">MVC 게시판 - list</th>
-	   <th colspan="2">
+	   <th>
 			<font size=3>글 개수 : ${listcount}</font>
 	   </th>
 	</tr>
@@ -47,7 +82,7 @@
    </thead>
    <tbody>
 	<c:set var="num" value="${listcount-(page-1)*limit}"/>	
-	<c:forEach var="b" items="${boardlist}">	
+	<c:forEach var="b" items="${boardlist}" >	
 	<tr>
 	  <td><%--번호 --%>
 		<c:out value="${num}"/><%-- num 출력 --%>		
@@ -122,7 +157,7 @@
 			</c:if>
 			<c:if test="${page < maxpage }">
 			  <li class="page-item">
-				<a href="BoardList.bo?page=${page+1}" 
+				<a href="list?page=${page+1}" 
 				   class="page-link">&nbsp;다음</a>
 			  </li>	
 			</c:if>
@@ -135,8 +170,8 @@
 						<font size=5>등록된 글이 없습니다.</font>
 					</c:if>
 					
-					<button type="button" class="btn btn-info float-right">글 쓰 기</button>
-                </div>
+					<button type="button" class="btn btn-info float-right" id="float-right">글 쓰 기</button>
+                
          </div><!--     <div class="row"> end -->
         </div><!-- container end -->
      </section>

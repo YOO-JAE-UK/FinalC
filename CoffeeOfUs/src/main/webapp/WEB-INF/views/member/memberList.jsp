@@ -87,9 +87,26 @@ select{
    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
    outline:none;
  }
- .container{width:60%}
+ .container{
+ width:60%;
+ font-size:15px;
+ }
+ 
  td:nth-child(1){wieth:33%}
- .input-group{margin-bottom:3em}
+ 
+ .input-group{
+ margin-bottom:1em;
+ margin-top:4em;
+ }
+ 
+ .form-control{
+ height: 40px !important;
+ font-size:15px !important;
+ }
+ #submit_btn{
+ font-size:15px;
+ height: 39px;
+ }
 </style>
 </head>
 <body>
@@ -104,16 +121,16 @@ select{
      </select>
      <input name="search_word" type="text" class="form-control"
             placeholder="아이디 입력하세요" value="${search_word}">
-     <button class="btn btn-primary" type="submit">검색</button>
+     <button class="btn btn-primary" type="submit" id="submit_btn">검색</button>
     </div>
  </form>
  <%--회원이 있는 경우 --%>
  <c:if test="${listcount > 0 }"> <%-- 회원이 있는 경우 --%> 
  <table class="table table-striped">
-   <caption style="font-weight:bold">회원 목록</caption>
+   <caption style="font-weight:bold">관리자 전용</caption>
      <thead>
        <tr>
-         <th colspan="2">MVC 게시판 - 회원 정보 list</th>
+         <th colspan="2">회원 목록</th>
          <th>
               <font size=3>회원 수 : ${listcount}</font>
          </th>

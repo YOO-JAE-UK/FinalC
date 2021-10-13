@@ -17,27 +17,26 @@
 	  	 (public String getQNA_NUM() {return QNA_NUM;})
 	  	 
 		 -->
-<!-- <insert id="insert" parameterType="board_qna">
+ <insert id="insert" parameterType="board_qna">
 	<selectKey resultType="int" order="BEFORE"
 				keyProperty="QNA_NUM">
 			select nvl(max(QNA_NUM),0)+1 from BOARD_QNA
 	</selectKey>
 	insert into BOARD_QNA
 	(QNA_NUM,
-	 QNA_NAME, QNA_PASS, QNA_SUBJECT, 
+	QNA_PASS, QNA_SUBJECT, USER_ID, USER_NICKNAME,
 	 QNA_CONTENT, QNA_FILE, QNA_ORIGINAL,
-	  QNA_RE_REF,
-	   QNA_RE_LEV, QNA_RE_SEQ, QNA_READCOUNT,
-	   QNA_DATE)
+	 QNA_DATE, QNA_READCOUNT, QNA_RE_REF,
+	   QNA_RE_LEV, QNA_RE_SEQ)
 		values
 		(#{QNA_NUM},
-		 #{QNA_NAME}, #{QNA_PASS}, #{QNA_SUBJECT},
+		 #{QNA_PASS}, #{QNA_SUBJECT}, #{USER_ID},#{USER_NICKNAME}, 
 		 #{QNA_CONTENT}, #{QNA_FILE, jdbcType=VARCHAR},
 		 #{QNA_ORIGINAL, jdbcType=VARCHAR},
-		 #{QNA_NUM},
-		 #{QNA_RE_LEV}, #{QNA_RE_SEQ}, #{QNA_READCOUNT},
-		 sysdate)
-</insert> -->
+		  sysdate, #{QNA_READCOUNT}, 
+		  #{QNA_NUM}, 0, 0
+		)
+</insert> 
 
 <select id="count" resultType="int">
 	select count(*)from BOARD_QNA
@@ -74,7 +73,7 @@
 
 </select> 
 
-<!-- <update id="readCountUpdate" parameterType="int">
+ <update id="readCountUpdate" parameterType="int">
 	update 	BOARD_QNA
 	set		QNA_READCOUNT=QNA_READCOUNT+1
 	where	QNA_NUM=#{number}
@@ -92,19 +91,25 @@
 	and		QNA_RE_SEQ <![CDATA[ > ]]> #{QNA_RE_SEQ}
 </update>
 
-QNA_FILE, QNA_ORIGINAL 필드 없어요
+<!-- QNA_FILE, QNA_ORIGINAL 필드 없어요  -->
 <insert id="reply_insert" parameterType="board_qna">
 	<selectKey resultType="int" order="BEFORE" keyProperty="QNA_NUM">
 		select nvl(max(QNA_NUM),0)+1 from QNA
 	</selectKey>
 	insert into BOARD_QNA
-	(QNA_NUM,QNA_NAME,QNA_PASS, QNA_SUBJECT,
-	QNA_CONTENT, QNA_RE_REF, QNA_RE_LEV, QNA_RE_SEQ,
-		QNA_READCOUNT, QNA_DATE)
-		values(#{QNA_NUM},
-		#{QNA_NAME}, #{QNA_PASS}, #{QNA_SUBJECT},
-	#{QNA_CONTENT}, #{QNA_RE_REF}, #{QNA_RE_LEV},
-	#{QNA_RE_SEQ}, #{QNA_READCOUNT},sysdate)
+	(COFFEE_NUM,
+	 COFFEE_PASS, COFFEE_SUBJECT, USER_ID, USER_NICKNAME,
+	 QNA_CONTENT, QNA_FILE, QNA_ORIGINAL,
+	 QNA_DATE, QNA_READCOUNT, QNA_RE_REF,
+	   QNA_RE_LEV, QNA_RE_SEQ)
+		values
+		(#{QNA_NUM},
+		 #{QNA_PASS}, #{QNA_SUBJECT}, #{USER_ID},#{USER_NICKNAME}, 
+		 #{QNA_CONTENT}, #{QNA_FILE, jdbcType=VARCHAR},
+		 #{QNA_ORIGINAL, jdbcType=VARCHAR},
+		  sysdate, #{QNA_READCOUNT}, 
+		  #{QNA_RE_REF}, #{QNA_RE_LEV}, #{QNA_RE_SEQ}
+		)
 </insert>
 
 <select id="boardWriter" parameterType="map" resultType="board_qna">
@@ -113,7 +118,7 @@ QNA_FILE, QNA_ORIGINAL 필드 없어요
 	and		 QNA_PASS=#{pass}
 </select>
 
-<update id="modify" parameterType="QNA">
+<update id="modify" parameterType="board_qna">
 	update BOARD_QNA
 	set
 		QNA_SUBJECT=#{QNA_SUBJECT},
@@ -123,6 +128,9 @@ QNA_FILE, QNA_ORIGINAL 필드 없어요
 	where QNA_NUM=#{QNA_NUM}
 </update>
 
+
+
+<!-- 
 <delete id="delete" parameterType="board_qna">
 	<![CDATA[
 		delete from BOARD_QNA
@@ -140,7 +148,9 @@ QNA_FILE, QNA_ORIGINAL 필드 없어요
 										WHERE	QNA_RE_REF=#{QNA_RE_REF} ))
 										)
 	 ]]>
-</delete> -->
+</delete> 
+-->
+
 
 <!-- 
 <insert id="insert_deleteFile" parameterType="String">

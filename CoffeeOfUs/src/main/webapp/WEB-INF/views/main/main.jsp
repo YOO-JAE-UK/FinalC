@@ -22,6 +22,11 @@
 <% String num = request.getParameter("num");%>
 	var i1=<%=num%>;
 		//alert(i1+"i의 값");
+
+var result="${message}";
+if(result == "abc"){
+   alert("탈퇴 되었습니다.")
+}		
 		
 </script>
 </head>
