@@ -101,7 +101,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int email_insert(String id,String user_email, String key) {
-		
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("user_email", user_email);
 		map.put("key", key);
@@ -128,6 +127,21 @@ public class MemberServiceImpl implements MemberService {
 	public int verifyKeyCheck(String id) {
 		Email email=dao.verifyKeyCheck(id);
 		return (email != null) ? 1 : 0;
+	}
+
+	@Override
+	public String passcheck(Member m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//비밀번호 변경
+	@Override
+	public int changepass(String id, String newpass) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		map.put("newpass", newpass);
+		return dao.changepass(map);
 	}
 
 	

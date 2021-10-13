@@ -6,13 +6,10 @@
 <title>JOIN</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>    
-<script src="../resources/js/join.js" charset="utf-8"></script>
+<script src="../resources/js/member/join.js" charset="utf-8"></script>
 <link href="${pageContext.request.contextPath }/resources/css/join.css"   
      type="text/css" rel="stylesheet">
 <script>
-<% String num = request.getParameter("num");%>
-var i1=<%=num%>;
-	//alert(i1+"i의 값");
 
 
 </script>

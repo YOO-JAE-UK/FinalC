@@ -23,21 +23,9 @@ $(function() {
 })
 $(function() {
 	$(".dropbtn").click(function() {
-		location.href = "${pageContext.request.contextPath}/member/drop_member?id=${id}";   //controller주소
+		location.href = "${pageContext.request.contextPath}/member/drop";   //controller주소
 	});
 })
-
-/* //이미지 보기
- $(function preview(e){
-	var reader = new FileReader();
-	reader.readAsDataURL(file);
-	reader.onload = function(e){
-		
-	}
-} */ 
-
-
-
 
 </script>
 <style>

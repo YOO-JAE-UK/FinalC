@@ -9,12 +9,12 @@ public class Board_Qna {
 	private String QNA_SUBJECT;
 	private String USER_ID;
 	private String USER_NICKNAME;
+	private String QNA_DATE;
+	private int QNA_READCOUNT;
 	private String QNA_CONTENT;
 	private int QNA_RE_REF;
 	private int QNA_RE_LEV;
 	private int QNA_RE_SEQ;
-	private int QNA_READCOUNT;
-	private String QNA_DATE;
 
 	private MultipartFile uploadFile; // db없음 
 	private String QNA_ORIGINAL; //파일이름

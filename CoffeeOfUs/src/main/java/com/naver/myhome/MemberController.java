@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naver.myhome.domain.Email;
 import com.naver.myhome.domain.MailVO;
 import com.naver.myhome.domain.Member;
@@ -73,13 +74,7 @@ public class MemberController {
 	  private String saveFolder;
 	  
 
-	/*
-	 * @CookieValue(value="saveid", required=false) Cookie readCookie 
-	 * 이름이 saveid인 쿠키를 Cookie 타입으로 전달받습니다.
-	 * 지정한 이름의 쿠키가 존재하지 않을 수도 있기 때문에 required=false로 설정해야 합니다.
-	 * 즉, id 기억하기를 선택하지 않을 수도 있기 때문에 required=false로 설정해야 합니다. 
-	 * required=true 상태에서 지정한 이름을 가진 쿠키가 존재하지 않으면 스프링 MVC는 익셉션을 발생시킵니다.
-	 */
+
 	// http://localhost:8088/myhome/member/loginForm
 	// 로그인 폼이동
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -94,32 +89,16 @@ public class MemberController {
 		return mv;
 	}
 	
-	
-	// http://localhost:8088/myhome4/member/joinForm
-	// 회원가입 폼 이동
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
-		return "member/joinForm"; // WEB-INF/views/member/joinForm.jsp
-	}
-	
-	
-	// 회원가입폼에서 아이디 중복 검사
-	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
-	// 파라미터 값과 String id 변수 이름이 같으면 생략가능 (delete에 생략함)
-	public void idcheck(@RequestParam("id") String id, 
-						HttpServletResponse response) throws Exception {
-		int result = memberservice.isId(id);
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.print(result);
-	}	
-	
-	
 	// 로그인 처리
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-	public String loginProcess(@RequestParam("id") String id, @RequestParam("password") String password,
-			@RequestParam(value = "remember", defaultValue = "", required = false) String remember,
-			HttpServletResponse response, HttpSession session, RedirectAttributes rattr) {
+	public String loginProcess(
+			@RequestParam("id") String id, 
+			@RequestParam("password") String password,
+			@RequestParam(value = "remember", defaultValue = "", required = false) 
+			String remember,
+			HttpServletResponse response,
+			HttpSession session, 
+			RedirectAttributes rattr) {
 
 		int result = memberservice.isId(id, password);
 		logger.info("결과 : " + result);
@@ -127,6 +106,7 @@ public class MemberController {
 		if (result == 1 && mailresult==1) {
 			// 로그인 성공
 			session.setAttribute("id", id);
+			logger.info("id =" + id);
 			Cookie savecookie = new Cookie("saveid", id);
 			if (!remember.equals("")) {
 				savecookie.setMaxAge(60 * 60);
@@ -146,109 +126,103 @@ public class MemberController {
 	}
 	
 	
-	
-	// 회원가입처리
-		@RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
-		public String joinProcess(Member member, 
-		   @RequestParam("tel_1") String tel1,
-		   @RequestParam("tel_2") String tel2,
-		   @RequestParam("tel_3") String tel3,
-		   RedirectAttributes rattr, 
-		   Model model, 
-		   HttpServletRequest request) throws Exception {
-			
-			MultipartFile uploadfile = member.getUploadfile();
-			
-			if(!uploadfile.isEmpty()) {
-				String fileName = uploadfile.getOriginalFilename();//원래 파일명
-				member.setUSER_IMG(fileName);//원래 파일명 저장
-				String saveFolder = 
-						request.getSession().getServletContext().getRealPath("resources")
-						+ "/upload/";
-				String fileDBName = fileDBName(fileName, saveFolder);
-				logger.info("fileDBName = " + fileDBName);
-				
-				// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
-				uploadfile.transferTo(new File(saveFolder + fileDBName));
-				
-				// 바뀐 파일명으로 저장
-				member.setUSER_FILE(fileDBName);
-			}
-			
-			
-			
-			String user_phone=tel1+"-" + tel2+"-"+tel3;
-			
-			member.setUSER_PHONE(user_phone);
-			//비밀번호 암호화 추가
-			//String encPassword = passwordEncoder.encode(member.getUSER_PASS());
-			//logger.info(encPassword);
-			//member.setUSER_PASS(encPassword);
-			int result = memberservice.insert(member);
-			
-			String key = getKey(50,false);
-			int mail_result=memberservice.email_insert(member.getUSER_ID(),member.getUSER_EMAIL(),key);
-			
-			// result=0;
-		/*
-		 * 스프링에서 제공하는 RedirectAttributes는 기존의 Servlet에서 사용되던 response.sendRedirect()를
-		 * 사용할 때와 동일한 용도로 사용합니다. 리다이렉트로 전송하면 파라미터를 전달하고자 할 때 addAttribute()나
-		 * addFlashAtribute()를 사용합니다. 예) response.sendRedirect("/test?result=1"); =>
-		 * rattr.addAttribute("result",1)"
-		 */
-				
-		// 삽입이 된 경우
-			if (result == 1 && mail_result==1) {
-				MailVO vo = new MailVO();
-				vo.setTo(member.getUSER_EMAIL());
-				vo.setContent(new StringBuffer()
-						.append("아이디는 : " + member.getUSER_ID() + "입니다." + "<br>" )
-						.append("비밀번호는 : " + member.getUSER_PASS() +"입니다." + "<br>" )
-						.append("이름은 : " + member.getUSER_NAME() + "입니다." + "<br>" )
-						.append("닉네임은 : " + member.getUSER_NICKNAME() + "입니다." + "<br>" )
-				        .append("<a href='http://localhost:8088/myhome/member/emailConfirm?email=")
-				        .append(member.getUSER_EMAIL()).append("&key=").append(key)
-				        .append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString()); 
-				sendMail.sendMail(vo);
-				
-				rattr.addFlashAttribute("result", "emailSuccess");
-				return "redirect:login";
-			} else {
-				model.addAttribute("url", request.getRequestURL());
-				model.addAttribute("message", "회원 가입 실패");
-				return "error/error";
-			}
-		}	
-		
-		/*
-		 * 스프링 컨테이너는 매개변수 Board객첵를 생성하고
-		 * Board객체의 setter 메서드들을 호출하여 사용자 입력값을 설정합니다.
-		 * 매개변수의 이름과 setter의 property가 일치하면 됩니다.
-		 */
 	/*
-	 * @PostMapping("/add") //@RequestMapping(vale="/add/,method=RequestMethod.POST)
-	 * public String add(Member member, HttpServletRequest request) throws Exception
-	 * {
-	 * 
-	 * MultipartFile uploadfile = member.getUploadfile();
-	 * 
-	 * if(!uploadfile.isEmpty()) { String fileName =
-	 * uploadfile.getOriginalFilename();//원래 파일명 member.setUSER_IMG(fileName);//원래
-	 * 파일명 저장 String saveFolder =
-	 * request.getSession().getServletContext().getRealPath("resources") +
-	 * "/upload/"; String fileDBName = fileDBName(fileName, saveFolder);
-	 * logger.info("fileDBName = " + fileDBName);
-	 * 
-	 * // transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
-	 * uploadfile.transferTo(new File(saveFolder + fileDBName));
-	 * 
-	 * // 바뀐 파일명으로 저장 member.setUSER_FILE(fileDBName); }
-	 * 
-	 * MemberService.insert(m); //저장메서드 호출
-	 * 
-	 * return "redirect:list"; }
+	 * @CookieValue(value="saveid", required=false) Cookie readCookie 
+	 * 이름이 saveid인 쿠키를 Cookie 타입으로 전달받습니다.
+	 * 지정한 이름의 쿠키가 존재하지 않을 수도 있기 때문에 required=false로 설정해야 합니다.
+	 * 즉, id 기억하기를 선택하지 않을 수도 있기 때문에 required=false로 설정해야 합니다. 
+	 * required=true 상태에서 지정한 이름을 가진 쿠키가 존재하지 않으면 스프링 MVC는 익셉션을 발생시킵니다.
 	 */
 	
+	// 회원가입폼에서 아이디 중복 검사
+	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
+	public void idcheck(@RequestParam("id") String id, 
+			HttpServletResponse response) throws Exception {
+		int result = memberservice.isId(id);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(result);
+	}	
+	
+	
+	// http://localhost:8088/myhome4/member/joinForm
+	// 회원가입 폼 이동
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	public String join() {
+		return "member/joinForm"; // WEB-INF/views/member/joinForm.jsp
+	}
+		
+	// 회원가입처리
+	@RequestMapping(value = "/joinProcess", method = RequestMethod.POST)
+	public String joinProcess(Member member, 
+	   @RequestParam("tel_1") String tel1,
+	   @RequestParam("tel_2") String tel2,
+	   @RequestParam("tel_3") String tel3,
+	   RedirectAttributes rattr, 
+	   Model model, 
+	   HttpServletRequest request) throws Exception {
+		
+		MultipartFile uploadfile = member.getUploadfile();
+		
+		if(!uploadfile.isEmpty()) {
+			String fileName = uploadfile.getOriginalFilename();//원래 파일명
+			member.setUSER_IMG(fileName);//원래 파일명 저장
+			logger.info("saveFolder = " + saveFolder);
+			String fileDBName = fileDBName(fileName, saveFolder);
+			logger.info("fileDBName = " + fileDBName);
+			
+			// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+			uploadfile.transferTo(new File(saveFolder + fileDBName));
+			
+			// 바뀐 파일명으로 저장
+			member.setUSER_FILE(fileDBName);
+		}
+		
+		
+		
+		String user_phone=tel1+"-" + tel2+"-"+tel3;
+		
+		member.setUSER_PHONE(user_phone);
+		//비밀번호 암호화 추가
+		//String encPassword = passwordEncoder.encode(member.getUSER_PASS());
+		//logger.info(encPassword);
+		//member.setUSER_PASS(encPassword);
+		int result = memberservice.insert(member);
+		
+		String key = getKey(50,false);
+		int mail_result=memberservice.email_insert(member.getUSER_ID(),member.getUSER_EMAIL(),key);
+		
+		// result=0;
+	/*
+	 * 스프링에서 제공하는 RedirectAttributes는 기존의 Servlet에서 사용되던 response.sendRedirect()를
+	 * 사용할 때와 동일한 용도로 사용합니다. 리다이렉트로 전송하면 파라미터를 전달하고자 할 때 addAttribute()나
+	 * addFlashAtribute()를 사용합니다. 예) response.sendRedirect("/test?result=1"); =>
+	 * rattr.addAttribute("result",1)"
+	 */
+				
+	// 삽입이 된 경우
+		if (result == 1 && mail_result==1) {
+			MailVO vo = new MailVO();
+			vo.setTo(member.getUSER_EMAIL());
+			vo.setContent(new StringBuffer()
+					.append("아이디는 : " + member.getUSER_ID() + "입니다." + "<br>" )
+					.append("비밀번호는 : " + member.getUSER_PASS() +"입니다." + "<br>" )
+					.append("이름은 : " + member.getUSER_NAME() + "입니다." + "<br>" )
+					.append("닉네임은 : " + member.getUSER_NICKNAME() + "입니다." + "<br>" )
+			        .append("<a href='http://localhost:8088/myhome/member/emailConfirm?email=")
+			        .append(member.getUSER_EMAIL()).append("&key=").append(key)
+			        .append("' target='_blenk'>가입 완료를 위해 이메일 이곳을 눌러주세요</a>").toString()); 
+			sendMail.sendMail(vo);
+			
+			rattr.addFlashAttribute("result", "emailSuccess");
+			return "redirect:login";
+		} else {
+			model.addAttribute("url", request.getRequestURL());
+			model.addAttribute("message", "회원 가입 실패");
+			return "error/error";
+		}
+	}	
+		
 	private String fileDBName(String fileName, String saveFolder) {
 		// 새로운 폴더 이름 : 오늘 년+월+일
 		Calendar c = Calendar.getInstance();
@@ -433,17 +407,51 @@ public class MemberController {
 	
 	//수정처리
 	@RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
-                                
 	                             // 커맨드 객체
 	public String updateProcess(Member member, Model model,
 			                   HttpServletRequest request,
-			                   RedirectAttributes rattr) {
-		
+			                   RedirectAttributes rattr, 
+			                   String check) throws Exception {
 		                              // 서비스인플 의 update(Member m)에 들어감
+		
+		MultipartFile uploadfile = member.getUploadfile();
+		logger.info("수정오류 확인" +member.getUSER_ADDRESS());
+		logger.info("수정오류 확인" +member.getUSER_ADDRESS_POST());
+		logger.info("수정오류 확인" +member.getUSER_EMAIL());
+		logger.info("수정오류 확인file: " +member.getUSER_FILE());
+		logger.info("수정오류 확인" +member.getUSER_ID());
+		logger.info("수정오류 확인img: " +member.getUSER_IMG()); //original
+		logger.info("수정오류 확인" +member.getUSER_NAME());
+		logger.info("수정오류 확인" +member.getUSER_NICKNAME());
+		logger.info("수정오류 확인" +member.getUSER_PHONE());
+		logger.info("수정오류 확인pass: " +member.getUSER_PASS());
+		if (check != null && !check.equals("")) { // 기존파일 그대로 사용하는 경우입니다.  	
+	        logger.info("기존파일 그대로 사용합니다.");
+	        member.setUSER_IMG(check);
+	        //<input type="hidden" name="BOARD_FILE" value="${boarddata.BOARD_FILE}>
+	        //jsp의 위 문장 때문에 board.setBOARD_FILE()값은 자동 저장됩니다.
+	} else {
+		  if(uploadfile != null && !uploadfile.isEmpty()) { 
+		String fileName =  uploadfile.getOriginalFilename(); 
+		member.setUSER_IMG(fileName);
+
+		  String fileDBName = fileDBName(fileName, saveFolder);
+		  logger.info("fileDBName = " + fileDBName);
+		  
+		  // transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+		  uploadfile.transferTo(new File(saveFolder + fileDBName));
+		   member.setUSER_FILE(fileDBName); 
+		   } else {
+			  member.setUSER_FILE("");
+			  member.setUSER_IMG("");
+		   }
+	}
+		  
 		int result = memberservice.update(member);
 		if (result == 1) {
 			rattr.addFlashAttribute("result", "updateSuccess");
-			return "redirect:/board/list";
+			rattr.addAttribute("id", member.getUSER_ID());
+			return "redirect:/member/member_info";
 		} else {
 			model.addAttribute("url", request.getRequestURL());
 			model.addAttribute("message", "정보 수정 실패");
@@ -470,21 +478,69 @@ public class MemberController {
 		return "member/changepass"; // WEB-INF/views/member/changepass.jsp
 	}
 	
-	
-	
-	// 회원 탈퇴
-	@RequestMapping(value = "/drop_member", method = RequestMethod.GET)
-	public String drop_member() {
-		return "member/drop_member"; // WEB-INF/views/member/drop_member.jsp
+	@RequestMapping(value = "/changepassProcess", method = RequestMethod.POST)
+	public String changepassProcess(
+		@RequestParam("id") String id, 
+		@RequestParam("curpass") String pass,
+		@RequestParam("newpass") String newpass) {
+		int result=memberservice.isId(id, pass);
+		
+		logger.info("비밀번호 변경 changepassProcess");
+		logger.info("result="+ result);
+		if(result==1) {
+			memberservice.changepass(id,newpass);
+			
+			return "redirect:member_info?id="+id; 
+		}else {
+			logger.info("비밀번호 변경 실패");
+			return "member/changepass";
+		}
 	}
+	
+	//비밀번호 체크
+	@ResponseBody	
+	@RequestMapping(value="/passCheck", method = RequestMethod.POST)
+		public String passCheck(
+				@RequestParam("USER_ID") String id,
+				@RequestParam("USER_PASS") String pass) throws JsonProcessingException {
+			int result = memberservice.isId(id);
+			ObjectMapper mapper = new ObjectMapper();
+			String none =""+result;
+			return mapper.writeValueAsString(none);
+		}
+	
+	
 		
-	// 회원 탈퇴
-//	@RequestMapping(value = "/drop_member", method = RequestMethod.GET)
-//	public String drop_member (String id) {
-//		memberservice.delete(id);
-//		return "redirect:list";
-//	}
+	// 회원 탈퇴 jsp 페이지 이동
+	@RequestMapping(value = "/drop", method = RequestMethod.GET)
+	public String drop () {
+		return "member/drop";
+	}
+	    
+	// 회원 탈퇴 처리
+	@RequestMapping(value = "/dropProcess", method = RequestMethod.POST)
+	public String dropProcess (
+		 String USER_ID, 
+		 String USER_PASS,
+		HttpSession session,
+		RedirectAttributes rattr) {
 		
+		int result=memberservice.isId(USER_ID, USER_PASS);
+	
+		if(result==1) {
+			memberservice.delete(USER_ID);
+			logger.info("탈퇴 성공, 세션값 무효화 성공");
+			
+			//세션 삭제
+			session.invalidate();
+
+			rattr.addFlashAttribute("message", "abc");
+			return "redirect:../main/main";
+		}else {
+			logger.info("탈퇴 실패");
+			return "member/drop";
+		}
+	}
 		
 	//로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

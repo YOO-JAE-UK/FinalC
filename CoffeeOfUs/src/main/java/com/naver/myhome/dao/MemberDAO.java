@@ -50,8 +50,14 @@ public class MemberDAO {
 	}
 	
 	// 회원 탈퇴
-	public void delete(String id) {
-		 sqlSession.delete("Members.delete", id);
+	public int delete(String id) {
+		return sqlSession.delete("Members.delete", id);
+	}
+	
+	
+	// 비밀번호 변경
+	public int changepass(Map<String, Object> map) {
+		return sqlSession.update("Members.modify", map);
 	}
 
 	public int getSearchListCount(Map<String, String> map) {
@@ -78,7 +84,8 @@ public class MemberDAO {
 	public Email verifyKeyCheck(String id) {
 		return sqlSession.selectOne("Email.verifyKeyCheck",id);
 	}
-	
+
+
 	
 	
 

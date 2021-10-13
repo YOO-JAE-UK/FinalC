@@ -62,6 +62,6 @@ public class Board_Qna_DAO {
 	}
 
 	public List<String> getDeleteFileList() {
-		return sqlSession.selectList("Boards_Qna.eteFileList");
+		return sqlSession.selectList("Boards_Qna.deteFileList");
 	}
 }

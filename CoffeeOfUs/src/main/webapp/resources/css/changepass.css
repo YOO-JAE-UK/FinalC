@@ -23,6 +23,15 @@
     padding: 16px;
 }
 
+.changepassidbtn{
+	font-size: 15px;
+	padding: 8px;
+    width: 100%;
+}
+#curpass, #newpass, #newpasscheck{
+	font-size:15px;
+}
+
 
 input{border:1px solid lightgray}
 input[type=text], input[type=password] {

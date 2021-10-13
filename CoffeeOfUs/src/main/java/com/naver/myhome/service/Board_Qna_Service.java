@@ -9,7 +9,7 @@
 	  
 	  // 글의 갯수 구하기 
 	  public int getListCount();
- 
+  
   
 	  //글 목록 보기 
 	  public List<Board_Qna> getBoardList(int page, int limit);
