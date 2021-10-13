@@ -3,6 +3,10 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
     
 <configuration>
+	<settings>
+  	<setting name="jdbcTypeForNull" value="NULL" />
+   </settings>
+	
 	<typeAliases>
 		<typeAlias alias="board_coffee"   type="com.naver.myhome.domain.Board_Coffee"/>
 		<typeAlias alias="board_qna"      type="com.naver.myhome.domain.Board_Qna"/>
@@ -12,7 +16,7 @@
 		<typeAlias alias="member"         type="com.naver.myhome.domain.Member"/>
 		<typeAlias alias="attend_check_member"   type="com.naver.myhome.domain.AttendCheckMember"/>
 		<typeAlias alias="email"          type="com.naver.myhome.domain.Email"/>
-		
+		<typeAlias alias="board_event"          type="com.naver.myhome.domain.Board_Event"/>
 	</typeAliases>
 	
 	<mappers>
@@ -24,6 +28,6 @@
 		<mapper resource="sql/member.xml"/>
 		<mapper resource="sql/attend_check.xml"/>
 		<mapper resource="sql/email.xml"/>
-		
+		<mapper resource="sql/board_event.xml"/>
 	</mappers>
 </configuration>

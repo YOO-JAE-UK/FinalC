@@ -129,6 +129,17 @@ div.content {
 		float: none;
 	}
 }
+.fc-left{
+	width:36% !important;
+}
+
+.fc-center{
+	width:15% !important;
+	
+}
+
+
+
 </style>
 </head>
 <body>
