@@ -9,6 +9,9 @@
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 이거추가하면 되는게안됨 안되는건 됨-->
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -105,17 +108,7 @@ div.content {
 	}
 }
 
-
-/* 부트스트랩 재정의 */
-.nice-select  {
-	line-height: 20px !important;
-}
-.select_form1{
-	height: 30px !important;
-    width: 20px !important;
-    padding-right: 30px !important;
-    padding-left: 10px !important;
-}
+  
 </style>
 <script>
 
@@ -157,38 +150,69 @@ div.content {
 					</div>
 						<div>
 							<div style="float:left; width: 300px; height:300px; margin-left: 5%">
-								<form>
-								<table>
-									<thead>
-										<tr>
-											<th colspan="2">맛</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>향</td>
-											<td>
-												<select class="form-control select_form1">
-												  <option>1</option>
-												  <option>2</option>
-												  <option>3</option>
-												  <option>4</option>
-												  <option>5</option>
-												</select>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								</form>
+									<canvas id="myChart" width="300" height="300"></canvas>
 							</div>
 							<div style="float:left; width: 300px; height:300px; background: red; margin-left: 5%">
 								<div style="width: 100%;height: 100px;border: 1px solid black;">로스팅</div>
 								<div style="width: 100%;height: 200px;border: 1px solid black;">짧은설명</div>
 							</div>	
 						</div>
-				
+					<script>
 					
-					
+					//chart.js
+					var ctx = document.getElementById('myChart').getContext('2d');
+					var myChart = new Chart(ctx, {
+					    type: 'radar',
+					    data: {
+					        labels: ['향', '신맛', '단맛', '밸런스', '바디감'],
+					        datasets: [{
+					            label: '맛',
+					            data: [5, 4, 3, 2, 1],
+					           /*  backgroundColor: [
+					                'rgba(255, 99, 132, 0.2)',
+					                'rgba(54, 162, 235, 0.2)',
+					                'rgba(255, 206, 86, 0.2)',
+					                'rgba(75, 192, 192, 0.2)',
+					                'rgba(153, 102, 255, 0.2)',
+					                'rgba(255, 159, 64, 0.2)'
+					            ], */
+					          /*   borderColor: [
+					                'rgba(255, 99, 132, 1)',
+					                'rgba(54, 162, 235, 1)',
+					                'rgba(255, 206, 86, 1)',
+					                'rgba(75, 192, 192, 1)',
+					                'rgba(153, 102, 255, 1)',
+					                'rgba(255, 159, 64, 1)'
+					            ], */
+					            borderWidth: 0,
+					            
+					            borderColor:'rgba(162, 97, 31, 0.7)',
+					            backgroundColor:'rgba(162, 97, 31, 0.7)'
+					        }]
+					    },
+					    options: {
+					    	animation:false,
+					    	grid:{
+					    		circular:false
+					    	},
+					    	legend:{
+					        	display:false
+					        },
+					    	scale:{
+					    			ticks: {
+					    				display:false, //글자없애기
+						        		maxTicksLimit:5,
+						        		
+						        	},
+					    	},
+					    	
+					        
+					        
+					       
+					        
+					    }
+					});
+</script>
 					
 				<div style="clear: both;">
 				<button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#myModal">단어 추가하기</button> 

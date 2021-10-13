@@ -6,6 +6,34 @@
 <meta charset="UTF-8">
 <title>Story</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
+<style>
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height: 100%;
+  width:200px;
+  height: 200px;
+  float: left;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+<script>
+let map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8,
+  });
+}
+</script>
 </head>
 <body>
 <jsp:include page="../header.jsp">
@@ -26,8 +54,11 @@
                 	</ul>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-9">
-                	hi~
+                
+                	
+                
                 </div>
+                
          </div><!--     <div class="row"> end -->
         </div><!-- container end -->
      </section>

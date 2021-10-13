@@ -17,7 +17,7 @@ function ajax(sdata){
 	console.log(sdata)
 	output="";
 	$.ajax({
-		tpye : "POST",
+		type : "POST",
 		data : sdata,
 		url : "list_ajax",
 		dataType : "json",
