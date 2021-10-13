@@ -17,6 +17,7 @@
 		<typeAlias alias="attend_check_member"   type="com.naver.myhome.domain.AttendCheckMember"/>
 		<typeAlias alias="email"          type="com.naver.myhome.domain.Email"/>
 		<typeAlias alias="board_event"          type="com.naver.myhome.domain.Board_Event"/>
+		<typeAlias alias="coffee" 	type="com.naver.myhome.domain.Coffee"/>
 	</typeAliases>
 	
 	<mappers>
@@ -29,5 +30,6 @@
 		<mapper resource="sql/attend_check.xml"/>
 		<mapper resource="sql/email.xml"/>
 		<mapper resource="sql/board_event.xml"/>
+		<mapper resource="sql/coffee.xml"/>
 	</mappers>
 </configuration>
