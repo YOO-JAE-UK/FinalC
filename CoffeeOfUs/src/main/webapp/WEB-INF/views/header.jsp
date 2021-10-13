@@ -12,9 +12,8 @@
     <title>CoffeeOfUs</title>	
 
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <script src="../resources/js/jquery-3.6.0.js"></script> 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
+  
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
@@ -242,7 +241,7 @@ $(document).ready(function(){
                                  <li class="community"><a href="#">커뮤니티</a>
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/board_coffee/list">커피정보게시판</a></li>
-                                        <li><a href="#">출석 게시판</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/board_event/list">출석 게시판</a></li>
                                         <li><a href="#">추천음악 게시판</a></li>
                                         <li><a href="#">투어 게시판</a></li>
                                         <li><a href="${pageContext.request.contextPath}/board_qna/list">Q & A</a></li>
@@ -267,15 +266,7 @@ $(document).ready(function(){
     <!-- Header Section End -->
         <!-- Js Plugins -->
     
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/popper.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-   <%--  <script src="${pageContext.request.contextPath}/resources/js/jquery.nice-select.min.js"></script>  이거하면 셀렉트안됨--%>
-   <%--  <script src="${pageContext.request.contextPath}/resources/js/jquery.barfiller.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script> --%>
-    
+  
 
 </body>
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board_event">
+	
+  <insert id="insert" parameterType="board_event">
+  	<selectKey resultType="int" order="BEFORE"
+  		keyProperty="event_board_num">
+  		select nvl(max(event_board_num),0)+1 from board_event
+  	</selectKey>
+    	insert into board_event 
+	    (event_board_num, 
+	     id,content,event_re_ref,
+	     event_re_lev,event_re_seq,
+	     reg_date) 
+		 values
+		 (#{event_board_num},
+		  #{id},  #{content},  #{event_board_num},
+		  #{event_re_lev}, #{event_re_seq}, 
+		  sysdate)
+  </insert>
+ 
+ <select id="count" resultType="int">
+ 	select count(*) from board_event
+ </select>
+ <select id="getList" parameterType="map" resultType="board_event">
+ 	select * from
+  	( select rownum rnum, b.*
+  	 from 
+  	 	(select event_board_num, 
+	     id, content, event_re_ref,
+	     event_re_lev, event_re_seq,
+	     reg_date, c.user_file 
+	     from  board_event a join member c
+	     on a.id=c.user_id
+  	 	 <include refid="status"/>
+  	 	 event_RE_SEQ asc) b
+  	 )
+  	 
+  	 where rnum &gt;= #{startrow} and rnum &lt;= #{endrow}		
+ 
+ </select>
+ <sql id="status">
+ 	order by event_re_ref
+ 	<choose>
+ 			<when test="state==1"> desc,</when>
+			<when test="state==2"> asc,</when>	 	
+ 	</choose>
+ 
+ </sql>
+</mapper>

@@ -8,7 +8,7 @@ function getCalendar() {
 
 	$('#calendar').fullCalendar(
 			{
-				height : 660,
+				height : 680,
 				aspectRatio : 2,
 				handleWindowResize: true,
 				header : {
@@ -30,7 +30,7 @@ function getCalendar() {
 				// 출석체크를 위한 버튼 생성
 				customButtons : {
 					custom2 : {
-						text : '출석체크하기',
+						text : '출석체크',
 						id : 'check',
 						click : function() {
 
@@ -105,7 +105,7 @@ function isCheck() {
 			} else {
 				$(".fc-custom2-button").css('color', 'black');
 				$(".fc-custom2-button").prop('disabled', false);
-				$(".fc-custom2-button").text("출석체크하기");
+				$(".fc-custom2-button").text("출석체크");
 			}
 		}
 
