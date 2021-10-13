@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Coffees">
+
+ <select id="word_list" resultType="coffee">
+		select *from FWORD
+</select>
+
+<select id="word_content" resultType="String" parameterType="String">
+	select FWORD_CONTENT 
+	from FWORD
+	where FWORD_WORD=#{word}
+</select>
+
+<insert id="add_word" parameterType="coffee" >
+	<selectKey resultType="int" order="BEFORE"
+				keyProperty="FWORD_NUM">
+			select nvl(max(FWORD_NUM),0)+1 from FWORD
+	</selectKey> 
+	insert into FWORD values(#{FWORD_NUM}, #{FWORD_CONSONANT},#{FWORD_WORD},#{FWORD_CONTENT})
+</insert>
+</mapper>
