@@ -17,7 +17,7 @@ function ajax(sdata){
 	console.log(sdata)
 	output="";
 	$.ajax({
-		tpye : "POST",
+		type : "POST",
 		data : sdata,
 		url : "list_ajax",
 		dataType : "json",
@@ -97,7 +97,14 @@ $(function() {
 		go(1);//보여줄 페이지를 1페이지로 설정합니다.
 	}); //change end
 	
-	$("button").click(function(){
+	$("#write_btn").click(function(){
 		location.href="tour_board_write";
 	})
+	
+	$(".searchButton",function(){
+	viewcount =$("#viewcount option:selected").val();
+	input = $("#search_input").val();
+
+})
+	
 })

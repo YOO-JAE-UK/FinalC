@@ -13,22 +13,22 @@ function setPaging(href, digit){
 	output += anchor;
 	return output;
 }
-function getList(page){
-
+function getList(page, search_type, search_text){
+	$("#ajax_content").empty();
 	//console.log(sdata)
 	$.ajax({
-		tpye : "GET",
+		type : "GET",
 		data : {
-			 "page":page
+			 "page":page,
+			 "search_type": search_type,
+			 "search_text" : search_text
 		},
 		url : "tour_board_list1",
 		dataType : "json",
 		//cashe : false,
 		success : function(data) {
-			//$("#viewcount").val(data.limit); //엄청긴글의 json을 받아온거에 limit값 고정할려고씀
+			$("#viewcount").val(data.search_type); //엄청긴글의 json을 받아온거에 limit값 고정할려고씀
 			//$("table").find("font").text("글 개수 : " + data.listcount);
-			
-			
 			
 			if(data.listcount > 0) { //총 갯수가 0보다 큰경우
 				
@@ -37,8 +37,32 @@ function getList(page){
 			 var num =data.listcount;	//변수 선언
 				
 				
-				output+='<div style="text-align: center;"><h2><b><font color="#ED4C6B">Tour_List</font></b></h2></div>';
+				output+='<div style="text-align: center;"><h2><b><font color="#99654e">Tour_List</font></b></h2></div>';
 				  output+=' <font size=3 style="margin-left: 15px; margin-bottom: 20px" id="count">글 개수 :'+num+'</font>'	;
+				  //검색
+				
+			
+				output+=' 		  <div class="wrap">'
+					
+						output+='<select id="viewcount" name="search_field" class="search_field">'
+						output+='	<option value="0" selected>제목</option>'
+						output+='	<option value="1" >카페이름</option>'
+						output+='	<option value="2" >내용</option>'
+						output+='	<option value="3" >작성자</option>'
+						output+='</select>'	
+				output+=' 	   <div class="search">'
+				output+=' 	      <input id="search_input" type="text" class="searchTerm" placeholder="찾을 단어를 검색해 보세요!" value="'+data.search_text+'">'
+				output+=' 	      <button type="submit" class="searchButton">'
+				output+=' 	        <i class="fa fa-search"></i>'
+				output+=' 	     </button>'
+				output+=' 	   </div>'
+				output+=' 		</div>'
+					
+					
+					output+='<input type="hidden" id="viewcount_text" value='+data.search_type+'>'
+					output+='<input type="hidden" id="search_input_text" value='+data.search_text+'>'
+				  
+				  
 				  output+='	 <div class="container mt-2">';
 				  output+='	  <div class="row">';
 				  
@@ -81,12 +105,12 @@ function getList(page){
 				  		
 				  		output+='</div>';// <!-- row end -->
 				  		output+='</div>';//<!-- <div class="container mt-2"> -->
-				  		output+='<button type="button" class="btn btn-info float-right">글 쓰 기</button>';
+				  		output+='<button type="button" class="btn btn-info float-right" id="write_btn">글 쓰 기</button>';
 				  		output+='<div class="col-sm-2"></div>';
 				  		output+='	</div>';
 				  		output+='</div>';
 				  		if(data.listcount>data.limit){
-				  			output+='<div style="    background: linear-gradient(to bottom, #e2e2e2, transparent); height:30px;" id="more"></div>';
+				  			output+='<div id="more"></div>';
 				  		}
 				  		$("#ajax_content").append(output);//
 				
@@ -104,20 +128,41 @@ function getList(page){
 
 
 $(document).on("click","#more",function(){
-	$("#ajax_content").empty();
-	getList(more_i)
+	viewcount =$("#viewcount_text").val();
+	input = $("#search_input_text").val();
+	$("#ajax_content").empty();	
+	getList(more_i,viewcount,input);
 		more_i++;
+
 });
 
 
-$(document).on("click","button",function(){
+$(document).on("click","#write_btn",function(){
 
 		location.href="tour_board_write";
-
 })
+
+$(document).on("click",".searchButton",function(){
+	viewcount =$("#viewcount option:selected").val();
+	input = $("#search_input").val();
+	
+	getList(1,viewcount,input);
+})
+
+$(document).on("change","#viewcount",function(){
+		selectedValue = $(this).val();
+		$("#search_input").val('');
+		message=["찾을 제목을","찾을 카페이름을","찾을 내용을","찾을 작성자를"]
+		$("#search_input").attr("placeholder",message[selectedValue]+" 입력하세요");
+	}); //$("#viewcount").change end
+
 
 $(document).ready(function(){
 	more_i=2;
-	getList(1);
+	search_type=$("#search_type").val();
+	search_text=$("#search_text").val();
+	getList(1,search_type,search_text);
+	
+
 	
 })
