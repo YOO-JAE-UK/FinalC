@@ -2,6 +2,7 @@ package com.naver.myhome.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class Board_Tour_ServiceImpl implements Board_Tour_Service {
 
 	@Autowired
 	private Board_Tour_DAO dao;
-	 
+	
 	@Override
 	public void add(Board_Tour board) {
 		dao.add(board);
@@ -24,7 +25,7 @@ public class Board_Tour_ServiceImpl implements Board_Tour_Service {
 		dao.add_admin(board);
 		
 	}
-	
+	/*
 	@Override
 	public List<Board_Tour> getBoardList(int page) {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -34,31 +35,20 @@ public class Board_Tour_ServiceImpl implements Board_Tour_Service {
 		map.put("end", endrow);
 		return dao.getBoardList(map);
 	}
+	*/
 	
-	@Override
-	public List<Board_Tour> getManage_List(int page, int limit) {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		int startrow=(page-1)*limit+1;
-		int endrow =startrow+limit-1;
-		map.put("start",startrow);
-		map.put("end", endrow);
-		return dao.getManage_List(map);
-	}
 	
 	@Override
 	public List<Board_Tour> getBoardList(String sido) {
 		return dao.getBoardList(sido);
 	}
 
-	@Override
-	public int getListCount() {
-		return dao.getListCount();
-	}
+	
 
 	@Override
 	public Board_Tour getDetail(int num) {
 		if(setReadCountUpdate(num) !=1)
-			return null; //議고쉶�닔 +1�씠 �떎�뻾�릺吏� �븡�쑝硫� null諛섑솚
+			return null; //조회수 +1이 실행되지 않으면 null반환
 		return dao.getDetail(num);
 	}
 	
@@ -74,8 +64,11 @@ public class Board_Tour_ServiceImpl implements Board_Tour_Service {
 
 
 	@Override
-	public Board_Tour getDetail(String name) {
-		return dao.getDetail_one(name);
+	public Board_Tour getDetail(String name,String sido) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("name", name);
+		map.put("sido", sido);
+		return dao.getDetail_one(map);
 	}
 	@Override
 	public String isname(String tour_NAME) {
@@ -89,7 +82,7 @@ public class Board_Tour_ServiceImpl implements Board_Tour_Service {
 		if(board !=null) {
 			result =dao.boardDelete(num);
 			
-			//異붽� - �궘�젣�븷 �뙆�씪 紐⑸줉�뱾�쓣 ���옣�븯湲� �쐞�븳 硫붿꽌�뱶 �샇異�
+			//추가 - 삭제할 파일 목록들을 저장하기 위한 메서드 호출
 			if(board.getTOUR_FILE()!=null)
 				dao.insert_deleteFile(board.getTOUR_FILE());
 		}
@@ -106,9 +99,61 @@ public class Board_Tour_ServiceImpl implements Board_Tour_Service {
 	public List<String> getDeleteFileList() {
 		return dao.getDeleteFileList();
 	}
-
-
-
 	
+	@Override
+	public int getManaeListCount(int search_type, String search_text) {
+		Map<String,String> map = new HashMap<String, String>();
+		if(search_type !=-1) {
+			String[] search_field = new String[] {"TOUR_SUBJECT","TOUR_NAME","TOUR_CONTENT","USER_NICKNAME"};
+			map.put("search_type", search_field[search_type]);
+			map.put("search_text","%"+search_text +"%");
+		}
+		return dao.getManageListCount(map);
+	}
+	
+	@Override
+	public int getListCount(int page, int search_type, String search_text) {
+		Map<String,String> map = new HashMap<String, String>();
+		if(search_type !=-1) {
+			String[] search_field = new String[] {"TOUR_SUBJECT","TOUR_NAME","TOUR_CONTENT","USER_NICKNAME"};
+			map.put("search_type", search_field[search_type]);
+			map.put("search_text","%"+search_text +"%");
+		}
+		return dao.getListCount(map);
+	}
+
+	@Override
+	public List<Board_Tour> getBoardList(int page, int search_type, String search_text) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			if(search_type !=-1) {
+			String[] search_field = new String[] {"TOUR_SUBJECT","TOUR_NAME","TOUR_CONTENT","USER_NICKNAME"};
+			map.put("search_type",search_field[search_type]);
+			map.put("search_text","%"+search_text+"%");
+			}
+			int startrow=1;
+			int endrow =(page*4)+4;
+			map.put("start",startrow);
+			map.put("end", endrow);
+			
+			return dao.getBoardList(map);
+	}
+	@Override
+	public List<Board_Tour> getManage_List(int page, int limit, int search_type, String search_text) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(search_type !=-1) {
+		String[] search_field = new String[] {"TOUR_SUBJECT","TOUR_NAME","TOUR_CONTENT","USER_NICKNAME"};
+		map.put("search_type",search_field[search_type]);
+		map.put("search_text","%"+search_text+"%");
+		}
+		
+		int startrow=(page-1)*limit+1;
+		int endrow =startrow+limit-1;
+		map.put("start",startrow);
+		map.put("end", endrow);
+
+		return dao.getManage_List(map);
+	}
+
+
 	
 }

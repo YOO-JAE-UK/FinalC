@@ -1,28 +1,48 @@
 $(document).ready(function() {
 	
 	//submit 버튼 클릭할 때 이벤트 부분
-	/*
+	
 	$("form").submit(function(){
-		
-		if($.trim($("input").eq(1).val()) == ""){
-			alert("비밀번호를 입력하세요");
-			$("input:eq(1)").focus();
-			return false;
-		}
 		if($.trim($("input").eq(2).val()) == ""){
-			alert("제목을 입력하세요");
+			alert("주소를 입력해주세요");
 			$("input:eq(2)").focus();
 			return false;
 		}
+		if($.trim($("input").eq(3).val()) == ""){
+			alert("위치와경도를 입력해주세요");
+			$("input:eq(3)").focus();
+			return false;
+		}
+		if($.trim($("input").eq(5).val()) == ""){
+			alert("위치정보를 입력해 주세요.");
+			$("input:eq(5)").focus();
+			return false;
+		}
+		if($("input[name=TOUR_GRADE]:radio:checked").length<1){
+			alert("평점을 입력해주세요");
+			return false;
+		}
+		
+		if($.trim($("input").eq(17).val()) == ""){
+			alert("카페이름을 입력해주세요");
+			$("input:eq(17)").focus();
+			return false;
+		}
+		if($.trim($("input").eq(18).val()) == ""){
+			alert("제목을 입력해주세요");
+			$("input:eq(18)").focus();
+			return false;
+		}
 		if($.trim($("textarea").val()) == ""){
-			alert("내용을 입력하세요");
+			alert("후기를 입력해주세요");
 			$("textarea").focus();
 			return false;
 		}
+
 	})//submit end
 	
 	
-*/
+
 	//지도
 	
 	

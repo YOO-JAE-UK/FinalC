@@ -287,7 +287,11 @@ map.fitBounds(bounds);
 	     <input class="underline" type="text" name="TOUR_SUBJECT" placeholder="Enter Subject">
      </div>
      <h4 class="clearfix">후기</h4>
-   		<textarea name="TOUR_CONTENT" rows="15" style="width: 100%"></textarea>
+   		<textarea name="TOUR_CONTENT" rows="15" style="width: 100%">
+서비스 옵션 :
+영업시간 : 
+연락처 :
+   		</textarea>
  	
  	
 <!-- progress bar -->

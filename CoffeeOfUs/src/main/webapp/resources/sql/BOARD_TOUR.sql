@@ -3,7 +3,7 @@ CREATE TABLE BOARD_TOUR(
 	TOUR_NUM			NUMBER 			NOT NULL,			--글번호
 	USER_ID				VARCHAR2(20) 	NOT NULL,			--아이디
 	USER_NICKNAME		VARCHAR2(20)	NOT NULL,			--닉네임
-	TOUR_ADDRESS		VARCHAR2(200)	NOT NULL,			--닉네임
+	TOUR_ADDRESS		VARCHAR2(200)	NOT NULL,			--주소
 	TOUR_NAME			VARCHAR2(100) 	NOT NULL,			--카페 이름
 	TOUR_SUBJECT		VARCHAR2(100) 	NOT NULL,			--글 제목
 	TOUR_CONTENT		VARCHAR2(4000) 	NOT NULL,			--내용
@@ -37,21 +37,26 @@ SELECT * FROM BOARD_TOUR
 				WHERE TOUR_ADMIN = 
 						(SELECT MAX(TOUR_ADMIN) 
 							FROM BOARD_TOUR
-								WHERE TOUR_NAME = '왈츠와 닥터만')
-									AND TOUR_NUM= (
-					SELECT MIN(TOUR_NUM)
+								WHERE TOUR_NAME = 'cafe' AND TOUR_ADDRESS LIKE '%경기도%') --cafe라는 이름으로된 0,1을 찾아라 
+									AND TOUR_NUM= 
+						(SELECT MIN(TOUR_NUM)
 			 			FROM BOARD_TOUR
 							WHERE TOUR_ADMIN = 
-										(SELECT MAX(TOUR_ADMIN) 
+										(SELECT MAX(TOUR_ADMIN) 			--cafe라는 이름으로된 0,1을 찾아라
 											FROM BOARD_TOUR
-												WHERE TOUR_NAME = 'cafe')
-													AND  TOUR_NAME = 'cafe'
-				)
-
+												WHERE TOUR_NAME = 'cafe' AND TOUR_ADDRESS LIKE '%경기도%'
+										)
+													AND  TOUR_NAME = 'cafe' 
+						)
+					
+				--
 				SELECT *FROM BOARD_TOUR
-	 		WHERE TOUR_ADMIN = 1
-	 			AND TOUR_NAME='cafe';
+	 		WHERE TOUR_ADMIN = 0
+	 			AND TOUR_NAME LIKE 'cafe'
+	 			AND TOUR_ADDRESS LIKE '%경기도%'
 	 			--
 	 			delete from BOARD_TOUR where TOUR_NUM=8;
 	 			--
-	 			
+
+	 			--
+

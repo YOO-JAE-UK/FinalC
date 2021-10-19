@@ -22,4 +22,6 @@
 	</selectKey> 
 	insert into FWORD values(#{FWORD_NUM}, #{FWORD_CONSONANT},#{FWORD_WORD},#{FWORD_CONTENT})
 </insert>
+
+
 </mapper>

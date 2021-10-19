@@ -10,7 +10,7 @@
 <jsp:include page="../header.jsp">
 	<jsp:param name="num" value="<%=5%>" />
 </jsp:include>
-<script src="../resources/js/jquery-3.6.0.js"></script>
+<!-- <script src="../resources/js/jquery-3.6.0.js"></script> -->
  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="../resources/js/tour/writeform.js" charset="utf-8"></script>
 <link rel="stylesheet" href="../resources/css/tour_board_write.css">
@@ -59,6 +59,7 @@
 	position: relative;
 	top: 100px;
 	text-decoration: none;
+	font-size: 16px;
 }
 
 /* Active/current link */
@@ -232,7 +233,7 @@ map.fitBounds(bounds);
 	   
 	   <hr style="border: 2px solid white; margin-bottom: 5px; margin-top:5px;">
 	   <div>
-	   <input id="pac-input" class="controls" type="text" placeholder="Search Place" /><!-- 여기에 NAME안쓴이유: 변경될수도 있기때문 -->
+	<!-- 6 -->   <input id="pac-input" class="controls" type="text" placeholder="Search Place" /><!-- 여기에 NAME안쓴이유: 변경될수도 있기때문 -->
 	   </div>
 	<div id="map" ></div><!--  -->
  <script
@@ -269,7 +270,7 @@ map.fitBounds(bounds);
 		     		<label for="p4_2">3.5</label> 
 		     		<input type="radio" name="TOUR_GRADE" value="5" id="p5"> 
 		     		<label for="p5">5</label> 
-		     		<input type="radio" name="TOUR_GRADE" value="4.5" id="p5_2"> 
+	<!-- 16 -->	     		<input type="radio" name="TOUR_GRADE" value="4.5" id="p5_2"> 
 		     		<label for="p5_2">4.5</label> 
 		     	</span> 
 		     </div>
@@ -326,7 +327,7 @@ map.fitBounds(bounds);
  	
  	<div style="margin-top: 40px;">
  		<button style="float:left; margin-top:25px" class="btn btn-light">취소</button>
- 		<button style="float:right; margin-top:25px"" class="btn btn-primary">작성완료</button>
+ 		<button type="submit" style="float:right; margin-top:25px" class="btn btn-primary">작성완료</button>
  	</div>
  	</div><!-- 오른쪽 content 자리 -->
 </form>              	

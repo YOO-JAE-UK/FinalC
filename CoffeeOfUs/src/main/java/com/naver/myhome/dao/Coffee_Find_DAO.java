@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.naver.myhome.domain.Bean;
 import com.naver.myhome.domain.Coffee;
 
 
@@ -27,6 +28,7 @@ public class Coffee_Find_DAO {
 		public int add_word(Coffee coffee) {
 			return sqlSession.insert("Coffees.add_word",coffee);
 		}
+
 
 
 

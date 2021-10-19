@@ -8,7 +8,10 @@
 <title>Insert title here</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 이거추가하면 되는게안됨 안되는건 됨-->
-
+<link rel="stylesheet" href="../resources/css/coffee_write.css">
+<script src="../resources/js/coffee/coffee_write.js" charset="utf-8"></script>
+<!--  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script> -->
+ 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -61,6 +64,7 @@
 	position: relative;
 	top: 100px;
 	text-decoration: none;
+	font-size: 16px;
 }
 
 /* Active/current link */
@@ -116,8 +120,32 @@ div.content {
     padding-right: 30px !important;
     padding-left: 10px !important;
 }
+tr{
+	margin-top: 20px;
+}
+.bean_list{
+	 border: 1px solid black;
+	 margin: 0 auto;
+	  height: 150px;
+	  width: 150px; 
+	  
+}
+.bean_name{
+	text-align: center;
+    font-size: 12pt;
+}
+.bean_name a:link {
+    color: black;
+}
+	
+
 </style>
 <script>
+$(document).ready(function(){
+	$("#bean_write").click(function(){
+		location.href="Beans_write";
+	})
+})
 
 </script>
 </head>
@@ -126,73 +154,53 @@ div.content {
 		<div class="col-sm-3">
 			<div class="sidebar">
 				<a href="Test">나만의 커피 찾기</a> 
-				<a href="#">커피 용어 찾기</a>
-				<a class="active" href="#">원두</a>
-				<a href="#">머신</a>
-				<a href="#">레시피</a>
+				<a href="Fword">커피 용어 찾기</a>
+				<a class="active" href="Beans">원두</a>
 			</div>
 		</div>
 		<div class="container calendar-container col-sm-7"
 			style="position: relative; left: -5%; margin-top:30px;">
-			
-			
-			
-			
-			<div style="text-align: center;"><h2><b><font color="#99654e">커피 디테일</font></b></h2></div>
-
-
-
 		
-  					<div style="text-align: center; margin:0 auto;">
-  						<div style="margin: 0 auto; margin-bottom: 20px; border: 2px solid black; width: 300px; height: 100px;" id="word_content">
-  							<div style="width: 100%; height: 80%;">
-  								<div style="float: left; width: 50%;height: 80px">hi</div>
-  								<div style="float: left; width: 50%;height: 80px">hi</div>
-  							</div>
-  							<div style="text-align:left; margin-left:5px; width:100%; height: 20px; overflow: hidden;">
-  								input이 들어갈 자리입니다.
-							</div>
-  						</div>
-					
-					</div>
-						<div>
-							<div style="float:left; width: 300px; height:300px; margin-left: 5%">
-								<form>
-								<table>
-									<thead>
-										<tr>
-											<th colspan="2">맛</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>향</td>
-											<td>
-												<select class="form-control select_form1">
-												  <option>1</option>
-												  <option>2</option>
-												  <option>3</option>
-												  <option>4</option>
-												  <option>5</option>
-												</select>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								</form>
-							</div>
-							<div style="float:left; width: 300px; height:300px; background: red; margin-left: 5%">
-								<div style="width: 100%;height: 100px;border: 1px solid black;">로스팅</div>
-								<div style="width: 100%;height: 200px;border: 1px solid black;">짧은설명</div>
-							</div>	
-						</div>
+			
+			
+			<div style="text-align: center; margin-bottom: 30px"><h2><b><font color="#99654e">원두 리스트</font></b></h2></div>
+
+			<hr style="border: 2px solid gray;  background: gray;">
+			
+						
+<c:if test="${listcount > 0 }">	
+	<c:set var="num" value="${listcount-(page-1)*limit}"/>	
+			
+			
+			<div class="row">
+<c:forEach var="b" items="${boardlist}" varStatus="state">	
+				<div class="col-xs-6 col-sm-3" >
 				
-					
-					
+					<div class="bean_list"><a href="bean_detail?num=${b.BEAN_NUM}"><img src="../upload${b.BEAN_FILE}" width="100%" height="100%"/></a></div>
+					<div class="bean_name"><a href="bean_detail?num=${b.BEAN_NUM}">${b.BEAN_NAME}</a></div>
+				
+				</div>
+<c:if test="${state.count==4}">
+		<hr style="border: 1px solid gray; width: 100%;">
+</c:if>
+</c:forEach>
+
+			</div>
+
+
+</c:if>
+<c:if test="${listcount == 0 }">
+	 등록된 글이 없습니다.
+</c:if>
 					
 				<div style="clear: both;">
-				<button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#myModal">단어 추가하기</button> 
-				</div>		
+					<button style="font-size: 12pt;" id="bean_write" type="button" class="btn btn-info float-right">원두 등록하기</button> 
+				</div>	
+			
+					
+					
+					
+					
 		 	
 			
 			<div class="col-sm-2">

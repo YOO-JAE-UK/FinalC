@@ -44,7 +44,10 @@ public class TourController {
 	private Board_Tour_Service Board_Tour_Service;
 	
 	//savefolder.properties에서 작성한 savefoldername 속성의 값을 String svaeFolder에 주입합니다.
-	@Value("${savefoldername}")
+	//@Value("${savefoldername}")
+	//private String saveFolder;
+	
+	@Value("#{folder['savefoldername']}")
 	private String saveFolder;
 	
 	@RequestMapping(value = "get_img", method = RequestMethod.GET)
@@ -167,10 +170,13 @@ public class TourController {
 		
 		public ModelAndView tour_board_manage_list(
 				@RequestParam(value="page",defaultValue = "1",required=false) int page,
+				@RequestParam(value="search_type",defaultValue = "0",required=false)int search_type,
+				@RequestParam(value="search_text",defaultValue = "",required=false)String search_text,
+				
 				ModelAndView mv) {
-			int limit =10; //한 화면에 출력할 레코드 갯수
+			int limit =8; //한 화면에 출력할 레코드 갯수
 			
-			int listcount = Board_Tour_Service.getListCount(); //총 리스트 수를 받아옴
+			int listcount = Board_Tour_Service.getManaeListCount(search_type,search_text); //총 리스트 수를 받아옴
 			//총 페이지 수
 			
 			int maxpage = (listcount + limit -1) / limit;
@@ -184,7 +190,7 @@ public class TourController {
 			if(endpage > maxpage)
 				endpage = maxpage;
 			
-			List<Board_Tour> boardlist = Board_Tour_Service.getManage_List(page, limit);// 리스트를 받아옴
+			List<Board_Tour> boardlist = Board_Tour_Service.getManage_List(page, limit, search_type,search_text);// 리스트를 받아옴
 					
 					mv.setViewName("tour/tour_board_manage_list");
 					mv.addObject("page",page);
@@ -194,6 +200,8 @@ public class TourController {
 					mv.addObject("listcount",listcount);
 					mv.addObject("boardlist",boardlist);
 					mv.addObject("limit",limit);
+					mv.addObject("search_type",search_type);
+					mv.addObject("search_text",search_text);
 			return mv;
 		}	
 		
@@ -218,10 +226,13 @@ public class TourController {
 		@ResponseBody
 		@GetMapping(value="/tour_board_list1")
 		public Map<String, Object> boardListAjax(
-				@RequestParam(value="page",defaultValue = "1",required=false) int page
+				@RequestParam(value="page",defaultValue = "1",required=false) int page,
+				@RequestParam(value="search_type",defaultValue = "0",required=false)int search_type,
+				@RequestParam(value="search_text",defaultValue = "",required=false)String search_text
 				) {
 			
-			int listcount = Board_Tour_Service.getListCount(); //관리자(1)빼고 총 리스트 수를 받아옴 
+			int listcount = Board_Tour_Service.getListCount(page,search_type,search_text); //관리자(1)빼고 총 리스트 수를 받아옴 
+
 			int limit =  (page*4)+4;
 				//총 페이지 수
 			//int maxpage = (listcount + limit -1) / limit;
@@ -235,10 +246,12 @@ public class TourController {
 			//if(endpage > maxpage)					//지금은 피룡업승ㅁ
 			//	endpage = maxpage;
 			
-			List<Board_Tour> boardlist = Board_Tour_Service.getBoardList(page);// 리스트를 받아옴
+			List<Board_Tour> boardlist = Board_Tour_Service.getBoardList(page,search_type,search_text);// 리스트를 받아옴
 					
 			Map<String, Object> map = new HashMap<String,Object>();
-			
+
+			map.put("search_type",search_type);
+			map.put("search_text",search_text);
 			map.put("page",page);
 		//	map.put("maxpage",maxpage);
 		//	map.put("startpage",startpage);
@@ -262,17 +275,22 @@ public class TourController {
 			session.setAttribute("id", admin);
 			
 			Board_Tour board = Board_Tour_Service.getDetail(num);
-			//board=null //error 페이지 이동 확인하고자 임의로 지정합니다.
 			if(board == null) {
 				logger.info("상세보기 실패");
 				mv.setViewName("error/error");
 				mv.addObject("url" , request.getRequestURL());
 				mv.addObject("message","상세보기 실패입니다.");
-			}else {
-				logger.info("상세보기 성공");			
+			}
+				int start =board.getTOUR_ADDRESS().indexOf(" ")+1; //띄워쓰기포함된 4가 리턴됨(도당고등학교 검색시)
+				int end =board.getTOUR_ADDRESS().indexOf(" ",start); //8리턴
+				String sido = board.getTOUR_ADDRESS().substring(start, end);
+			
+				logger.info("상세보기 성공");	
+				
 				mv.setViewName("tour/tour_board_view");
 				mv.addObject("boarddata",board);
-			}			
+				mv.addObject("sido",sido);
+						
 			return mv;
 		}
 		
@@ -290,8 +308,8 @@ public class TourController {
 				@ResponseBody
 				@GetMapping(value="/list_map_detail_one" )
 				public Map<String,Object> list_map_detail_one(
-						String name) {
-					Board_Tour board = Board_Tour_Service.getDetail(name);
+						String name, String sido) {
+					Board_Tour board = Board_Tour_Service.getDetail(name,sido);
 					Map<String, Object> map = new HashMap<String,Object>();
 					map.put("list_map_detail", board);
 					return map;
