@@ -21,6 +21,8 @@
 		<typeAlias alias="product" 	type="com.naver.myhome.domain.Product"/>
 		<typeAlias alias="cart" 	type="com.naver.myhome.domain.Cart"/>
 		<typeAlias alias="recieve" 	type="com.naver.myhome.domain.RecieveAddress"/>
+		<typeAlias alias="bean"		type="com.naver.myhome.domain.Bean"/>
+		<typeAlias alias="crawler"	type="com.naver.myhome.domain.CRAWLER"/>
 	</typeAliases>
 	
 	<mappers>
@@ -37,5 +39,7 @@
 		<mapper resource="sql/product.xml"/>
 		<mapper resource="sql/cart.xml"/>
 		<mapper resource="sql/recieveAddress.xml"/>
+		<mapper resource="sql/coffee_bean.xml"/>
+		<mapper resource="sql/main.xml"/>
 	</mappers>
 </configuration>
