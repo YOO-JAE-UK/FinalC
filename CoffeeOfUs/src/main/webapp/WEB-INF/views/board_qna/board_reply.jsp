@@ -14,7 +14,7 @@
 	label{font-weight: bold}
 	#upfile{display: none}
 	
-	#board_name, #board_subject, 
+	#board_nickname, #board_subject, 
 	#board_content, #board_pass,
 	#font-size{
 		font-size:15px;
@@ -25,21 +25,23 @@
 <jsp:include page="../header.jsp">
 		 <jsp:param name="num" value="<%= 4 %>"/>
 	</jsp:include>
-
+	
 	 <section class="upcoming-classes spad">
+	   <h4 style="text-align: center;">QNA - 답변 게시판</h4>
         <div class="container">
          <div class="row">
                  
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                	<form action="replyAction" method="post" name="boardform">
+   <div class="col-xs-12 col-sm-12 col-md-12">
+   	<form action="replyAction" method="post" name="boardform">
 		<input type="hidden" name="QNA_RE_REF" value="${boarddata.QNA_RE_REF }">
 		<input type="hidden" name="QNA_RE_LEV" value="${boarddata.QNA_RE_LEV }">
 		<input type="hidden" name="QNA_RE_SEQ" value="${boarddata.QNA_RE_SEQ }">
 		<div class="form-group">
 			<label for="board_name">글쓴이</label>
-			<input name="USER_ID" id="board_name" value="${id}" readOnly
-			type="text" class="form-control"
-			placeholder="Enter board_name">
+			<input name="USER_NICKNAME" id="board_nickname" value="${boarddata.USER_NICKNAME}" readOnly
+			type="text" class="form-control">
+			<input name="USER_ID" id="board_name" value="${boarddata.USER_ID}" readOnly
+			type="hidden" class="form-control" >
 		</div>
 		<div class="form-group">
 			<label for="board_subject">제목</label>
@@ -62,11 +64,11 @@
 			<input type=button class="btn btn-danger" id="font-size" value="취소"
 				onClick="history.go(-1)">
 		</div>
-		</form>
-         </div>      
-         </div><!--     <div class="row"> end -->
-        </div><!-- container end -->
-     </section>
+	</form>
+   </div>      
+  </div><!--     <div class="row"> end -->
+ </div><!-- container end -->
+</section>
  
      <!-- footer -->
      <jsp:include page="../footer.jsp" />

@@ -4,8 +4,8 @@ create table BOARD_QNA(
     QNA_NUM	       NUMBER       NOT NULL,   --글번호
     QNA_PASS	   VARCHAR2(20)	NOT NULL,   --비밀번호
     QNA_SUBJECT	   VARCHAR2(40)	NOT NULL,   --제목
-    USER_ID	       VARCHAR2(20) references member(USER_ID) on delete cascade,   --아이디
-    USER_NICKNAME  VARCHAR2(20)	NOT NULL,   --닉네임
+    USER_ID	       VARCHAR2(50) references member(USER_ID) on delete cascade,   --아이디
+    USER_NICKNAME  VARCHAR2(50)	,   --닉네임
     QNA_CONTENT	   VARCHAR2(4000) NOT NULL,	--내용
     QNA_FILE	   VARCHAR2(100),	        --첨부 파일 명(가공)
 	QNA_ORIGINAL   VARCHAR2(100),	        --첨부 파일 명
@@ -21,4 +21,4 @@ select * from BOARD_QNA;
 
 insert into BOARD_QNA values(1,'1234','테스트 게시물','user01', '장군', '첫 테스트 게시 내용', NULL,NULL,SYSDATE,0,0,0,0);
 
-
+alter table board_qna modify QNA_SUBJECT varchar2(60); 

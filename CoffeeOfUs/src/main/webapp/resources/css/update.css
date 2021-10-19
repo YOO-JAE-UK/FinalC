@@ -148,7 +148,6 @@ button:focus{
 #update {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid lightgray;
     width: 600px; /* Could be more or less, depending on screen size */
     padding: 16px;
 	font-family: "DM Sans", sans-serif; 	  

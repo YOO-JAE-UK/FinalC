@@ -10,7 +10,6 @@
 	  // 글의 갯수 구하기 
 	  public int getListCount();
   
-  
 	  //글 목록 보기 
 	  public List<Board_Qna> getBoardList(int page, int limit);
   
@@ -34,7 +33,9 @@
   
 	  // 글 등록하기 
 	  public void insertBoard(Board_Qna board);
-  
+	  
+	  //
+	  
 	  //BOARD_RE_SEQ값 수정 
 	  public int boardReplyUpdate(Board_Qna board);
   

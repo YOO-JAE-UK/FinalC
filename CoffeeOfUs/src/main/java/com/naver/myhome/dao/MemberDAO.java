@@ -54,18 +54,27 @@ public class MemberDAO {
 		return sqlSession.delete("Members.delete", id);
 	}
 	
-	
 	// 비밀번호 변경
 	public int changepass(Map<String, Object> map) {
 		return sqlSession.update("Members.modify", map);
 	}
-
+	
 	public int getSearchListCount(Map<String, String> map) {
 		return sqlSession.selectOne("Members.searchCount", map);
 	}
 	
 	public List<Member> getSearchList(Map<String, Object> map) {
 		return sqlSession.selectList("Members.getSearchList", map);
+	}
+	
+	//아이디 찾기
+	public Member findId(String email){ 
+		return sqlSession.selectOne("Members.findId", email);
+	}
+	
+	// 비밀번호 찾기 이메일
+	public Member findpass_email(Map<String,String> map) {
+		return sqlSession.selectOne("Members.findpass_email", map);
 	}
 	
 	//회원가입 이메일 인증
@@ -85,6 +94,9 @@ public class MemberDAO {
 		return sqlSession.selectOne("Email.verifyKeyCheck",id);
 	}
 
+	public String nickname(String id) {
+		return sqlSession.selectOne("Members.nickname", id);
+	}
 
 	
 	

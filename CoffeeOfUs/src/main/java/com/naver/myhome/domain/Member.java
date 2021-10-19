@@ -18,7 +18,7 @@ public class Member {
 	private String USER_ADDRESS;
 	private String USER_PHONE;
 	private String USER_FILE=""; //파일이름
-	private String USER_IMG="";  //실제저장될 파일이름
+	private String USER_IMG="";  //실제저장될 파일이름 original
 	private String USER_CHECK;
 	private String USER_LASTLOGIN;
 	

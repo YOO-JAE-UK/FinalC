@@ -1,9 +1,13 @@
 package com.naver.myhome.service;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +61,22 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result;
 	}
+	
+	// 아이디 찾기
+	@Override
+	public Member findId(String email){
+		return dao.findId(email);
+		
+	}
+	
+	//비밀번호 찾기 이메일
+	@Override
+	public Member findpass_email(String id, String email) {
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("id", id);
+		map.put("email", email);
+		return dao.findpass_email(map);
+	}
 
 	@Override
 	public Member member_info(String id) {
@@ -77,7 +97,7 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> getSearchList(int index, String search_word, int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(index!=-1) {
-			String[] search_field = new String[] { "id", "name", "age", "gender"};
+			String[] search_field = new String[] { "id", "name", "nickname"};
 			map.put("search_field", search_field[index]);
 			map.put("search_word", "%" + search_word + "%");
 		}
@@ -92,7 +112,7 @@ public class MemberServiceImpl implements MemberService {
 	public int getSearchListCount(int index, String search_word) {
 		Map<String, String> map = new HashMap<String, String>();
 		if(index!=-1) {
-			String[] search_field = new String[] { "id", "name", "age", "gender"};
+			String[] search_field = new String[] { "id", "name", "nickname"};
 			map.put("search_field", search_field[index]);
 			map.put("search_word", "%" + search_word + "%");
 		}
@@ -106,7 +126,6 @@ public class MemberServiceImpl implements MemberService {
 		map.put("key", key);
 		map.put("id", id);
 		return dao.insert_email(map);
-		
 	}
 
 	@Override
@@ -129,11 +148,6 @@ public class MemberServiceImpl implements MemberService {
 		return (email != null) ? 1 : 0;
 	}
 
-	@Override
-	public String passcheck(Member m) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	//비밀번호 변경
 	@Override
@@ -146,6 +160,18 @@ public class MemberServiceImpl implements MemberService {
 
 	
 
+	
+	@Override
+	public String Nickname(String id) {
+		return dao.nickname(id);
+	}
+
+
+
+
+
+
+	
 	
 	
 

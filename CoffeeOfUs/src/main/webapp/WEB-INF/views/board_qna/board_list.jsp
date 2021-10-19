@@ -98,7 +98,7 @@
 				<c:forEach var="a" begin="0" end="${b.QNA_RE_LEV*2}" step="1">
 				&nbsp; 	
 				</c:forEach>		
-				<img src='../resources/image/line.gif'>
+				<img src='../resources/img/line.gif'>
 			</c:if>  
 			 
 			<c:if test="${b.QNA_RE_LEV == 0}">  <%-- 원문인 경우 --%>
@@ -114,8 +114,15 @@
 			
 		  </div>
 		</td>
+		<c:choose>
+		<c:when test="${name==''}">
 		<td><div>${b.USER_ID}</div></td>
-		<td><div>${b.QNA_DATE}</div></td>	
+		</c:when>
+		<c:otherwise>
+		<td><div>${b.USER_NICKNAME}</div></td>
+		</c:otherwise>
+		</c:choose>
+		<td><div>${b.QNA_DATE.substring(0,10)}</div></td>	
 		<td><div>${b.QNA_READCOUNT}</div></td>
 	   </tr>
 	  </c:forEach>
@@ -131,7 +138,7 @@
 			 </c:if>
 			 <c:if test="${page > 1 }">			
 				<li class="page-item">
-				   <a href="BoardList.bo?page=${page-1}" 
+				   <a href="list?page=${page-1}" 
 				      class="page-link">이전&nbsp;</a>
 				</li> 
 			 </c:if>
@@ -144,7 +151,7 @@
 				</c:if>
 				<c:if test="${a != page }">
 				    <li class="page-item">
-					   <a href="BoardList.bo?page=${a}" 
+					   <a href="list?page=${a}" 
 					      class="page-link">${a}</a>
 				    </li>	
 				</c:if>

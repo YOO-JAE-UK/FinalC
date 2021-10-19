@@ -26,6 +26,7 @@
 	</jsp:include>
 
      <section class="upcoming-classes spad">
+   	   <h4 style="text-align: center;">QNA - 수정 게시판</h4>
         <div class="container">
          <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -37,6 +38,8 @@
 					<div class="form-group">
 						<label for="board_name">글쓴이</label>
 						<input type="text" class="form-control" id="font-size"
+						value="${boarddata.USER_NICKNAME}" readOnly>
+						<input type="hidden" class="form-control" id="font-size"
 						value="${boarddata.USER_ID}" readOnly>
 					</div>
 					
@@ -60,7 +63,8 @@
 						</label>
 						<input  type="file" id="upfile" name="uploadfile">
 						 <span id="filevalue">${boarddata.QNA_ORIGINAL}</span>
-						 <img src="../resources/img/remove.png" alt="파일삭제" width="10px" class="remove">
+						 <img src="../resources/img/remove.png" alt="파일삭제" 
+						 		width="10px" class="remove">
 					</div>
 					
 					</c:if>

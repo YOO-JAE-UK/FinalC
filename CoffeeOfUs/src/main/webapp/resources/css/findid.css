@@ -2,41 +2,54 @@
 
 .titlefont{
 	border-bottom: 2px solid #3b3b3b;
-    margin-bottom: 30px;
-    padding-bottom: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
     font-size: 30px;
     text-align:center;
 }
 .titlefont2{
 	border-bottom: 2px solid #3b3b3b;
     margin-top: 90px;
-    margin-bottom: 30px;
-    padding-bottom: 10px;
+    margin-bottom: 26px;
+    padding-bottom: 28px;
     font-size: 30px;
     text-align:center;
 }
-
+#titlemessage{
+	margin: -42px 0 25px 0px;
+    text-align:center;
+}
 .comtext{
 	margin-top: 7px;
 	margin-bottom: 3px;
-	font-size: 12px;
+	font-size: 10px;
+}
+.title2_message{
+	margin:-50px 0 33px 0px;
+	font-size: 13px;
+	text-align:center;
 }
 
-form {
+#form1{
     background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 5% auto 0% auto; /* 5% from the top, 15% from the bottom and centered */
     width: 500px; /* Could be more or less, depending on screen size */
     padding: 16px;
 }
-
+#form2{
+    background-color: #fefefe;
+    margin: 0% auto 10% auto; /* 5% from the top, 15% from the bottom and centered */
+    width: 500px; /* Could be more or less, depending on screen size */
+    padding: 16px;
+	
+}
 
 input{border:1px solid lightgray}
 input[type=text], input[type=password] {
     width: 100%;
     height:50px;
     padding: 10px;
-    margin: 0px 0 8px 0;
-    border-radius: 0 3px 15px -1;
+    margin: 0px 0 20px 0;
     display: inline-block;
     font-size: 12px;
 }
@@ -47,7 +60,20 @@ input[type=text]:focus, input[type=password]:focus {
     outline: none;
 }
 
-.tempassbtn, .findidbtn {
+.tempassbtn {
+    background-color: #1cdfde;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid #c1c1c1;
+    cursor: pointer; /* 손가락 커서 모양 */
+    width: 100%;
+    opacity: 0.9;
+    font-size: 14px;
+    
+} 
+
+.findidbtn {
     background-color: #1cdfde;
     color: white;
     padding: 14px 20px;
@@ -59,6 +85,21 @@ input[type=text]:focus, input[type=password]:focus {
     font-size: 14px;
     
 }
+
+.cancelbtn{
+    background-color: #ff461d;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 1px solid #c1c1c1;
+    cursor: pointer; /* 손가락 커서 모양 */
+    width: 100% !important;
+    opacity: 0.9;
+    font-size: 14px;
+    
+}
+
+
 button:nth-child(1){border-radius:3px 0 0 3px}
 button:nth-child(2){border-radius:0 3px 3px 0px}
 button:hover {

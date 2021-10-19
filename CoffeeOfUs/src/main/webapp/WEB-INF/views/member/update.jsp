@@ -164,7 +164,7 @@ $(function() {
 			<label for="user_image" class="user_image" id="imgtext"> 
 			   <input type="file" name="uploadfile" class="user_image_choice"
 				      accept="image/gif, image/jpeg, image/png" >
-				<img id="user_image" src="get_img?name=${m.USER_FILE}" alt="image" 
+				<img id="user_image" src="../upload${m.USER_FILE}" alt="image" 
 				      width="130" height="130" class="avatar" >
 			</label>
 		   </div>
