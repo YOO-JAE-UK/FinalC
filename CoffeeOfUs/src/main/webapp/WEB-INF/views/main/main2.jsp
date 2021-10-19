@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>ff
-<head>
+<head>f
 <meta charset="UTF-8">
 <title>Story</title>
  <!-- Css Styles -->
