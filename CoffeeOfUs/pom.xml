@@ -15,6 +15,31 @@
 	</properties>
 	<dependencies>
 	<!-- 추가되는 것들 -->
+		<!-- 셀레니움 -->
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>3.141.59</version>
+</dependency>
+		
+		 <!--  특정 시간을 주기 위한 cron 사용-Quartz 라이브러리를 이용해서 처리합니다.
+	소프트웨어 유틸리티 cron은 유닉스 계열 컴퓨터 운영 체제의 시간 기반 잡 스케줄러입니다.
+	  1) pom.xml -->
+	    <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+	<dependency>
+	    <groupId>org.quartz-scheduler</groupId>
+	    <artifactId>quartz</artifactId>
+	    <version>2.3.0</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz-jobs -->
+	<dependency>
+	    <groupId>org.quartz-scheduler</groupId>
+	    <artifactId>quartz-jobs</artifactId>
+	    <version>2.3.0</version>
+	</dependency>
+		
 	<!-- 추가되는 부분 -->
 		<dependency>
 		   <groupId>org.aspectj</groupId>
