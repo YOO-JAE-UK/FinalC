@@ -37,14 +37,7 @@
 		  #{COFFEE_NUM}, 0, 0
 		)
 </insert>
-<!-- values
-		(#{COFFEE_NUM},
-		 #{COFFEE_PASS}, #{COFFEE_SUBJECT},#{USER_ID},#{USER_NICKNAME}
-		 #{COFFEE_CONTENT}, #{COFFEE_FILE, jdbcType=VARCHAR},
-		 #{COFFEE_ORIGINAL, jdbcType=VARCHAR},
-		  sysdate, #{COFFEE_READCOUNT}, 
-		  #{COFFEE_NUM}, #{COFFEE_RE_LEV}, #{COFFEE_RE_SEQ}
-		) -->
+
 <select id="count" resultType="int">
 	select count(*)from COFFEE
 </select>
@@ -135,34 +128,33 @@
 	where COFFEE_NUM=#{COFFEE_NUM}
 </update> 
 
-<!-- <delete id="delete" parameterType="board_coffee">
+ <delete id="delete" parameterType="board_coffee">
 	<![CDATA[
 		delete from COFFEE
 			where	COFFEE_RE_REF = #{COFFEE_RE_REF}
 			and		COFFEE_RE_LEV >=#{COFFEE_RE_LEV}
 			and 	COFFEE_RE_SEQ >=#{COFFEE_RE_SEQ}
 			and		COFFEE_RE_SEQ <=(
-									nvl((SELECT min(COFFEE_re_seq)-1
+									nvl((SELECT min(COFFEE_RE_SEQ)-1
 										FROM	COFFEE
 										WHERE	COFFEE_RE_REF=#{COFFEE_RE_REF}
 										AND		COFFEE_RE_LEV=#{COFFEE_RE_LEV}
 										AND		COFFEE_RE_SEQ>#{COFFEE_RE_SEQ}),
-										(SELECT max(COFFEE_re_seq)
+										(SELECT max(COFFEE_RE_SEQ)
 										FROM	COFFEE
 										WHERE	COFFEE_RE_REF=#{COFFEE_RE_REF} ))
 										)
 	 ]]>
-</delete>  -->
+</delete> 
 
 
-<!-- <insert id="insert_deleteFile" parameterType="String">
+<insert id="insert_deleteFile" parameterType="String">
 	insert into delete_file
 	values(#{file})
-</insert> -->
+</insert>
 
-<!-- 삭제할 파일들의 목록을 구합니다. 
 	<select id="deleteFileList" resultType="String">
-		select COFFEE_file from delete_file
+		select BOARD_FILE from delete_File
 	</select> 
-	 -->
+
 </mapper>

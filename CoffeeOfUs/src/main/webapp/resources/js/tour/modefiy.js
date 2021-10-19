@@ -3,6 +3,27 @@ $(document).ready(function() {
 	//submit 버튼 클릭할 때 이벤트 부분
 	$("form").submit(function(){
 		
+		if($("input[name=TOUR_GRADE]:radio:checked").length<1){
+			alert("평점을 입력해주세요");
+			return false;
+		}
+		
+		if($.trim($("input").eq(19).val()) == ""){
+			alert("카페이름을 입력해주세요");
+			$("input:eq(19)").focus();
+			return false;
+		}
+		if($.trim($("input").eq(20).val()) == ""){
+			alert("제목을 입력해주세요");
+			$("input:eq(20)").focus();
+			return false;
+		}
+
+		if($.trim($("textarea").val()) == ""){
+			alert("후기를 입력해주세요");
+			$("textarea").focus();
+			return false;
+		}
 		/*
 			이곳이 적용되는 경우
 			1. 파일 첨부를 변경하지 않은 경우

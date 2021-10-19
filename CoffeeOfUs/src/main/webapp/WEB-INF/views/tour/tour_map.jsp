@@ -11,7 +11,8 @@
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script src="../resources/js/d3.min.js"></script>
 
-
+<link rel="stylesheet" href="../resources/css/tour_map_star.css">
+<script src="../resources/js/tour/list_map_star.js" charset="utf-8"></script>
    <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -64,17 +65,17 @@ background: white;;
   	
   }
   .list_map_left{
-  	width: 70%;
+  	width: 60%;
   	float: left;
   }
     .list_map_right{
-  	width: 30%;
+  	width: 40%;
   	float: right;
   	text-align: right;
   }	
   
   .detail_map_img{
-  margin: 20px;
+  margin: 20px 20px 10px 20px;
    width: 190px;
     height: 130px;
      border: 1px solid black;
@@ -101,6 +102,7 @@ background: white;;
 	position: relative;
 	top: 100px;
 	text-decoration: none;
+	font-size: 16px;
 }
 
 /* Active/current link */
@@ -225,7 +227,94 @@ $(".dg-map svg").mouseover(function(event) {
 				  $("#list_map").append(output);
 					$(data.list_map).each(function() {
 						output= "";
-					  output += "<div class='list_each'><div class='list_map_left' >"+ this.tour_NAME +"</div><div class='list_map_right'>"+this.tour_GRADE+"</div></div>";
+					  output += "<div class='list_each'><div class='list_map_left' >"+ this.tour_NAME +"</div>";
+					  output +="<div class='list_map_right'>";
+	
+				      <!--별  -->
+				      output+='		      <div class="star-input"> ';
+				      <!-- <p class="score"><b>0</b>점</p>  -->
+				      output+='				      	<span class="input"> ';
+//1
+				      if(this.tour_GRADE>=1 && this.tour_GRADE <=1.4){
+				      output+='				     		<input type="radio"  value="1" id="p1" checked disabled >';
+				      		}else{
+				      output+=							'<input type="radio" value="1" id="p1"  disabled >';
+				      		}
+				      output+='				     		<label for="p1">1</label>';
+//0.5			      
+				    	  if(this.tour_GRADE<=0.9 && this.tour_GRADE >=0 ){
+				      output+='				     		<input type="radio" value="0.5" id="p1_2" checked disabled>';
+							}else{
+				    	  output+='				     		<input type="radio" value="0.5" id="p1_2" disabled>';
+							}
+				      output+='				     		<label for="p1_2">0.5</label>';
+//2
+				    	  if(this.tour_GRADE>=2 && this.tour_GRADE <=2.4){
+				      output+='				     		<input type="radio"  value="2" id="p2" checked disabled> '	;			     		
+							}else{
+					  output+='				     		<input type="radio"  value="2" id="p2"  disabled> '	;			     		
+							}
+				      output+='				     		<label for="p2">2</label> ';
+				      
+//1.5				      
+				    	  if(this.tour_GRADE>=1.5 && this.tour_GRADE<=1.9){
+				      output+='				     		<input type="radio"  value="1.5" id="p2_2" checked disabled> ';		
+							}else{
+					  output+='				     		<input type="radio"  value="1.5" id="p2_2" disabled> ';		
+							}
+				      output+='				     		<label for="p2_2">1.5</label> ';
+//3
+				    	if(this.tour_GRADE>=3 && this.tour_GRADE <=3.4){
+					  output+='				     		<input type="radio"  value="3" id="p3" checked disabled> ';
+				    	}else{
+					  output+='				     		<input type="radio"  value="3" id="p3" disabled> ';
+					  	}
+
+					  output+='				     		<label for="p3">3</label> ';
+//2.5
+					    if(this.tour_GRADE>=2.5 && this.tour_GRADE <=2.9){
+					  output+='				   			<input type="radio"  value="2.5" id="p3_2" checked disabled> ';
+						}else{
+					  output+='				   			<input type="radio"  value="2.5" id="p3_2"  disabled> ';
+						}
+					  output+='				     		<label for="p3_2">2.5</label> ';
+//4
+						 if(this.tour_GRADE>=4 && this.tour_GRADE <= 4.4){
+					 output+='				     		<input type="radio"  value="4" id="p4" checked disabled> ';
+						}else{
+					 output+='				     		<input type="radio"  value="4" id="p4"  disabled> ';
+						}
+				     output+='				     		<label for="p4">4</label> ';
+//3.5
+				    	if(this.tour_GRADE>=3.5 && this.tour_GRADE <=3.9){
+				     output+='				     		<input type="radio" value="3.5" id="p4_2" checked disabled> ';
+						}else{
+				     output+='				     		<input type="radio"  value="3.5" id="p4_2"  disabled> '	;							
+						}
+				     output+='				     		<label for="p4_2">3.5</label> '		;					   
+//5
+				    	  if(this.tour_GRADE==5){
+					 output+='				     		<input type="radio"  value="5" id="p5" checked disabled> ';
+						}else{
+				     output+='				     		<input type="radio"  value="5" id="p5" disabled> '	;						
+						}
+			     		output+='				     		<label for="p5">5</label> ';
+//4.5
+			     		  if(this.tour_GRADE>=4.5 &&this.tour_GRADE<=4.9){
+			     	 output+='				     		<input type="radio"  value="4.5" id="p5_2" checked disabled> ';
+			 			}else{
+			 		 output+='				     		<input type="radio"  value="4.5" id="p5_2" disabled> '	;	
+			 			}
+				     output+='				     		<label for="p5_2">4.5</label> ';
+				     output+='				     	</span> ';
+				     output+='				     </div>';
+				      <!-- 별끝 -->
+					  
+
+				     		output+="</div></div>";
+					  
+					  
+
 					  $("#list_map").append(output);
 				});//each function() end
 			}//success
@@ -235,6 +324,7 @@ $(".dg-map svg").mouseover(function(event) {
   //"#list_map"
 	  $(document).on("click",".list_map_left",function(e){
 		var etext = $(this).text();
+		var sido = $(".list_map_title").text();
 	  $('#detail_map').show();
 	  $("#detail_map").empty();
 		 
@@ -242,13 +332,20 @@ $(".dg-map svg").mouseover(function(event) {
 			type : "get",
 			url : "list_map_detail_one",
 			data : {"name" : etext,
+					"sido" : sido
 			},
 			dataType:"json",
-			success : function(data){			
+			success : function(data){	
 					  output= "";	
+					  if(data.list_map_detail.tour_FILE ==null){
+						  output += "<img class='detail_map_img' src='../resources/img/cafe_default.jpg'>";
+					  }else{
 					   output += "<img class='detail_map_img' src='get_img?name="+data.list_map_detail.tour_FILE+"'>";
-					   output += "<div>"+data.list_map_detail.tour_SUBJECT+"</div>"
-					   output += "<div>"+data.list_map_detail.tour_CONTENT+"</div>"
+					  }
+					  output += "<div style='margin:0px 20px 0px 20px;font-size:15pt;font-weight: bold; text-align:center;'>"+data.list_map_detail.tour_SUBJECT+"</div>"
+					  output += "<hr style='margin:6px'>" 
+					  output += "<textarea style='margin:0 20px;width: 190px; height: 90px;font-size: 10pt; resize:none;'>"+data.list_map_detail.tour_CONTENT+"</textarea>"
+					   output += "<div style='display:none' id='list_map_detail_num'>"+data.list_map_detail.tour_NUM+"</div>"
 					  $("#detail_map").append(output);
 					  
 			}//success
@@ -265,7 +362,11 @@ $(".dg-map svg").mouseover(function(event) {
 		    $('path').css("fill","white") //세종
 		 
 	 }
-			 
+	  })
+	  
+	  $(document).on("click","#detail_map",function(){
+		  var num = $('#list_map_detail_num').text();
+		  location.href="detail?num="+num
 	  })
 
 
@@ -282,6 +383,7 @@ $(".dg-map svg").mouseover(function(event) {
 		  location.href = "tour_board_manage_list";
 	  })
 	
+	 
   })
 </script>
 
@@ -299,7 +401,7 @@ $(".dg-map svg").mouseover(function(event) {
 			style="position: relative; left: -5%; margin-top:30px;">
 			
 			 <div id="map_main" style="width: 100%; height: 100%; z-index: 99;">
-                <div style="text-align: center; margin-bottom: 50px;"><h2><b><font color="#ED4C6B">Tour_Map</font></b></h2></div>
+                <div style="text-align: center; margin-bottom: 50px;"><h2><b><font color="#99654e">Tour_Map</font></b></h2></div>
                 	<div class="dg-map dg-map-in" style="float: left">
   <svg x="0" y="0" width="300" height="400" viewBox="0 0 800 1200" >
     <!-- Add the polygon element. -->
@@ -348,9 +450,9 @@ $(".dg-map svg").mouseover(function(event) {
 </div><!-- detail map end -->
 					
 					</div><!-- map_main끝 -->
-					<div style="position: absolute; top:90%;left:80%; width: 200px;">
-						<button style="float: right;margin-right: 10px;" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
-						<button style="float: right;margin-right: 10px;" id="manage_list" type="button" class="btn btn-info">관리자 글관리</button>
+					<div style="position: absolute; top:90%;left:80%; width: 260px;">
+						<button style="float: right;margin-right: 10px; font-size: 12pt;" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
+						<button style="float: right;margin-right: 10px; font-size: 12pt;" id="manage_list" type="button" class="btn btn-info">관리자 글관리</button>
 						
 					</div>
 		</div><!-- 7 end -->

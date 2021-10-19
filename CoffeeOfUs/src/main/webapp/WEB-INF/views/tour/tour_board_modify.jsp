@@ -182,7 +182,6 @@ map.fitBounds(bounds);
 </script>
 </head>
 <body>
-	<input id="id" type="hidden" value='a'>
 
 	<div class="row">
 		<div class="col-sm-3">
@@ -222,7 +221,7 @@ map.fitBounds(bounds);
 				<img style="margin-bottom: 5px;" src="../resources/img/attach.png" alt="파일첨부" width="20px">
 			</label>
 			<input type="file" id="upfile" name="uploadfile">
-			 <input type="hidden" name="TOUR_FILE" value="${boarddata.TOUR_FILE}">
+			<input type="hidden" name="TOUR_FILE" value="${boarddata.TOUR_FILE}">
 			<input type="hidden" name="before_file" value="${boarddata.TOUR_FILE}">
 			 <span id="filevalue">${boarddata.TOUR_ORIGINAL }</span>
 	   </div>
@@ -231,7 +230,7 @@ map.fitBounds(bounds);
 	   
 	   <hr style="border: 2px solid white; margin-bottom: 5px; margin-top:5px;">
 	   <div>
-	   <input id="pac-input" class="controls" type="text" placeholder="Search Place" value="${boarddata.TOUR_ADDRESS }"/><!-- 여기에 NAME안쓴이유: 변경될수도 있기때문 -->
+ <!-- 8 --><input id="pac-input" class="controls" type="text" placeholder="Search Place" value="${boarddata.TOUR_ADDRESS }"/><!-- 여기에 NAME안쓴이유: 변경될수도 있기때문 -->
 	   </div>
 	<div id="map" ></div><!--  -->
  <script
@@ -246,7 +245,7 @@ map.fitBounds(bounds);
 		    </div>
 		    <div style="float: right">
 		      <!--별  -->
-		      
+		   
 		      <div class="star-input"> 
 		      <!-- <p class="score"><b>0</b>점</p>  -->
 		      	<span class="input"> 
