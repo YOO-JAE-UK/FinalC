@@ -18,6 +18,9 @@
 		<typeAlias alias="email"          type="com.naver.myhome.domain.Email"/>
 		<typeAlias alias="board_event"          type="com.naver.myhome.domain.Board_Event"/>
 		<typeAlias alias="coffee" 	type="com.naver.myhome.domain.Coffee"/>
+		<typeAlias alias="product" 	type="com.naver.myhome.domain.Product"/>
+		<typeAlias alias="cart" 	type="com.naver.myhome.domain.Cart"/>
+		<typeAlias alias="recieve" 	type="com.naver.myhome.domain.RecieveAddress"/>
 	</typeAliases>
 	
 	<mappers>
@@ -31,5 +34,8 @@
 		<mapper resource="sql/email.xml"/>
 		<mapper resource="sql/board_event.xml"/>
 		<mapper resource="sql/coffee.xml"/>
+		<mapper resource="sql/product.xml"/>
+		<mapper resource="sql/cart.xml"/>
+		<mapper resource="sql/recieveAddress.xml"/>
 	</mappers>
 </configuration>

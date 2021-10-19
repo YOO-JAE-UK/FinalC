@@ -50,4 +50,69 @@
  	</choose>
  
  </sql>
+ 
+ <update id="BoardUpdate" parameterType="board_event">
+ 
+ update board_event set content=#{content}
+ where event_board_num=#{event_board_num}
+ 
+ 
+ </update>
+ 
+ <update id="BoardReplyUpdate" parameterType="board_event">
+ 
+ update board_event
+  	set		event_re_seq=event_re_seq+1
+  	where   event_re_ref=#{event_re_ref} 
+  	 and	event_re_seq <![CDATA[>]]> #{event_re_seq} <!-- 크기나 작기부호는 태그로 인식할수도 있어서 <![CDATA[>]]> 쓴 -->
+ 
+ 
+ </update>
+ <insert id="BoardReply" parameterType="board_event">
+ 	<selectKey resultType="int" order="BEFORE"
+  		keyProperty="event_board_num">
+  		select nvl(max(event_board_num),0)+1 from board_event
+  	</selectKey>
+    	insert into board_event 
+	    (event_board_num, 
+	     id,content,event_re_ref,
+	     event_re_lev,event_re_seq,
+	     reg_date) 
+		 values
+		 (#{event_board_num},
+		  #{id},  #{content},  #{event_re_ref},
+		  #{event_re_lev}, #{event_re_seq}, 
+		  sysdate)
+ 
+ 
+ </insert>
+ <delete id="BoardDelete" parameterType="board_event">
+<![CDATA[
+  	delete from board_event
+  	where event_re_ref =#{event_re_ref}
+  	and event_re_lev >=#{event_re_lev}
+  	and event_re_seq >=#{event_re_seq}
+  	and event_re_seq <=(
+  						nvl((SELECT min(event_re_seq)-1
+  							FROM   board_event
+  							WHERE  event_re_ref=#{event_re_ref}
+  							AND    event_re_lev=#{event_re_lev}
+  							AND	   event_re_seq>#{event_re_seq}),
+  							(SELECT max(event_re_seq)
+  							 FROM   board_event
+  							 WHERE  event_re_ref=#{event_re_ref}))
+  							) 
+  
+  ]]>
+  </delete>
+ 
+
+ 
+ <select id="BoardSelect" parameterType="board_event" resultType="board_event">
+ 	select * from board_event
+ 	where event_board_num=#{event_board_num}
+ 
+ </select>
+ 
+ 
 </mapper>

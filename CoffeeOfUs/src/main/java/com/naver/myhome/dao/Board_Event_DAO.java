@@ -30,5 +30,30 @@ public class Board_Event_DAO {
 		return sqlSession.selectList("board_event.getList",map);
 	}
 
+	public int BoardUpdate(Board_Event board) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("board_event.BoardUpdate",board);
+	}
+
+	public int BoardReplyUpdate(Board_Event board) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("board_event.BoardReplyUpdate",board);
+	}
+
+	public int BoardReply(Board_Event board) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("board_event.BoardReply",board);
+	}
+
+	public int BoardDelete(Board_Event board) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("board_event.BoardDelete",board);
+	}
+
+	public Board_Event BoardSelect(Board_Event board) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("board_event.BoardSelect",board);
+	}
+
 	
 }

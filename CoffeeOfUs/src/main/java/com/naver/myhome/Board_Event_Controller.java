@@ -75,8 +75,8 @@ public class Board_Event_Controller {
 		int listcount=board_event_service.getListCount();
 		int limit= 5;
 		int maxpage= (listcount + limit -1)/limit;
-		int startpage = ((page-1)/5)*5+1;
-		int endpage= startpage+5-1;
+		int startpage = ((page-1)/3)*3+1;
+		int endpage= startpage+3-1;
 		if(endpage>maxpage)
 			endpage=maxpage;
 		
@@ -90,6 +90,25 @@ public class Board_Event_Controller {
 		map.put("page",page);
 		map.put("state", state);
 		return map;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/BoardUpdate", method=RequestMethod.POST)
+	//@RequestMapping(value="/wrtie",method=RequestMethod.GET)
+	public int BoardUpdate(Board_Event board) {
+		return board_event_service.BoardUpdate(board);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/BoardReply", method=RequestMethod.POST)
+	//@RequestMapping(value="/wrtie",method=RequestMethod.GET)
+	public int BoardReply(Board_Event board) {
+		return board_event_service.BoardReply(board);
+	}
+	@ResponseBody
+	@RequestMapping(value = "/BoardDelete", method=RequestMethod.POST)
+	//@RequestMapping(value="/wrtie",method=RequestMethod.GET)
+	public int BoardDelete(Board_Event board) {
+		return board_event_service.BoardDelete(board);
 	}
 
 }

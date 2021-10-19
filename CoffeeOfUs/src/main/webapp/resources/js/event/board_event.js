@@ -3,6 +3,23 @@ $('.CommentBox').on('keyup','.comment_inbox_text',function(){
 	  $(this).prev().text(length+"/200");
 		
 	});
+function del(num){
+	if(!confirm("정말 삭제하시겠습니까?")){
+		return;
+	}
+	$.ajax({
+		url:'BoardDelete',
+		type:'post',
+		dataType:'json',
+	    data:{event_board_num:num},
+	    success:function(rdata){
+	    	if(rdata>=1){
+	    		getList(1,1);
+	    	}
+	    }
+	
+	})
+}
 
 $("#content").keyup(function(){
 	var content=$(this).val();
@@ -14,6 +31,15 @@ $("#content").keyup(function(){
 	$(".float-left").text(length+"/50")
 
 })
+
+$("#content").focus(function(){
+	if($(".comment_list").find("div.CommentWriter").css('display')=='block'){
+	alert("작업완료후 입력하세요");
+	$(".comment_list").find("textarea").focus();
+	
+   }
+})
+
 
 $("#write").click(function(){
 	var content=$("#content").val();
@@ -172,18 +198,146 @@ function getList(page,state){
 $(".comment_list").on('click','.comment_tool_button',function(){
 	  var selector=$(this).next();
 	  
-	  if($('.comment_list+.CommentWriter').css('display')=='block'){
-		  selector.toggle();
+	   
+	    if($(".comment_list").find("div.CommentWriter").css('display')=='block'){
+	    	console.log(1);
+	    	alert("작업완료후 시도해주세요")
+	    	}else{
+	    	
+	    	selector.toggle();
 		  
 		  if(selector.css('display')=='block'){
 			  
-			  $(".LayerMore").not(selector).css('display','none');
+			  $(".LayerMore").not(selector).css('display','none');//선택자외의 layermore은 사라짐
 		  }	  
-	  }else{
-		  alert('작업완료후 선택해주세요');
-	  }
+	    }
+	  
+	    
 
 	});
+$('.comment_list').on('click','.LayerMore',function(){
+	$(this).hide();
+		
+});//수정이나 삭제 클릭시 layerMore 이 사라짐
+
+function updateForm(num){
+	var content=$('#' + num).find('.text_comment').text();
+	var selector = '#'+num +' .comment_area';
+	$(selector).hide();
+	
+	selector=$('#' + num);
+	selector.append($('.comment_list+.CommentWriter').clone().css('display','block'));
+
+	selector.find('textarea').val(content);
+	
+	selector.find('.btn_register').attr('data-id',num).addClass('update').text('수정완료');
+	
+	selector.find('.btn_cancel').css('display','block').addClass('update_cancel');
+	
+	selector.find('.comment_inbox_count').text(content.length+ "/50");
+}	
+
+$('.CommentBox').on('click','.update',function(){
+	console.log("수정완료2")
+	
+	$(this).parent().parent().css("display","none");
+	
+	var content=$(this).parent().parent().find('textarea').val();
+	if(!content){
+		alert('수정할 내용을 입력하세요');
+		return;
+	}
+	$.ajax({
+	     url:'BoardUpdate',
+	     type:'post',
+	     data:{event_board_num:$(this).attr('data-id'),content:content},
+	     dataType:'json',
+	     success:function(rdata){
+	    	 if(rdata==1){
+	    		 getList(1,1);
+	    	 }
+	     }
+		
+	});
+	
+})
+
+function replyform(num,lev,seq,ref){
+	
+	if($(".comment_list").find("div.CommentWriter").css('display')=='block'){
+		alert('다른 작업 완료 후 선택하세요');
+		
+	}else{
+		var output='<li class="CommentItem CommentItem--reply lev'
+		       + lev +' CommentItem-form"></li>'
+		       
+ var selector=$('#' + num);
+	
+	selector.after(output);
+	
+	output=$('.comment_list+.CommentWriter').clone().css("display","block");
+	
+	$(".CommentBox .LayerMore").css('display','none');
+	
+	selector.next().html(output);
+	
+	selector.next().find('textarea').attr('placeholder','답글을 남겨보세요');
+	
+	selector.next().find('.btn_cancel').css('display','block').addClass('reply_cancel');
+	
+	selector.next().find('.btn_register').addClass('reply').text('답글완료')
+	                   .attr('data-ref',ref).attr('data-lev',lev).attr('data-seq',seq);
+	selector.find('a.comment_info_button').hide();
+	}
+}
+
+$('.CommentBox').on('click','.reply',function(){
+	
+    var content=$(this).parent().parent().find('.comment_inbox_text').val();
+    if(!content){
+ 	   alert('답변 내용을 입력하세요');
+ 	   return;
+    }
+    
+    $(this).parent().parent().parent().css("display","none");
+    
+    $.ajax({
+ 	  url:'BoardReply',
+ 	  type:'post',
+ 	  data:{
+ 		  id:$("#id").val(),
+ 		  content:content,
+ 		  event_re_lev: $(this).attr('data-lev'),
+ 		  event_re_ref: $(this).attr('data-ref'),
+ 		  event_re_seq:$(this).attr('data-seq'),
+ 	  },
+ 	  success: function(rdata){
+ 		  if(rdata==1){
+ 			  getList(1,1);
+ 		  }
+ 	  }
+    
+    
+    })
+
+})
+$('.CommentBox').on('click','.reply_cancel',function(){
+	$(this).parent().parent().parent().prev().find('a.comment_info_button').show();
+	$(this).parent().parent().parent().remove();
+		
+		
+  });
+$('.CommentBox').on('click','.update_cancel',function(){
+	
+	var num=$(this).next().attr('data-id');
+	var selector='#' + num;
+	
+	$(selector + ' .CommentWriter').remove();
+	
+	
+	$(selector + '>.comment_area').css('display','block');
+	
+});
 
 
 

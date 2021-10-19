@@ -1,0 +1,255 @@
+/*  ȸ������ Ÿ��Ʋ   */
+.titlefont{
+	border-bottom: 2px solid #3b3b3b;
+	margin-bottom:50px;
+	padding-bottom:10px;
+	font-size: 30px;
+}
+.titlefont2{
+	border-bottom: 2px solid #3b3b3b;
+	margin-bottom:20px;
+	padding-bottom:10px;
+	font-size: 30px;
+}
+.container2 {
+	border: none;
+	padding: 1.5% 1%
+}
+.form-check-inline{
+	display:inline !important;
+	padding-left:2px !important;
+	position:relative !important;
+	top:6px !important
+	
+}
+#recievename{
+	position:relative !important;
+	right:341px !important;
+}
+#recievetel{
+	position:relative !important;
+	right:341px !important;
+}
+#recievewap{
+	margin-top:10px;
+}
+#totalpoint{
+	position:relative !important;
+	right:341px !important;
+	text-align:center;
+	color:red;
+	height:33px;
+	bottom:7px
+}
+#totalpointwap{
+	position:relative;
+	left:346px;
+	margin-bottom:15px;
+
+}
+
+/*  ����� id   */
+#idwap{
+	margin: 5px 0 0 0;
+}
+#idtext{
+	float:left;
+	width:75%;
+	margin: 1px 8px -3px 15px;
+	font-size:14px;
+}
+#input_id{
+	padding: 13px;
+    font-size: 13px;
+    width: 84%;
+    height: 42px;
+    float: right;
+    margin: -30px 0 34px 0px;
+    border: none;
+}
+
+/*  �̸�   */
+#wap{
+	margin: 5px 0 0 0;
+}
+#nametext{
+	float:left;
+	width:75%;
+	margin:8px 3px -11px 17px;
+	font-size:14px;
+}
+#input_name{
+	padding: 13px;
+    font-size: 13px;
+    width: 84%;
+    height: 42px;
+    float: right;
+    margin: -23px 0px 51px 27px;
+    border: none;
+    
+}
+
+/*   �̸��� �ּ�    */
+#mailtext{
+	margin: 187px 0 -7px 20px;
+	font-size:14px;
+}
+#input_email{
+    margin: -40px -1px 16px 68px;
+    width: 84%;
+    float: right;
+    border: none;
+}
+
+/*  ����ó   */
+#teltext{
+	margin: 23px 0 0px 14px;
+	font-size:14px;
+} 
+#input_tel{
+	width: 84%;
+    float: right;
+    margin: -36px -1px 24px 0;
+    border: none;
+}
+
+/*  �ּ�   */
+#post1{
+	padding:3px;
+	margin:0 0px -5px 390px;
+	width: 20%;
+	text-align: center;
+}
+#postcode{
+    float: right;
+    width:54px;
+    height: 27px;
+}
+#add_wap{
+	margin: -22px 0 0 0;
+	
+}
+ #addtext{
+	margin: 29px 0 -29px 15px;
+	font-size:14px;
+}
+
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+#message{
+	margin: 0 0 0 8px;
+}
+
+input{border-radius:3px;border:1px solid lightgray}
+.tx, input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 26px 0;
+    display: inline-block;
+    font-size: 13px;
+}
+
+input[type=radio]{
+	width: 5%;
+    display: inline-block;
+    border: none;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    outline: none;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer; /* �հ��� Ŀ�� ��� */
+    
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity:1;
+    
+}
+button:focus{
+   outline:none;
+}
+.addaddress{
+	border:none !important;
+	position:relative;
+	bottom:15px
+}
+/* ��� ��ư*/
+.cancelbtn{
+  float: left;
+  width: 25%;
+  color: white;
+  font-size:15px;
+  padding: 5px;
+  background-color: #a5a1a1;
+}
+
+/* ��� ��ư */
+.submitbtn {
+  float: right;
+  width: 25%;
+  color: white;
+  background: #3fd0e2;
+  font-size:15px;
+  padding: 5px;
+}
+
+#joinform {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    width: 600px; /* Could be more or less, depending on screen size */
+    padding: 16px;
+	font-family: "DM Sans", sans-serif; 	  
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+ 
+b + div{width: 100%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    }
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table; 
+}
+
+h1{
+	text-align:center;
+}
+
+b {
+	display: block
+}
+
+span{
+	display:inline-block;
+	margin-top:-20px;
+	font-size:10px
+	
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+       width: 100%;
+    }
+}

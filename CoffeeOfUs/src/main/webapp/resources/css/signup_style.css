@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	color:white;
+	
+}
+
+* {
+	box-sizing: border-box;
+}
+b{
+	color:#607d8b;
+	font-size:1.5rem;
+}
+#span5{
+	visibility: hidden;
+	color: #f44336;
+	position: relative;
+	top:-10px;
+	
+}
+
+select, input[type=text], input[type=password], input[type="button"] {
+	
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	display: inline-block;
+	border: none;
+	background: #04060a7a; 
+	outline: none;
+	height:40px;
+	
+}
+
+select {
+	padding:10px 15px 10px 15px;
+	vertical-align:bottom;
+	
+	
+}
+
+legend {
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold
+}
+
+#id{
+	width: 70%;
+	position:relative;
+	left:9px;
+	border:none;
+	color:#607d8b;
+	background:white;
+	font-size:1.7rem
+}
+#xname{
+	position:relative;
+	bottom:30px;
+	font-size:1.7rem;
+	
+}
+#name{
+	background:white;
+	color:#607d8b;
+	position:relative;
+	left:7px
+}
+#xmail{
+	position:relative;
+	bottom:30px;
+	font-size:1.7rem
+	
+}
+#email{
+	width: 70%;
+	position:relative;
+	left:57px;
+	bottom:43px;
+	border:none;
+	color:#607d8b;
+	background:white;
+	font-size:1.7rem
+	
+}
+#post1{
+	width:18%;
+	background:white;
+	color:#607d8b;
+	border:1px solid #607d8b;
+	
+}
+#xtel{
+	position:relative;
+	bottom:83px;
+}
+#tel{
+	background:white;
+	color:#607d8b;
+	font-size:1.7rem
+}
+.confirm{
+	display:none;
+}
+#id+input, #post1+input ,#phoneNumber+input,#confirmNumber+input{
+	width: 17.5%;
+	background: #607d8b;
+	line-height:10px;
+    vertical-align:bottom;
+    color:white;
+}
+#confirmNumber{
+	text-align:center;
+}
+textarea {
+	width: 100%;resize:none;
+
+}
+
+#address{
+	width:100%;
+	background:white;
+	color:#607d8b;
+	border:1px solid #607d8b
+}
+
+
+#sel {
+	width: 30.7%;
+	background: #04060a7a;
+	color:white
+}
+
+.container2 {
+	border: none;
+	padding: 1.5% 1%
+}
+
+input[type=text]:focus, input[type=password]:focus {
+	background-color:#04060a7a;
+	outline: none;
+}
+input[type=text], input[type=password]{
+	color:white;
+	
+}
+
+input[type=button]:hover {
+	opacity: 0.8;
+	cursor: pointer
+}
+
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+}
+
+button:hover {
+	opacity: 1;
+}
+
+.
+.signupbtn{
+	background-color:#82ae46;
+}
+.signupbtn:hover{
+	background-color:#8cbb4c !important;
+	color:white !important;
+}
+
+.cancelbtn, .signupbtn {
+	float: left;
+	width: 45%;
+	margin: 5px 20px;
+}
+
+.container {
+	padding: 16px;
+}
+
+body {
+	background-color: white;
+}
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+#myform {
+	
+	margin: 5% auto 15% auto;
+	width: 50%;
+	animation: animatezoom 0.6s;
+	border-radius:15px;
+	padding: 0px 15px 15px 15px;
+	color:#607d8b;
+}
+
+fieldset{
+	border:none;
+	
+}
+#intro{
+	background:#04060a7a;
+	color: white;
+}

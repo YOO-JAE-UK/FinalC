@@ -43,4 +43,10 @@
                                    from ATTEND_CHECK where id=#{id})
  
  </select>
+ 
+ <update id="updatePoint" parameterType="map">
+ 
+ 	update attend_check set point=#{updatePoint} where id=#{id} and num= (select nvl(max(num),0)
+                                   from ATTEND_CHECK where id=#{id})
+ </update>
 </mapper>

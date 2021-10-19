@@ -70,8 +70,8 @@ public class MemberController {
 	  private SendMail sendMail;
 	  
 	  //savefolder.properties에서 작성한 savefoldername 속성의 값을 String svaeFolder에 주입합니다.
-	  @Value("${savefoldername}")
-	  private String saveFolder;
+	  @Value("#{folder['savefoldername']}")
+		private String saveFolder;
 	  
 
 

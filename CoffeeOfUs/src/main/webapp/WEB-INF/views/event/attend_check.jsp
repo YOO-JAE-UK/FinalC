@@ -81,7 +81,7 @@ body {
 /* Sidebar links */
 .sidebar a {
 	display: block;
-	color: black;
+	color: #607d8b;
 	padding: 20px;
 	position: relative;
 	top: 100px;
