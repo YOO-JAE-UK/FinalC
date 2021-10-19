@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Beans">
+
+ <insert id="bean_add" parameterType="bean">
+	<selectKey resultType="int" order="BEFORE"
+				keyProperty="BEAN_NUM">
+			select nvl(max(BEAN_NUM),0)+1 from BEAN
+	</selectKey> 
+	
+	insert into BEAN
+	(BEAN_NUM,
+	 BEAN_NAME, BEAN_CONTENT, BEAN_FILE, BEAN_ORIGINAL,
+	 BEAN_DATE, BEAN_ROASTING, BEAN_AROMA,
+	 BEAN_SOUR, BEAN_SWEET, BEAN_BALANCE,
+	   BEAN_BODY)
+		values
+		(#{BEAN_NUM},
+		 #{BEAN_NAME}, #{BEAN_CONTENT}, #{BEAN_FILE, jdbcType=VARCHAR},#{BEAN_ORIGINAL, jdbcType=VARCHAR}, 
+		 sysdate, #{BEAN_ROASTING}, #{BEAN_AROMA},
+		 #{BEAN_SOUR}, #{BEAN_SWEET},
+		 #{BEAN_BALANCE}, #{BEAN_BODY}
+		)
+</insert>
+
+<select id="count" parameterType="String" resultType="int">
+	select count(*) from BEAN
+	where BEAN_NAME LIKE '%'||#{search_text}||'%'
+</select>
+
+<select id="getlist" parameterType="map" resultType="bean">
+	select * from
+	 (select rownum rnum, b.*
+		from BEAN b
+		where BEAN_NAME LIKE '%'||#{search_text}||'%'
+		order by BEAN_NUM desc)
+	 where rnum &gt;= #{start} and rnum &lt;= #{end} 
+</select>
+<select id="bean_detail" parameterType="int" resultType="bean">
+	select * from BEAN
+	where BEAN_NUM = #{num}
+</select>
+
+<select id="test_detail" parameterType="map" resultType="bean">
+	select b.*
+	from PSY_T a
+	JOIN BEAN b
+	ON a.PSY_T_NAME = b.BEAN_NAME
+	WHERE a.PSY_T_1KEYWORD =#{cake}
+	AND a.PSY_T_2KEYWORD = #{apple}
+	AND a.PSY_T_3KEYWORD =#{roasting}
+</select>
+
+<update id="modify" parameterType="bean">
+	update BEAN
+	set
+		BEAN_NAME =#{BEAN_NAME},
+		BEAN_CONTENT =#{BEAN_CONTENT},
+		BEAN_FILE =#{BEAN_FILE, jdbcType=VARCHAR},
+		BEAN_ORIGINAL =#{BEAN_ORIGINAL, jdbcType=VARCHAR},
+		BEAN_ROASTING =#{BEAN_ROASTING},
+		BEAN_AROMA =#{BEAN_AROMA},
+		BEAN_SOUR =#{BEAN_SOUR},
+		BEAN_SWEET =#{BEAN_SWEET},
+		BEAN_BALANCE =#{BEAN_BALANCE},
+		BEAN_BODY= #{BEAN_BODY}
+	where BEAN_NUM= #{BEAN_NUM}
+</update> 
+
+ <delete id="delete" parameterType="int" >
+		delete from BEAN_TOUR
+		where BEAN_NUM = #{num}
+</delete> 
+
+
+<insert id="insert_deleteFile" parameterType="String">
+	insert into delete_file
+	values(#{file})
+</insert> 
+
+
+	<select id="deleteFileList" resultType="String">
+		select TOUR_file from delete_file
+	</select> 
+</mapper>

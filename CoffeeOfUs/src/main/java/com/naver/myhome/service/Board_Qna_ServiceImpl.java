@@ -46,7 +46,7 @@
 	  return dao.boardReplyUpdate(board); 
   }
   
-  @Transactional 
+  @Override
   public int boardReply(Board_Qna board) {
 	  boardReplyUpdate(board); 
 	  board.setQNA_RE_LEV(board.getQNA_RE_LEV()+1);

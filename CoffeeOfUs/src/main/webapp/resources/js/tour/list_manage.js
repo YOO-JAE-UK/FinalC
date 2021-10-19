@@ -23,6 +23,7 @@ function ajax(sdata){
 		dataType : "json",
 		cashe : false,
 		success : function(data) {
+			
 			$("#viewcount").val(data.limit); //엄청긴글의 json을 받아온거에 limit값 고정할려고씀
 			$("table").find("font").text("글 개수 : " + data.listcount);
 			

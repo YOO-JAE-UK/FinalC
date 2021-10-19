@@ -167,7 +167,7 @@ function initMap() {
   <div id="product-info" class="clearfix-auto">
     <div id="product-spec" class="wrapper">
 		    <div style="float: left">
-		      <h2 style="width: 150px; margin-top: 7px;"><span id="do">시 도</span></h2>
+		      <h2 style="width: 150px; margin-top: 7px;"><span id="do">${sido}</span></h2>
 		    </div>
 		    <div style="float: right">
 		      <!--별  -->

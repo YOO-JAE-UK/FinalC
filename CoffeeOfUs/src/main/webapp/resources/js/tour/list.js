@@ -1,4 +1,4 @@
-function go(page){
+	function go(page){
 	var limit = $('#viewcount').val();
 	var data = "limit=" + limit + "&state=ajax&page=" + page;
 	ajax(data);
@@ -27,14 +27,16 @@ function getList(page, search_type, search_text){
 		dataType : "json",
 		//cashe : false,
 		success : function(data) {
-			$("#viewcount").val(data.search_type); //엄청긴글의 json을 받아온거에 limit값 고정할려고씀
+		 num =data.listcount;	//변수 선언
+		//alert(JSON.stringify(data))
 			//$("table").find("font").text("글 개수 : " + data.listcount);
-			
-			if(data.listcount > 0) { //총 갯수가 0보다 큰경우
-				
-	
+		 
+				$("#ajax_content").empty();//
+				//적용안됨$("#viewcount").val(data.search_type); //엄청긴글의 json을 받아온거에 limit값 고정할려고씀	
+				//alert(data.search_type)
+				count1= data.search_type;
 			output="";
-			 var num =data.listcount;	//변수 선언
+			 
 				
 				
 				output+='<div style="text-align: center;"><h2><b><font color="#99654e">Tour_List</font></b></h2></div>';
@@ -44,11 +46,33 @@ function getList(page, search_type, search_text){
 			
 				output+=' 		  <div class="wrap">'
 					
-						output+='<select id="viewcount" name="search_field" class="search_field">'
-						output+='	<option value="0" selected>제목</option>'
-						output+='	<option value="1" >카페이름</option>'
-						output+='	<option value="2" >내용</option>'
-						output+='	<option value="3" >작성자</option>'
+						output+='<select id="viewcount" name="search_type" class="search_field">'
+							if(count1==0){
+								output+='<option value="0" selected>제목</option>'
+							}else{
+								output+='<option value="0" >제목</option>'
+							}
+				
+							if(count1==1){
+								output+='<option value="1" selected>카페이름</option>'
+							}else{
+								output+='<option value="1">카페이름</option>'
+							}
+						
+							if(count1==2){
+								output+='<option value="2" selected>내용</option>'
+							}else{
+								output+='<option value="2" >내용</option>'
+							}
+							
+							if(count1==3){
+								output+='<option value="3" selected>작성자</option>'
+							}else{
+								output+='<option value="3" >작성자</option>'
+							}
+
+						
+						
 						output+='</select>'	
 				output+=' 	   <div class="search">'
 				output+=' 	      <input id="search_input" type="text" class="searchTerm" placeholder="찾을 단어를 검색해 보세요!" value="'+data.search_text+'">'
@@ -66,7 +90,7 @@ function getList(page, search_type, search_text){
 				  output+='	 <div class="container mt-2">';
 				  output+='	  <div class="row">';
 				  
-				 
+if(data.listcount > 0) { //총 갯수가 0보다 큰경우 
 				  		$(data.boardlist).each(///////////////////(total -index-1)
 				  				function(index, item) {
 				  					
@@ -100,12 +124,14 @@ function getList(page, search_type, search_text){
 			}//if(data.listcount) end	
 				  		
 				  		if(data.listcount == 0){
+				  			
+				  			$("#ajax_content").empty();//
 				  			output+='<font size=5>등록된 글이 없습니다.</font>';
 				  		}
 				  		
 				  		output+='</div>';// <!-- row end -->
 				  		output+='</div>';//<!-- <div class="container mt-2"> -->
-				  		output+='<button type="button" class="btn btn-info float-right" id="write_btn">글 쓰 기</button>';
+				  		output+='<button style="font-size: 12pt;" type="button" class="btn btn-info float-right" id="write_btn">글 쓰 기</button>';
 				  		output+='<div class="col-sm-2"></div>';
 				  		output+='	</div>';
 				  		output+='</div>';

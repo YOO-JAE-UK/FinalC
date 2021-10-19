@@ -29,9 +29,65 @@ if(result == 'deleteFail'){
 	alert("삭제 성공!");
 }
 
+
 </script>
 
 <style>
+	/* search */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.search_field{
+ 	border: 2px solid #37586f;
+    border-radius: 5px;
+    height: 25px;
+}
+   
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #37586f;
+  border-right: none;
+  padding: 5px;
+  height: 35px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 35px;
+  border: 1px solid #37586f;
+  background: #37586f;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+
+      transform: translate(228%, -80%);
+}
+
+	/* searach  */
  video {
     max-width: 100%;
   }
@@ -72,6 +128,7 @@ if(result == 'deleteFail'){
 	position: relative;
 	top: 100px;
 	text-decoration: none;
+	  font-size: 16px;
 }
 
 /* Active/current link */
@@ -118,6 +175,15 @@ div.content {
 .over{
 	overflow: hidden
 }
+
+#more:hover{
+	background: linear-gradient(to bottom, #e2e2e2, transparent);
+	 height:30px;
+}
+#more{
+	background:#f9f9f9;
+	height:30px;
+}
 </style>
 </head>
 <body>
@@ -136,22 +202,13 @@ div.content {
 				
 		</div><!-- <div class="container calendar-container col-sm-7" -->
 		
+		
+		
 	</div>
 
 	<jsp:include page="../footer.jsp" />
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<script
-	src='https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/moment.min.js'></script>
-<link
-	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css'
-	rel='stylesheet' />
-<link
-	href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css'
-	rel='stylesheet' media='print' />
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js'></script>
-<script src="https://cdn.bootcss.com/fullcalendar/3.9.0/locale-all.js"></script>
-<script src="https://cdn.bootcss.com/fullcalendar/3.9.0/gcal.js"></script>
+
 </html>

@@ -20,8 +20,7 @@ $(function() {
 				 },
 			dataType:"json",
 			success:function(rdata){
-				//alert(JSON.stringify(rdata))
-				
+				//alert(JSON.stringify(rdata)) 데이타 넘어온값  확인
 				//댓글의 총 갯수가 표시 됩니다.
 				$('#count').text(rdata.listcount);
 			 if(rdata.listcount > 0){
@@ -31,13 +30,12 @@ $(function() {
 					  output='';
 					  img = '';
 					  if($("#loginid").val() == this.id){
-						  img = "<img src='../resources/img/pencil2.png' width='15px' class='update'>"
+						  img = "<img src='../resources/img/pencil2.png' width='15px' class='update'>"   
 							  + "<img src='../resources/img/delete.png' width='15px' class='remove'>"
 							  + "<input type='hidden' value='"		+ this.num + "'>";
 					  }
 					  output += "<tr><td>" + this.id +"</td>";
 					  output += "<td></td>";
-					  //output += "<td>"+this.content+"</td>";이렇게하면 스크립트 공격당함
 					  output += "<td>" + this.reg_DATE.substring(0,10) + img + "</td></tr>";
 					  
 					  $("#comment tbody").append(output);
@@ -136,7 +134,6 @@ $(function() {
 	
 		//delete.png를 클릭하는 경우
 		$("#comment").on('click','.remove',function(){
-			
 			if(!confirm("정말 삭제하시겠습니까?")){
 				return;
 			}
@@ -145,7 +142,7 @@ $(function() {
 					type : "post",
 					url : "../comment_qna/delete",
 					data : {
-						"NUM" : deleteNum
+						"num" : deleteNum
 					},
 					success : function(result){
 						if(result == 1){

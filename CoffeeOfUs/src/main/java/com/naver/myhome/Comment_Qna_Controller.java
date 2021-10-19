@@ -47,8 +47,9 @@ public class Comment_Qna_Controller {
 	}
 
 	@PostMapping(value ="/delete")
-	public void CommentDelete(int num, HttpServletResponse response) throws Exception{
-								//int num => Integer.parseInt(request.getParameter("num"))
+	public void CommentDelete(HttpServletResponse response,
+			int num) throws Exception{
+			//int num => Integer.parseInt(request.getParameter("num"))
 		int result =commentService.commentsDelete(num);
 		response.getWriter().print(result);
 	}

@@ -2,6 +2,7 @@ package com.naver.myhome.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,16 @@ public class Board_Tour_DAO {
 			sqlSession.insert("Boards_Tour.insert_admin",board);	
 		}
 
-		public int getListCount() {
-			return sqlSession.selectOne("Boards_Tour.count");
+		public int getListCount(Map<String, String> map) {
+			return sqlSession.selectOne("Boards_Tour.count",map);
 		}
 		
-		public List<Board_Tour> getBoardList(HashMap<String, Integer> map) {
+		
+		public List<Board_Tour> getBoardList(HashMap<String, Object> map) {
 			return sqlSession.selectList("Boards_Tour.list",map);
 		}
 
-		public List<Board_Tour> getManage_List(HashMap<String, Integer> map) {
+		public List<Board_Tour> getManage_List(HashMap<String, Object> map) {
 			return sqlSession.selectList("Boards_Tour.manage_list",map);
 		}
 		
@@ -54,8 +56,8 @@ public class Board_Tour_DAO {
 			return sqlSession.selectList("Boards_Tour.list_map",sido);
 		}
 
-		public Board_Tour getDetail_one(String name) {
-			return sqlSession.selectOne("Boards_Tour.detail_one",name);
+		public Board_Tour getDetail_one(HashMap<String, String> map) {
+			return sqlSession.selectOne("Boards_Tour.detail_one",map);
 		}
 		public String getIsName(String tour_NAME) {
 			return sqlSession.selectOne("Boards_Tour.isname",tour_NAME);
@@ -71,6 +73,11 @@ public class Board_Tour_DAO {
 		public List<String> getDeleteFileList() {
 			return sqlSession.selectList("Boards_Tour.deleteFileList");
 		}
+		public int getManageListCount(Map<String, String> map) {
+			return sqlSession.selectOne("Boards_Tour.manage_count",map);
+		}
+	
+
 		
 		
 		

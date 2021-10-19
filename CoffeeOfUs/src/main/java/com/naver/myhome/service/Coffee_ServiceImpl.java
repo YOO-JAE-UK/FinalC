@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.naver.myhome.dao.Coffee_Find_DAO;
+import com.naver.myhome.domain.Bean;
 import com.naver.myhome.domain.Coffee;
 
 @Service
@@ -30,6 +31,8 @@ public class Coffee_ServiceImpl implements Coffee_Service {
 	public int add_word(Coffee coffee) {
 		return dao.add_word(coffee);
 	}
+
+
 
 
 

@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Find Id/Pw</title>
+<title>loginForm</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
+<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <link href="${pageContext.request.contextPath }/resources/css/login.css"
 	type="text/css" rel="stylesheet">
 	
@@ -27,12 +29,10 @@ var i1=<%=num%>;
 		
 	}
 
-	$(function() {
-		$(".join").click(function() {
-			location.href = "${pageContext.request.contextPath}/member/join";   //controller주소
-		});
-	})
-</script>
+
+	
+	</script>
+
 <style>
 
 </style>
@@ -41,6 +41,15 @@ var i1=<%=num%>;
 </head>
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
+
+<div style="text-align:center;"> 
+	<c:choose> 
+		<c:when test="${sessionId != null}"> 
+				<h2> 네이버 아이디 로그인 성공하셨습니다!! </h2> 
+				<h3>'${sessionId}' 님 환영합니다! </h3> 
+	    <h3><a href="logout">로그아웃</a></h3> 
+	    </c:when> 
+	    <c:otherwise>
 
 
 <form name="loginform" id="loginform" action="${pageContext.request.contextPath }/member/loginProcess"
@@ -64,25 +73,41 @@ var i1=<%=num%>;
 	     </c:if>  
 	     >
 	</div>   
+	    <div id="login_yoji" >
 	    <input type="checkbox" name="remember" style="margin-bottom:15px"> 로그인 유지       
+	    </div>
 	</div>
 	
 	<div class="clearfix">
-	<div class="submitbtn_wrap">
-       <button type='submit' class="submitbtn">로그인</button>
+	  <div class="submitbtn_wrap">
+         <button type='submit' class="submitbtn">로그인</button>
+	  </div>
+	  <div class="join_wrap">
+	     <button type='button' class="join">회원가입</button>
+	  </div>
 	</div>
-	<div class="join_wrap">
-	   <button type='button' class="join">회원가입</button>
-	</div>
-	</div>
-	<div class="naverlogin">
-	   <button type="button" class="naverloginbtn" >네이버 아이디로 로그인</button>
-	</div>
+	
+	<!-- '네이버 아이디로 로그인하기' 버튼 -->
+		<div id="naver_id_login" style="text-align:center">		<a href="${url}">
+		<img  src="${pageContext.request.contextPath}/resources/img/naver_logo_btn.png" 
+			id="naver_login_logo" alt="naver_login_logo"/>
+		</a>
+		</div> <br> 
+	
+	
 	<a href="${pageContext.request.contextPath}/member/findId" 
 	   style="color:black" id="findtext">ID/PW찾기</a>   
 </form>
 
+		</c:otherwise> 
+	</c:choose> 
+</div>
+<script>
+$(".join").click(function() {
+	location.href = "${pageContext.request.contextPath}/member/join";   //controller주소
+});
 
+</script>
 <jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

@@ -27,8 +27,10 @@ $(document).ready(function() {
 			2. 파일첨부의 remove 이미지를 클릭해서 파일을 제거하고 파일첨부를 변경하지 않은 경우
 			이때 value의 값은 ''입니다.
 		 */
+		
+		//한번도 변경하지 않으면 ${'#filevalue').text()의 파일명을 전송합니다.
 		if(check == 0){
-			value = $('#filevalue').text();
+			value = $('#filevalue').text(); //오리지널이름
 			html = "<input type= 'text' value='" + value + "' name='check'>";
 			$(this).append(html);
 		}

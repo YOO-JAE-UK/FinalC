@@ -6,24 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="../resources/js/jquery-3.6.0.js"></script>
-<!-- <script src="../resources/js/tour/list_manage.js" charset="utf-8"></script> -->
+<jsp:include page="../header.jsp">
+	<jsp:param name="num" value="<%=1%>" />
+</jsp:include>
+
+<!--  <script src="../resources/js/tour/list_manage.js" charset="utf-8"></script>  -->
 
 <!--자동완성기능 필요한 것 CSS , JS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<script src="${pageContext.request.contextPath}/resources/js/coffee/jquery-ui.js"></script>
-
+<script src="../resources/js/coffee/jquery-ui.js"></script>
 <script src="../resources/js/coffee/jquery-ui.min.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script src="https://unpkg.com/hangul-js"></script>
 <script src="https://unpkg.com/type-hangul@latest/dist/type-hangul.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/coffee/hangul.js"></script>
-<jsp:include page="../header.jsp">
-	<jsp:param name="num" value="<%=5%>" />
-</jsp:include>
+
 
 
 <style>
@@ -69,6 +69,7 @@
 body{
   background: #f2f2f2;
   font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
 }
 
 .search {
@@ -165,6 +166,7 @@ body{
 	position: relative;
 	top: 100px;
 	text-decoration: none;
+	font-size: 16px;
 }
 
 /* Active/current link */
@@ -299,7 +301,19 @@ div.content {
 
 
 	$(document).ready(function(){
-	
+		$("form").submit(function(){
+			if($.trim($("#FWORD_WORD").val()) == ""){
+				alert("단어를 밉력해주세요");
+				$("#FWORD_WORD").focus();
+				return false;
+			}
+			if($.trim($("#FWORD_CONTENT").val()) == ""){
+				alert("단어 설명을 입력해주세요");
+				$("#FWORD_CONTENT").focus();
+				return false;
+			}
+
+		})//submit end
 
 		
 		$("span").click(function(){
@@ -363,14 +377,12 @@ div.content {
 		<div class="col-sm-3">
 			<div class="sidebar">
 				<a href="Test">나만의 커피 찾기</a> 
-				<a class="active"  href="#">커피 용어 찾기</a>
-				<a href="#">원두</a>
-				<a href="#">머신</a>
-				<a href="#">레시피</a>
+				<a class="active"  href="Fword">커피 용어 찾기</a>
+				<a href="Beans">원두</a>
 			</div>
 		</div>
 		<div class="container calendar-container col-sm-7"
-			style="position: relative; left: -5%; margin-top:30px;">
+			style="position: relative; left: -5%; margin-top:30px;   font-size: 12pt;">
 			
 			
 			
@@ -572,7 +584,7 @@ div.content {
 
 
 				<!-- 모달 end -->	
-		 	<button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#myModal">단어 추가하기</button> 
+		 	<button style="font-size: 12pt;" type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#myModal">단어 추가하기</button> 
 			
 			<div class="col-sm-2">
 			</div>

@@ -48,9 +48,19 @@
 		 #{TOUR_SERVICE},0, 1
 		)
 </insert>
-<select id="count" resultType="int">
+<select id="count" resultType="int" parameterType="map">
 	select count(*)from BOARD_TOUR
+	where TOUR_NUM > 0 
+	 <include refid="search" />
 </select>
+
+<select id="manage_count" resultType="int">
+	select count(*)from BOARD_TOUR
+	where TOUR_ADMIN =1
+	<include refid="search" />
+</select>
+
+
 <!-- 문법 오류
 	1.where rnum >= #{start}
 	==> 해결법
@@ -70,10 +80,37 @@
 	select * from
 	 (select rownum rnum, b.*
 		from BOARD_TOUR b
+		 where TOUR_NUM > 0
+		 <include refid="search" />
 		order by TOUR_NUM desc)
 	 where rnum &gt;= #{start} and rnum &lt;= #{end} 
-
 </select> 
+
+<select id="manage_list" parameterType="java.util.Map" resultType="board_tour">
+	select * from
+	 (select rownum rnum, b.*
+		from BOARD_TOUR b
+		where TOUR_ADMIN=1
+		 <include refid="search" />
+		order by TOUR_NUM desc)
+	 where rnum &gt;= #{start} and rnum &lt;= #{end} 
+</select> 
+
+<sql id="search">
+	<if test="search_type != null">
+	and
+		 <choose>
+		 	<when test="search_type=='TOUR_SUBJECT'">TOUR_SUBJECT</when>
+		 	<when test="search_type=='TOUR_NAME'">TOUR_NAME</when>
+		 	<when test="search_type=='TOUR_CONTENT'">TOUR_CONTENT</when>
+		 	<when test="search_type=='USER_NICKNAME'">USER_NICKNAME</when>
+		 </choose>
+		 like #{search_text}
+	 </if>
+</sql>
+
+
+
 
 <update id="readCountUpdate" parameterType="int">
 	update 	BOARD_TOUR
@@ -104,24 +141,10 @@
 	where TOUR_NUM=#{TOUR_NUM}
 </update> 
 
-<!-- <delete id="delete" parameterType="board_coffee">
-	<![CDATA[
-		delete from COFFEE
-			where	TOUR_RE_REF = #{TOUR_RE_REF}
-			and		TOUR_RE_LEV >=#{TOUR_RE_LEV}
-			and 	TOUR_RE_SEQ >=#{TOUR_RE_SEQ}
-			and		TOUR_RE_SEQ <=(
-									nvl((SELECT min(TOUR_re_seq)-1
-										FROM	COFFEE
-										WHERE	TOUR_RE_REF=#{TOUR_RE_REF}
-										AND		TOUR_RE_LEV=#{TOUR_RE_LEV}
-										AND		TOUR_RE_SEQ>#{TOUR_RE_SEQ}),
-										(SELECT max(TOUR_re_seq)
-										FROM	COFFEE
-										WHERE	TOUR_RE_REF=#{TOUR_RE_REF} ))
-										)
-	 ]]>
-</delete>  -->
+ <delete id="delete" parameterType="int" >
+		delete from BOARD_TOUR
+		where TOUR_NUM = #{num}
+</delete> 
 
 
 <insert id="insert_deleteFile" parameterType="String">
@@ -129,11 +152,11 @@
 	values(#{file})
 </insert> 
 
-<!-- 삭제할 파일들의 목록을 구합니다. 
+
 	<select id="deleteFileList" resultType="String">
 		select TOUR_file from delete_file
 	</select> 
-	 -->
+
 	 <select id="list_map" parameterType="String" resultType="board_tour">
 			SELECT TOUR_NAME, AVG(TOUR_GRADE) TOUR_GRADE
 			FROM  BOARD_TOUR
@@ -141,20 +164,20 @@
 			GROUP BY TOUR_NAME
 	 </select>
 	 
-	 <select id="detail_one" parameterType="String" resultType="board_tour">
+	 <select id="detail_one" parameterType="map" resultType="board_tour">
 			SELECT * FROM BOARD_TOUR
 				WHERE TOUR_ADMIN = 
 						(SELECT MAX(TOUR_ADMIN) 
 							FROM BOARD_TOUR
-								WHERE TOUR_NAME = #{name}
-						)
-									AND TOUR_NUM= 
-									(SELECT MIN(TOUR_NUM)
+								WHERE TOUR_NAME = #{name} AND TOUR_ADDRESS LIKE '%'||#{sido}||'%')
+									AND TOUR_NUM= 							
+									(
+									SELECT MIN(TOUR_NUM)
 								 			FROM BOARD_TOUR
 												WHERE TOUR_ADMIN = 
 															(SELECT MAX(TOUR_ADMIN) 
 																FROM BOARD_TOUR
-																	WHERE TOUR_NAME = #{name}
+																	WHERE TOUR_NAME = #{name} AND TOUR_ADDRESS LIKE '%'||#{sido}||'%'
 															)
 																		AND  TOUR_NAME = #{name}
 									)
