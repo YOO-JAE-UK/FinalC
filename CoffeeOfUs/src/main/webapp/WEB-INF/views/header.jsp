@@ -236,7 +236,7 @@ $(document).ready(function(){
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/event/attendCheck">출석 체크</a></li>
                                         <li><a href="${pageContext.request.contextPath}/event/roulette">룰렛 포인트</a></li>
-                                        <li><a href="#">포인트 스토어</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/point_store/list">포인트 스토어</a></li>
                                     </ul>
                                 </li>
                                 <li class="shopping"><a href="#">쇼핑검색</a>

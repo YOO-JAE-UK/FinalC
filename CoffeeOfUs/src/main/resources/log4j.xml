@@ -19,6 +19,19 @@
 		<level value="trace" />
 	</logger>
 	
+	<logger name="board_event">
+		<level value="trace" />
+	</logger>
+	<logger name="product">
+		<level value="trace" />
+	</logger>
+	<logger name="cart">
+		<level value="trace" />
+	</logger>
+	<logger name="recieveAddress">
+		<level value="trace" />
+	</logger>
+	
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

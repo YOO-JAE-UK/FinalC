@@ -5,7 +5,7 @@ drop table attend_check CASCADE CONSTRAINTS;
 
 create table attend_check(
 	num			number primary key,
-    id			varchar2(20) references member(user_id),
+    id			varchar2(20) references member(user_id) on delete cascade,
 	attenddate	 date,
 	status       varchar2(1) default 'N',
 	point		number(5)	
@@ -13,18 +13,23 @@ create table attend_check(
 create sequence event_seq
 drop sequence event_seq
 
-insert into member values('admin','1234','f문','rdans25d','jw89082f@gmail.com','11111','안양시','010-1111-1111','/pencil.png','i.png','1',sysdate)
+--위 테이블,시퀀스까지 생성해주시면 됩니다.
+insert into member values('b','1234','aaf문','aardans25d','aajw89082f@gmail.com','11111','안양시','010-1111-1111',null,'i.png','1',sysdate)
 insert into attend_check values (4,'b','2021-10-06','N',30)
-insert into attend_check values (6,'b','2021-09-07','N',40)
+≈
 insert into attend_check values(event_seq.nextval,'a','2021-10-06','N',
                               nvl((select point from attend_check
                                    where num=(select nvl(max(num),0)
                                    from ATTEND_CHECK where id='a')),0))
-insert into attend_check values ('a',TO_CHAR(sysdate,'YYYY-MM-DD'))
+select * from EMAIL
+update email set keycheck=1 where keycheck=0
 delete from ATTEND_CHECK where id='b'
 select * from attend_check
 select * from member
-delete from member
+update member set user_check=1 where user_check=0
+delete from member where user_id='a'
+select * from BOARD_EVENT
+delete from board_event where id='a'
 
  select nvl(max(point),0) point from attend_check where id='a'
       				and num=(select nvl(max(num),0)
@@ -35,3 +40,5 @@ select * from attend_check where id='a' and TO_CHAR(attenddate,'YYYY-MM-DD')= '2
 
 select count(*) from ATTEND_CHECK where id='a' and TO_CHAR(attenddate,'YYYY-MM') ='2021-10'
 
+	update attend_check set point=20 where id='b' and num= (select nvl(max(num),0)
+                                   from ATTEND_CHECK where id='b')

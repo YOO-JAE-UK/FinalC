@@ -12,4 +12,14 @@ public interface Board_Event_Service {
 
 	List<Board_Event> getList(int state, int page, int limit);
 
+	int BoardUpdate(Board_Event board);
+
+	int BoardReply(Board_Event board);
+
+	int BoardReplyUpdate(Board_Event board);
+
+	int BoardDelete(Board_Event board);
+
+	Board_Event BoardSelect(Board_Event board);
+
 }

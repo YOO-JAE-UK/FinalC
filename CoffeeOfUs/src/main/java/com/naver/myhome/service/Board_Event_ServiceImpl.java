@@ -43,4 +43,41 @@ public class Board_Event_ServiceImpl implements Board_Event_Service{
 		return dao.getList(map);
 	}
 
+	@Override
+	public int BoardUpdate(Board_Event board) {
+		// TODO Auto-generated method stub
+		return dao.BoardUpdate(board);
+	}
+	@Override
+	public int BoardReplyUpdate(Board_Event board) {
+		
+		
+		return dao.BoardReplyUpdate(board);
+	}
+	
+	@Override
+	public int BoardReply(Board_Event board) {
+		BoardReplyUpdate(board);
+		board.setEvent_re_lev(board.getEvent_re_lev()+1);
+		board.setEvent_re_seq(board.getEvent_re_seq()+1);
+		
+		return dao.BoardReply(board);
+	}
+
+	
+	@Override
+	public Board_Event BoardSelect(Board_Event board) {
+		
+		return dao.BoardSelect(board);
+	}
+
+	
+	@Override
+	public int BoardDelete(Board_Event board) {
+		
+		Board_Event boarddetail=BoardSelect(board);
+		
+		return dao.BoardDelete(boarddetail);
+	}
+
 }

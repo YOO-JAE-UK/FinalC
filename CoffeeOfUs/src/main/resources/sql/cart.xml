@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+	
+  <select id="getCartCount" resultType="int">
+  	select count(*) from cart
+  
+  </select>
+  
+  <insert id="addtoCart" parameterType="cart">
+   insert into cart values (#{id},#{ccode},#{cproductname},#{cdescription},#{cperpoint}
+   ,#{cquantity},#{cimg},#{ctotalpoint},sysdate)
+  
+  </insert>
+  
+  <select id="isProduct" parameterType="cart" resultType="cart">
+  	select * from cart where id=#{id} and ccode=#{ccode} 
+  
+  </select>
+  
+  <update id="updatetoCart" parameterType="cart">
+  	update cart set cquantity= cquantity + #{cquantity} , 
+  	      ctotalpoint= ctotalpoint + #{ctotalpoint}
+  	      where id=#{id} and ccode=#{ccode}
+  
+  </update>
+  
+  <select id="getCartList" parameterType="map" resultType="cart">
+  	<!-- select * from 
+  			(select rownum rnum,b.* from
+  			     (select * from cart where id=#{id}
+  			     order by cdate desc)b)
+  	 where rnum &gt;= #{start} and rnum &lt;= #{end}  -->
+  	 
+  	 select * from 
+  			(select rownum rnum,b.* from
+  			     (select cart.*,product.quantity cremain from 
+  			      cart ,product
+  			      where cart.ccode=product.code 
+  			      and id=#{id}
+  			     order by cdate desc)b)
+  	 where rnum &gt;= #{start} and rnum &lt;= #{end} 		     
+  
+  </select>
+  
+  <delete id="cartItemDelete" parameterType="map">
+  	delete from cart where id=#{id}	and ccode=#{ccode}
+  
+  
+  </delete>
+  <update id="Plus" parameterType="cart">
+  		update cart set cquantity=#{cquantity},ctotalpoint=#{ctotalpoint}
+  		where ccode=#{ccode} and id=#{id} 
+  
+  </update>
+  <select id="List" resultType="cart">
+  	select * from cart where id=#{id}
+  
+  </select>
+  <select id="AllCartList" parameterType="String" resultType="cart">
+  		select * from cart where id=#{id} order by cdate desc
+  
+  
+  </select>
+  
+  <delete id="removeCart" parameterType="String">
+  	delete from cart where id=#{id}
+  
+  </delete>
+</mapper>

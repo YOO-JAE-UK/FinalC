@@ -90,20 +90,25 @@ body {
 }
 #point{
     float: left;border:1px solid lightgray;
-    width:50%;height:50px;
+    width:40%;height:50px;
 	padding-top:13px;
 	text-align:center;
 	border-radius:5px 0 0 5px;
-	color:gray;
+	color:white;
+	background-color:#607d8b
 }
 #mypoint{
 	float: left;border:1px solid lightgray;
-	border-left:none;width:50%;
+	border-left:none;width:40%;
 	padding-top:13px;
 	height:50px;
 	text-align:center;
 	border-radius:0 5px 5px 0;
-	color:gray;
+	color:white;
+	background-color:#17a2b8
+}
+.point{
+	margin-left:20px
 }
 
 /* Sidebar links */
@@ -112,7 +117,7 @@ body {
 	color: #607d8b;
 	padding: 20px;
 	position: relative;
-	top: 100px;
+	top: 70px;
 	text-decoration: none;
 }
 
