@@ -5,7 +5,6 @@
 <head>
 <title>회 원 정 보</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-
 <link href="${pageContext.request.contextPath }/resources/css/member_info.css"
 	type="text/css" rel="stylesheet">
 
@@ -41,7 +40,14 @@ $(function() {
 		<h3 class="titlefont">회원 정보</h3>
 		<div class="input_wrp">
 			<div class="comtext">사용자 ID</div>
+			<c:choose>
+			<c:when test="${name=='' }">
 			<div class="infotext">${m.USER_ID}</div>
+			</c:when>
+			<c:otherwise>
+			<div class="infotext">${m.USER_NAME}</div>
+			</c:otherwise>
+			</c:choose>
 			   <div class="showinfo"></div><%-- Member.java클래스의 getUSER_ID()메서드 호출 --%>
 			<div class="comtext">별 명</div>
 			<div class="infotext">${m.USER_NICKNAME}</div>
@@ -56,7 +62,7 @@ $(function() {
 			<div class="infotext">${m.USER_PHONE}</div>
 			   <div class="showinfo"></div>
 			<div class="comtext">프로필 사진</div>
-			<img src="get_img?name=${m.USER_FILE}" alt="user_image"  class="user_image">
+			<img src="../upload${m.USER_FILE}" alt="user_image"  class="user_image">
 			
 			   <div class="showinfoimg"></div>
 		</div>

@@ -24,17 +24,17 @@
 	</selectKey>
 	insert into BOARD_QNA
 	(QNA_NUM,
-	QNA_PASS, QNA_SUBJECT, USER_ID, USER_NICKNAME,
+	 QNA_PASS, QNA_SUBJECT, USER_ID, USER_NICKNAME,
 	 QNA_CONTENT, QNA_FILE, QNA_ORIGINAL,
-	 QNA_DATE, QNA_READCOUNT, QNA_RE_REF,
-	   QNA_RE_LEV, QNA_RE_SEQ)
+	 QNA_DATE, QNA_READCOUNT, 
+	 QNA_RE_REF, QNA_RE_LEV, QNA_RE_SEQ)
 		values
 		(#{QNA_NUM},
 		 #{QNA_PASS}, #{QNA_SUBJECT}, #{USER_ID},#{USER_NICKNAME}, 
 		 #{QNA_CONTENT}, #{QNA_FILE, jdbcType=VARCHAR},
 		 #{QNA_ORIGINAL, jdbcType=VARCHAR},
-		  sysdate, #{QNA_READCOUNT}, 
-		  #{QNA_NUM}, 0, 0
+		 sysdate, #{QNA_READCOUNT}, 
+		 #{QNA_NUM}, 0, 0
 		)
 </insert> 
 
@@ -94,21 +94,22 @@
 <!-- QNA_FILE, QNA_ORIGINAL 필드 없어요  -->
 <insert id="reply_insert" parameterType="board_qna">
 	<selectKey resultType="int" order="BEFORE" keyProperty="QNA_NUM">
-		select nvl(max(QNA_NUM),0)+1 from QNA
+		select nvl(max(QNA_NUM),0)+1 from BOARD_QNA
 	</selectKey>
 	insert into BOARD_QNA
-	(COFFEE_NUM,
-	 COFFEE_PASS, COFFEE_SUBJECT, USER_ID, USER_NICKNAME,
-	 QNA_CONTENT, QNA_FILE, QNA_ORIGINAL,
-	 QNA_DATE, QNA_READCOUNT, QNA_RE_REF,
-	   QNA_RE_LEV, QNA_RE_SEQ)
+	(QNA_NUM,
+	 QNA_PASS, QNA_SUBJECT, USER_ID, USER_NICKNAME,
+	 QNA_CONTENT, QNA_FILE, 
+	 QNA_ORIGINAL,
+	 QNA_DATE, QNA_READCOUNT, 
+	 QNA_RE_REF, QNA_RE_LEV, QNA_RE_SEQ)
 		values
 		(#{QNA_NUM},
 		 #{QNA_PASS}, #{QNA_SUBJECT}, #{USER_ID},#{USER_NICKNAME}, 
 		 #{QNA_CONTENT}, #{QNA_FILE, jdbcType=VARCHAR},
 		 #{QNA_ORIGINAL, jdbcType=VARCHAR},
-		  sysdate, #{QNA_READCOUNT}, 
-		  #{QNA_RE_REF}, #{QNA_RE_LEV}, #{QNA_RE_SEQ}
+		 sysdate, #{QNA_READCOUNT}, 
+		 #{QNA_RE_REF}, #{QNA_RE_LEV}, #{QNA_RE_SEQ}
 		)
 </insert>
 
@@ -130,7 +131,7 @@
 
 
 
-<!-- 
+ 
 <delete id="delete" parameterType="board_qna">
 	<![CDATA[
 		delete from BOARD_QNA
@@ -149,18 +150,18 @@
 										)
 	 ]]>
 </delete> 
--->
 
 
-<!-- 
+
+
 <insert id="insert_deleteFile" parameterType="String">
 	insert into delete_file
 	values(#{file})
 </insert>
 
-삭제할 파일들의 목록을 구합니다.
+<!-- 삭제할 파일들의 목록을 구합니다.  -->
 	<select id="deleteFileList" resultType="String">
 		select QNA_file from delete_file
 	</select> 
-	-->
+	
 </mapper>

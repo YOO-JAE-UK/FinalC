@@ -35,7 +35,6 @@ import com.naver.myhome.service.Board_Qna_Service;
 import com.naver.myhome.service.Comment_Qna_Service;
 
 @Controller
-
 @RequestMapping(value = "/board_qna")
 public class Board_Qna_Controller {
 
@@ -68,9 +67,7 @@ public class Board_Qna_Controller {
 	// @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Board_Qna board, HttpServletRequest request)
 			throws Exception {
-
-		MultipartFile uploadfile = board.getUploadFile();
-		
+		MultipartFile uploadfile = board.getUploadfile();
 		if (!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();// 원래 파일명
 			board.setQNA_ORIGINAL(fileName);// 원래 파일명 저장
@@ -86,7 +83,6 @@ public class Board_Qna_Controller {
 			board.setQNA_FILE(fileDBName);
 		}
 		Board_Qna_Service.insertBoard(board); // 저장 메서드 호출
-
 		return "redirect:list";
 	}
 
@@ -126,7 +122,7 @@ public class Board_Qna_Controller {
 		logger.info("refileName = " + refileName);
 
 		// 오라클 디비에 저장될 파일 명
-		// File.separatoror => /
+		// File.separatoror => "/" + year + "-" + month + "-" + date + "/" + refileName;
 		String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
 		logger.info("fileDBName =" + fileDBName);
 		return fileDBName;
@@ -222,7 +218,7 @@ public class Board_Qna_Controller {
 		return mv;
 	}
 
-	@GetMapping("replyView")
+	@GetMapping("/replyView")
 	public ModelAndView BoardReplyView(int num, ModelAndView mv, 
 										HttpServletRequest request) {
 		Board_Qna board = Board_Qna_Service.getDetail(num);
@@ -245,7 +241,6 @@ public class Board_Qna_Controller {
 		if (result == 0) {
 			mv.setViewName("error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "게시판 답변 처리실패");
 		} else {
 			// mv.setViewName("redirect:list");
 			mv.setViewName("redirect:detail?num=" + board.getQNA_NUM());
@@ -279,12 +274,12 @@ public class Board_Qna_Controller {
 	}
 
 	@PostMapping("/modifyAction") 
-	public String boardModifyAction(Board_Qna boarddata, String before_file, 
+	public String BoardModifyAction(Board_Qna boarddata, String before_file, 
 			String check, Model mv, HttpServletRequest request, 
 			RedirectAttributes rattr 
 			) throws Exception{
 		boolean usercheck =
-				Board_Qna_Service.isBoardWriter(boarddata.getQNA_NUM(), boarddata.getQNA_PASS()); 
+		  Board_Qna_Service.isBoardWriter(boarddata.getQNA_NUM(), boarddata.getQNA_PASS()); 
 		String url=""; 
 		//비밀번호가 다른 경우
 		if(usercheck == false) { 
@@ -293,14 +288,15 @@ public class Board_Qna_Controller {
 		    return "redirect:modifyView"; 
 	    }
 						  
-		MultipartFile uploadfile = boarddata.getUploadFile(); 
-		//String saveFolder =request.getSession().getServletContext().getRealPath("resources") + "/upload/";
+		MultipartFile uploadfile = boarddata.getUploadfile(); 
+		String saveFolder =
+	request.getSession().getServletContext().getRealPath("resources") + "/upload/";
 						  
 		if(check != null && !check.equals("")) {//기존파일 그대로 사용하는 경우입니다.
 			logger.info("기존파일 그대로 사용합니다."); 
 			boarddata.setQNA_ORIGINAL(check); 
-			//<input type="hidden" name="BOARD_FILE" value="${boarddata.BOARD_FILE}"> 
-			//위 문장 때문에 board.setBOARD_FILE()값은 자동 저장됩니다. 
+			//<input type="hidden" name="QNA_FILE" value="${boarddata.QNA_FILE}"> 
+			//위 문장 때문에 board.setQNA_FILE()값은 자동 저장됩니다. 
 		}else {
 						  
 						  
@@ -321,7 +317,7 @@ public class Board_Qna_Controller {
 			boarddata.setQNA_FILE(fileDBName); 
 			}else { //uploadfile.isEmpty() 인경우 - 파일을 선택하지 않은 경우 
 				logger.info("선택 파일 없습니다.");
-				//<input type="hidden" name="BOARD_FILE" value=${boarddata.BOARD_FILE}"> 
+				//<input type="hidden" name="QNA_FILE" value=${boarddata.QNA_FILE}"> 
 				//위 태그에 값이 있다면 ""로 값을 변경합니다. 
 			boarddata.setQNA_FILE(""); 	//""로 초기화 합니다.
 			boarddata.setQNA_ORIGINAL(""); //""로 초기화 합니다. 

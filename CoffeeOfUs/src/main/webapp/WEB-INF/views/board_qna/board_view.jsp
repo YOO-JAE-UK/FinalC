@@ -57,7 +57,7 @@ form[action=down] > input[type=submit]{
     border: none;
     cursor : pointer;
 }
-.container,  #write, #content, #board_pass{
+.container, #write, #font-id, #content, #board_pass{
 	font-size:15px;
 }
 
@@ -86,17 +86,36 @@ form[action=down] > input[type=submit]{
 	</jsp:include>
 
 	 <section class="upcoming-classes spad">
+	 
         <div class="container">
          <div class="row">
                  
                 <div class="col-xs-12 col-sm-12 col-md-12">
+                <c:choose>
+                <c:when test="${name=='' }">
                 	<input type="hidden" value="${id}" id="loginid" name="loginid">
+                </c:when>
+                <c:otherwise>
+                	<input type="hidden" value="${name}" id="loginid" name="loginid">
+                </c:otherwise>
+                </c:choose>
 
 		<table class="table table-striped" id="list_font">
-			<tr><th colspan="2">QNA 페이지</th></tr>
+			<h4 style="text-align: center;">QNA 페이지</h4><br>
 			<tr >
 				<td>글쓴이</td>
+				<c:choose>
+				<c:when test="${name=='' }">
 				<td><div>${boarddata.USER_ID}</div></td>
+				<input name="USER_ID" id="user_id" value="${id}" readOnly
+								type="hidden" class="form-control" placeholder="Enter board_name">
+				</c:when>
+				<c:otherwise>
+				<td><div>${boarddata.USER_NICKNAME}</div></td>
+				<input name="USER_ID" id="user_id" value="${name}" readOnly
+								type="hidden" class="form-control" placeholder="Enter board_name">
+				</c:otherwise>
+				</c:choose>
 			</tr>
 			<tr>
 				<td>제목</td>
@@ -104,7 +123,7 @@ form[action=down] > input[type=submit]{
 			</tr>
 			<tr>
 				<td><div>내용	</div></td>
-				<td style="padding-right:0px"><textarea class="form-control" rows="5" id="write"
+				<td style="padding-right:0px"><textarea class="form-control" rows="5" id="font-id"
 					readOnly >${boarddata.QNA_CONTENT}</textarea></td>
 			</tr>
 			<c:if test="${boarddata.QNA_RE_LEV==0}"><%--원문글인 경우에만 첨부파일을 추가 할 수 있습니다. --%>
@@ -131,26 +150,24 @@ form[action=down] > input[type=submit]{
 			
 			<tr>
 				<td colspan="2" class="center">
-					<button class="btn btn-primary start" id="write">댓글</button>
+					<button class="btn btn-primary start" id="font-id">댓글</button>
 					<span id="count">${count}</span>
 				<c:if test="${boarddata.USER_ID == id || id=='admin' }">
 					<a href="modifyView?num=${boarddata.QNA_NUM }">
-						<button class="btn btn-warning" id="write">수정</button>
+						<button class="btn btn-warning" id="font-id">수정</button>
 					</a>
 					<%-- href의 주소를 #으로 설정합니다. --%>
 					<a href="#">
 						<button class="btn btn-danger" data-toggle="modal"
-						data-target="#myModal" id="write">삭제</button>
+						data-target="#myModal" id="font-id">삭제</button>
 					</a>
-					<c:if test="${boarddata.QNA_RE_LEV <1 }">
-					<a href="replyView?num=${boarddata.QNA_NUM}">
-						<button class="btn btn-info" id="write">답변</button>
-					</a>
-					</c:if>
 				</c:if>
+					<a href="replyView?num=${boarddata.QNA_NUM}">
+						<button class="btn btn-info" id="font-id">답변</button>
+					</a>
 				
 				<a href="list">
-					<button class="btn btn-success" id="write">목록</button>
+					<button class="btn btn-success" id="font-id">목록</button>
 				</a>
 				</td>
 			</tr>
@@ -176,8 +193,8 @@ form[action=down] > input[type=submit]{
 			   			class="form-control" placeholder="Enter password"
 			   			name="BOARD_PASS" id="board_pass">
 			   	</div>
-			   	<button type="submit" class="btn btn-primary" id="write">전송</button>
-			   	<button type="button" class="btn btn-danger" data-dismiss="modal" id="write">취소</button>
+			   	<button type="submit" class="btn btn-primary" id="font-id">전송</button>
+			   	<button type="button" class="btn btn-danger" data-dismiss="modal" id="font-id">취소</button>
 			   	</form>
 			   </div><!-- class="modal-body" -->
 			  </div><!-- class="modal-content" -->
@@ -185,7 +202,7 @@ form[action=down] > input[type=submit]{
 			</div><!-- class="modal end"  <div class="modal" id="myModal">-->
 			
 			<div id="comment">
-				<button class="btn btn-info float-left" id="write">총 50자까지 가능합니다.</button>
+				<button class="btn btn-info float-left" id="font-id">총 50자까지 가능합니다.</button>
 				<button id="write" class="btn btn-info float-right">등록</button>
 				<textarea rows=3 class="form-control"
 							id="content" maxlength="50"></textarea>

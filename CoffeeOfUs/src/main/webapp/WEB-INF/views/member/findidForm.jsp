@@ -5,52 +5,68 @@
 <head>
 <title>ID/PW 찾기</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-
+<jsp:include page="../header.jsp"></jsp:include>
 <link href="${pageContext.request.contextPath }/resources/css/findid.css"
 	type="text/css" rel="stylesheet">
 
 <script>
-	
-</script>
+var findid = " ${id.USER_ID}";
+var result = "${result}";
+if (result == 'findpass_EmailFail') {
+	alert("정보가 일치하지 않습니다.")
+}
+
+ if ("${rr}" == 'findid_IdFail') {
+	alert("아이디는 " + findid +" 입니다." )
+ }
+	</script>
+
+
+
 <style>
 </style>
 
 
 </head>
 <body>
-	<jsp:include page="../header.jsp"></jsp:include>
-
-
-	<form name="findidForm" action="${pageContext.request.contextPath }/member/findId"
-		method="get">
-		<h3 class="titlefont">ID/PW 찾기</h3>
+	
+    
+	<form name="findidForm1" id="form1" action="${pageContext.request.contextPath }/member/findIdProcess"
+		method="POST">
+		<h3 class="titlefont">ID 찾기</h3>
 		<div class="input_wrp">
-			<div class="comtext">이메일 주소</div>
+			
+			<div class="comtext">이메일</div>
 			<div class="input_wrp">
 				<div class="findemailbtn">
 					<input type='text' id="findemail" name="findemail"
-						placeholder="Enter Email" required>
-				</div>
-				<div>
-					<button type="button" class="findidbtn">ID/PW 찾기</button>
+						placeholder="ex) user01@naver.com" required>
 				</div>
 			</div>
+				<div>
+					<button type="submit" class="findidbtn" id="searchBtn">ID 찾기</button>
+				</div>
 		</div><br>
-
-		<h3 class="titlefont2">임시 비밀번호 발급</h3>
+	</form>
+	<form name="findpassForm2" id="form2" action="${pageContext.request.contextPath }/member/findpwProcess"
+		method="post">
+		<h3 class="titlefont2"> 비밀번호 찾기</h3>
+		<p class="title2_message">사용자 ID와 이메일 주소를 입력후 이메일을 확인해주세요.</p>
 		<div class="input_wrp">
 			<div class="comtext">사용자 ID</div>
-			<input type='text' id="tempass" name="tempass" placeholder="사용자 ID"
+			<input type='text' id="id" name="id" placeholder="ex) user01"
 				required>
 			<div class="comtext">이메일 주소</div>
-			<input type='text' id="tempass" name="tempass" placeholder="이메일 주소"
+			<input type='text' id="email" name="email" placeholder="ex) user01@naver.com"
 				required>
 			<div>
-				<button type="button" class="tempassbtn">임시 비밀번호 발급</button>
+				<button type="submit" class="tempassbtn">비밀번호 찾기</button>
+			    <button type='reset' class="cancelbtn" onClick="history.go(-1)">← 취소</button>
 			</div>
 		</div>
 	</form>
-
+	
+	
 
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>

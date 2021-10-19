@@ -27,7 +27,7 @@ public class Comment_Qna_ServiceImpl implements Comment_Qna_Service {
 		int endrow = page * 3;
 
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("board_num", board_num);
+		map.put("QNA_NUM", board_num);
 		map.put("start", startrow);
 		map.put("end", endrow);
 		return dao.getCommentList(map);

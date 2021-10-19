@@ -1,7 +1,8 @@
 package com.naver.myhome.service;
 
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.naver.myhome.domain.Email;
 import com.naver.myhome.domain.Member;
@@ -23,9 +24,13 @@ public interface MemberService {
 	
 	public int update(Member m); // 회원정보 수정
 	
-	public String passcheck(Member m); //비밀번호 확인 
-	
 	public int changepass(String id,String newpass); //비밀번호 변경
+	
+	public Member findId(String email);  // 아이디 찾기
+	
+	public Member findpass_email(String id, String email); //비밀번호 찾기 이메일 
+	
+	public String Nickname(String id); // 닉네임 찾기( 로그인시 아이디와 비밀번호를 토대로)
 	
 	public List<Member> getSearchList(int index, String search_word,
 			                         int page, int limit);
@@ -39,6 +44,10 @@ public interface MemberService {
 	public void updateKey(String email);
 
 	public int verifyKeyCheck(String id);
+
+
+
+
 
     
 	

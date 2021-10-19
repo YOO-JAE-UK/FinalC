@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,10 +39,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.naver.myhome.domain.Email;
 import com.naver.myhome.domain.MailVO;
+import com.naver.myhome.domain.MailVO2;
 import com.naver.myhome.domain.Member;
+import com.naver.myhome.naverlogin.NaverLoginBO;
 import com.naver.myhome.service.MemberService;
+import com.naver.myhome.task.EmailSender;
 import com.naver.myhome.task.SendMail;
 
 
@@ -69,24 +79,102 @@ public class MemberController {
 	  @Autowired 
 	  private SendMail sendMail;
 	  
+	  @Autowired
+	  private EmailSender emailSender;
+			  
+	  private NaverLoginBO naverLoginBO; 
+		private String apiResult = null; 
+		
+		@Autowired 
+		private void setNaverLoginBO(NaverLoginBO naverLoginBO) { 
+				this.naverLoginBO = naverLoginBO; 
+		} 
+	  
 	  //savefolder.properties에서 작성한 savefoldername 속성의 값을 String svaeFolder에 주입합니다.
-	  @Value("${savefoldername}")
+	  @Value("#{folder['savefoldername']}")
 	  private String saveFolder;
 	  
 
 
 	// http://localhost:8088/myhome/member/loginForm
 	// 로그인 폼이동
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login",  method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView login(ModelAndView mv, 
-			@CookieValue(value = "saveid", required = false) Cookie readCookie
+			@CookieValue(value = "saveid", required = false) Cookie readCookie,HttpSession session
 			) {
 		if (readCookie != null) {
 			mv.addObject("saveid", readCookie.getValue());
 			logger.info("cookie time=" + readCookie.getMaxAge());
 		}
+		
+		System.out.println("여기는 네이버 로그인");
+		
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */ 
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session); 
+		
+		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************& 
+		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=
+		//  e68c269c-5ba9-4c31-85da-54c16c658125 
+		//
+		System.out.println("네이버:" + naverAuthUrl); 
+		mv.addObject("url",naverAuthUrl);
 		mv.setViewName("member/loginForm"); // WEB-INF/views/member/loginForm.jsp
 		return mv;
+	}
+	
+@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST }) 
+	
+	public String callback(Model model, 
+							@RequestParam String code, 
+			    			@RequestParam String state, 
+			    			HttpSession session)  throws IOException, ParseException { 
+		
+		System.out.println("여기는 callback"); 
+		OAuth2AccessToken oauthToken; 
+		oauthToken = naverLoginBO.getAccessToken(session, code, state); 
+		
+		//1. 로그인 사용자 정보를 읽어온다. 
+		apiResult = naverLoginBO.getUserProfile(oauthToken); 
+		//String형식의 json데이터 
+		
+			/** apiResult json 구조 
+			   {"resultcode":"00", 
+			   "message":"success", 
+			   "response":{"id":"33666449",
+			   				"nickname":"shinn****",
+			   				"age":"20-29",
+			   				"gender":"M",
+			   				"email":"sh@naver.com",
+			   				"name":"\uc2e0\ubc94\ud638"}} **/ 
+		System.out.println("apiResult:"+ apiResult);
+		//2. String형식인 apiResult를 json형태로 바꿈 
+		JSONParser parser = new JSONParser(); 
+		Object obj = parser.parse(apiResult); 
+		JSONObject jsonObj = (JSONObject) obj; 
+		
+		//3. 데이터 파싱 
+		//Top레벨 단계 _response 파싱 
+		JSONObject response_obj = (JSONObject)jsonObj.get("response"); 
+		//response의 nickname값 파싱
+		String id = (String)response_obj.get("id"); 
+		String email = (String)response_obj.get("email"); 
+		String name = (String)response_obj.get("name"); 
+		
+		System.out.println(id); 
+		
+		//4.파싱 닉네임 세션으로 저장 
+		session.setAttribute("id",id); //세션 생성 
+		session.setAttribute("name", name);
+		Member member= new Member();
+		member.setUSER_ID(id);
+		member.setUSER_EMAIL(email);
+		member.setUSER_NAME(name);
+	    int data=memberservice.isEmail(email);
+		if(data!=1) {
+		memberservice.insert(member);
+		}
+		model.addAttribute("result", apiResult); 
+		return "main/main"; 
 	}
 	
 	// 로그인 처리
@@ -101,11 +189,13 @@ public class MemberController {
 			RedirectAttributes rattr) {
 
 		int result = memberservice.isId(id, password);
+		String nickname = memberservice.Nickname(id);
 		logger.info("결과 : " + result);
           int mailresult = memberservice.verifyKeyCheck(id);
 		if (result == 1 && mailresult==1) {
 			// 로그인 성공
 			session.setAttribute("id", id);
+			session.setAttribute("name", nickname);
 			logger.info("id =" + id);
 			Cookie savecookie = new Cookie("saveid", id);
 			if (!remember.equals("")) {
@@ -177,29 +267,15 @@ public class MemberController {
 			// 바뀐 파일명으로 저장
 			member.setUSER_FILE(fileDBName);
 		}
-		
-		
-		
+
 		String user_phone=tel1+"-" + tel2+"-"+tel3;
 		
 		member.setUSER_PHONE(user_phone);
-		//비밀번호 암호화 추가
-		//String encPassword = passwordEncoder.encode(member.getUSER_PASS());
-		//logger.info(encPassword);
-		//member.setUSER_PASS(encPassword);
 		int result = memberservice.insert(member);
 		
 		String key = getKey(50,false);
 		int mail_result=memberservice.email_insert(member.getUSER_ID(),member.getUSER_EMAIL(),key);
 		
-		// result=0;
-	/*
-	 * 스프링에서 제공하는 RedirectAttributes는 기존의 Servlet에서 사용되던 response.sendRedirect()를
-	 * 사용할 때와 동일한 용도로 사용합니다. 리다이렉트로 전송하면 파라미터를 전달하고자 할 때 addAttribute()나
-	 * addFlashAtribute()를 사용합니다. 예) response.sendRedirect("/test?result=1"); =>
-	 * rattr.addAttribute("result",1)"
-	 */
-				
 	// 삽입이 된 경우
 		if (result == 1 && mail_result==1) {
 			MailVO vo = new MailVO();
@@ -332,10 +408,13 @@ public class MemberController {
 	 */
 	//관리자용 회원 목록 보기
 	@RequestMapping(value = "/list")
-	public ModelAndView memberList(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
-			@RequestParam(value = "limit", defaultValue = "3", required = false) int limit, ModelAndView mv,
+	public ModelAndView memberList(
+			@RequestParam(value = "page", defaultValue = "1", required = false) int page,
+			@RequestParam(value = "limit", defaultValue = "3", required = false) int limit, 
+			ModelAndView mv,
 			@RequestParam(value = "search_field", defaultValue = "-1", required = false) int index,
-			@RequestParam(value = "search_word", defaultValue = "", required = false) String search_word) {
+			@RequestParam(value = "search_word", defaultValue = "", required = false) String search_word
+			) {
 		List<Member> list = null;
 		int listcount = 0;
 
@@ -418,13 +497,12 @@ public class MemberController {
 		logger.info("수정오류 확인" +member.getUSER_ADDRESS());
 		logger.info("수정오류 확인" +member.getUSER_ADDRESS_POST());
 		logger.info("수정오류 확인" +member.getUSER_EMAIL());
-		logger.info("수정오류 확인file: " +member.getUSER_FILE());
+		logger.info("수정오류 확인 file : " +member.getUSER_FILE());
 		logger.info("수정오류 확인" +member.getUSER_ID());
-		logger.info("수정오류 확인img: " +member.getUSER_IMG()); //original
+		logger.info("수정오류 확인 img : " +member.getUSER_IMG()); //original
 		logger.info("수정오류 확인" +member.getUSER_NAME());
 		logger.info("수정오류 확인" +member.getUSER_NICKNAME());
-		logger.info("수정오류 확인" +member.getUSER_PHONE());
-		logger.info("수정오류 확인pass: " +member.getUSER_PASS());
+		logger.info("수정오류 확인 pass : " +member.getUSER_PASS());
 		if (check != null && !check.equals("")) { // 기존파일 그대로 사용하는 경우입니다.  	
 	        logger.info("기존파일 그대로 사용합니다.");
 	        member.setUSER_IMG(check);
@@ -459,19 +537,56 @@ public class MemberController {
 		}
 	}
 	
-	
-	// 아이디 찾기
-	@RequestMapping(value = "/findId", method = RequestMethod.GET)
-	public String findId() {
+	// 로그인시 id/pw찾기 버튼 클릭시 아이디 찾기 페이지로 이동
+	@RequestMapping(value = "/findId", method = {RequestMethod.GET, RequestMethod.POST})  
+	public String findId() throws Exception{
 		return "member/findidForm"; // WEB-INF/views/member/findidForm.jsp
 	}
+	
+	// 아이디 찾기
+	@RequestMapping(value = "/findIdProcess", method = {RequestMethod.GET, RequestMethod.POST})
+	public String findIdProcess(
+			RedirectAttributes rattr, 
+			@RequestParam("findemail") String email,
+			Model md) {
+		logger.info("아이디 찾기 findIdProcess");
+		md.addAttribute("id", memberservice.findId(email));
+		md.addAttribute("rr", "findid_IdFail");
 		
-	// 비밀번호 재확인
-	@RequestMapping(value = "/passcheck", method = RequestMethod.GET)
-	public String passcheck() {
-		return "member/passcheck"; // WEB-INF/views/member/passcheck.jsp
+		return "/member/findidForm";
 	}
-		
+	
+	
+	// 비밀번호 찾기 이메일 
+	@RequestMapping(value = "/findpwProcess", method = RequestMethod.POST) 
+	  public String findpwProcess(
+			   @RequestParam("id") String id,
+			   @RequestParam("email") String email,
+			   RedirectAttributes rattr, 
+			   Model model, 
+			   HttpServletRequest request) throws Exception {
+	
+		Member member=memberservice.findpass_email(id, email);     
+			        
+	     // 아이디와 메일이 맞는 경우
+		if (member != null) { 
+				MailVO2 vo = new MailVO2();
+				vo.setTo(email);
+				vo.setContent(new StringBuffer()
+					.append(id + " 님의 " + "<br>" )
+					.append("비밀번호는 : " + member.getUSER_PASS() +" 입니다." + "<br>" )
+			        .append("<a href='http://localhost:8088/myhome/member/login?email=")
+			        .append("' target='_blenk'>로그인을 위해 이곳을 눌러주세요</a>").toString()); 
+				emailSender.emailSender(vo);
+				rattr.addFlashAttribute("result", "findpass_EmailSuccess");
+		}else {
+			rattr.addFlashAttribute("result", "findpass_EmailFail");
+			return "redirect:findId";
+		}
+		return "redirect:login";
+	  }
+	 
+	
 	// 비밀번호 변경
 	@RequestMapping(value = "/changepass", method = RequestMethod.GET)
 	public String changepass() {
@@ -523,6 +638,7 @@ public class MemberController {
 		 String USER_ID, 
 		 String USER_PASS,
 		HttpSession session,
+		RedirectAttributes redirectAttr, 
 		RedirectAttributes rattr) {
 		
 		int result=memberservice.isId(USER_ID, USER_PASS);
@@ -530,15 +646,17 @@ public class MemberController {
 		if(result==1) {
 			memberservice.delete(USER_ID);
 			logger.info("탈퇴 성공, 세션값 무효화 성공");
-			
+			redirectAttr.addFlashAttribute("message", "성공적으로 탈퇴했습니다.");
 			//세션 삭제
 			session.invalidate();
 
 			rattr.addFlashAttribute("message", "abc");
 			return "redirect:../main/main";
 		}else {
+			redirectAttr.addFlashAttribute("message", "탈퇴 실패했습니다.");
 			logger.info("탈퇴 실패");
 			return "member/drop";
+
 		}
 	}
 		

@@ -107,6 +107,9 @@ select{
  font-size:15px;
  height: 39px;
  }
+ #table_line{
+ border: 1px; solid lightgray;
+ }
 </style>
 </head>
 <body>
@@ -117,7 +120,6 @@ select{
         <option value="0"  selected>아이디</option>
         <option value="1">이름</option>
         <option value="2">닉네임</option>
-        <option value="3">성별</option>
      </select>
      <input name="search_word" type="text" class="form-control"
             placeholder="아이디 입력하세요" value="${search_word}">
@@ -125,7 +127,7 @@ select{
     </div>
  </form>
  <%--회원이 있는 경우 --%>
- <c:if test="${listcount > 0 }"> <%-- 회원이 있는 경우 --%> 
+ <c:if test="${listcount > 0 }"> 
  <table class="table table-striped">
    <caption style="font-weight:bold">관리자 전용</caption>
      <thead>
@@ -135,7 +137,7 @@ select{
               <font size=3>회원 수 : ${listcount}</font>
          </th>
        <tr>
-          <td>아이디</td><td>이름</td><td>삭제</td>
+          <td>아이디</td><td>이름</td><td>닉네임</td><td>삭제</td>
        </tr>
      </thead>
      <tbody>
@@ -146,6 +148,7 @@ select{
              <a href="member_info?id=${m.USER_ID}">${m.USER_ID}</a>
          </td>
         <td>${m.USER_NAME}</td>
+        <td>${m.USER_NICKNAME}</td>
         <td><a href="delete?id=${m.USER_ID}">삭제</a></td>
         </tr>
        </c:forEach>     

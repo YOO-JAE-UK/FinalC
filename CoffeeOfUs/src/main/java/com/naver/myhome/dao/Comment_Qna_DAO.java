@@ -18,22 +18,22 @@ public class Comment_Qna_DAO {
 	private SqlSessionTemplate sqlSession;
 
 	public int getListCount(int board_num) {
-		return sqlSession.selectOne("Commentsqna.count", board_num);
+		return sqlSession.selectOne("Comments_qna.count", board_num);
 	}
 
 	public List<Comment_Qna> getCommentList(Map<String, Integer> map) {
-		return sqlSession.selectList("Commentsqna.getList", map);
+		return sqlSession.selectList("Comments_qna.getList", map);
 	}
 
 	public int commentsInsert(Comment_Qna c) {
-		return sqlSession.insert("Commentsqna.insert", c);
+		return sqlSession.insert("Comments_qna.insert", c);
 	}
 
 	public int commentDelete(int num) {
-		return sqlSession.delete("Commentsqna.delete", num);
+		return sqlSession.delete("Comments_qna.delete", num);
 	}
 
 	public int commentUpdate(Comment_Qna co) {
-		return sqlSession.update("Commentsqna.update", co);
+		return sqlSession.update("Comments_qna.update", co);
 	}
 }

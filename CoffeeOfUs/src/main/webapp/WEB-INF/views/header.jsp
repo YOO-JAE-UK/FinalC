@@ -14,6 +14,8 @@
  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../resources/js/popper.js"></script>
+    
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
@@ -29,7 +31,7 @@
 <style>
 	.header__top__widget{
 		height: 50px;
-		padding: 5px 0px 10px;
+		padding: 0px 0px 40px !important;
 		text-align: right;
 	}
 	.header__top{
@@ -66,9 +68,11 @@
  right: 5px;
  margin-top: 16px;
 }
-#navbardrop{
+#manager{
  margin-top: 27px;
- font-size: 11pt;
+ font-size: 12pt;
+ position: absolute;
+ top: 1px;
 }
 	li{
 		list-style: none;
@@ -76,7 +80,9 @@
 	.header__menu > ul> li{
 		margin: 0 25px 0 25px;
 	}
-	
+/* #manager_wap{
+  margin: 9px -47px 0 0 !important;
+} */	
 	
 </style>
 
@@ -157,30 +163,34 @@ $(document).ready(function(){
                         <div class="header__top__widget" >
                           <c:if test="${!empty id}">
                              <ul style="float: right;">
+                              
+                             <c:choose> 
+                              <c:when test="${name==''}">
                               <li> <a href="${pageContext.request.contextPath}/member/logout" 
-	                        	        class="cus1">${id} 님(로그아웃)</a> </li>
+	                        	        class="cus1" style="text-transform: lowercase !important;">${id} 님(로그아웃)</a> </li>
+                              </c:when>                             
+                              <c:otherwise>                            
+                              <li> <a href="${pageContext.request.contextPath}/member/logout" 
+	                        	        class="cus1" style="text-transform: lowercase !important;">${name} 님(로그아웃)</a> </li>
+	                           </c:otherwise>
+	                          </c:choose> 
 	                           <li> <a href="${pageContext.request.contextPath}/member/member_info?id=${id}" 
 	                        	        class="cus2" >My</a> </li>
                               
                                  <c:if test="${id=='admin'}">
-                              <!-- Dropdown -->
-                                     <li class=" dropdown" style="float: right;"><a
-                                 class="nav-link dropdown-toggle" href="#" id="navbardrop"
-                                 data-toggle="dropdown"> 관리자 </a>
-                                 <div class="dropdown-menu">
-                                 <ul>
-                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/member/list">회원정보</a></li>
-                                    <li><a class="dropdown-item" href="#">게시판</a></li>   
-                                 </ul>
-                                    
-                                 </div>
-                                 </li>
+                              
+                              <!-- 관리자 -->
+                              <div class="manager_wap">
+                              <a class="manager" href="${pageContext.request.contextPath}/member/list" id="manager"
+                                 > 관리자 </a>
+                              </div>
+                              
                            </c:if><!-- admin이면 dropdown -->
                            </ul>
                           </c:if>
                        	
                        	<c:if test="${empty id}">
-                             <ul style="margin-top:40px">
+                             <ul style="margin:30px 160px 16px 0; font-size:14px;">
                               <li> <a href="${pageContext.request.contextPath}/member/login" 
                                          class="headerbtn">로그인</a></li>
                               <li> <a href="${pageContext.request.contextPath}/member/join" 

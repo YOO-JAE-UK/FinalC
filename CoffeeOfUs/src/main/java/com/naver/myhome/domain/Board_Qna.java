@@ -4,21 +4,21 @@ package com.naver.myhome.domain;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Board_Qna {
-	private int QNA_NUM;
+	private int    QNA_NUM;
 	private String QNA_PASS;
 	private String QNA_SUBJECT;
 	private String USER_ID;
 	private String USER_NICKNAME;
 	private String QNA_DATE;
-	private int QNA_READCOUNT;
-	private String QNA_CONTENT;
-	private int QNA_RE_REF;
-	private int QNA_RE_LEV;
-	private int QNA_RE_SEQ;
+	private int    QNA_READCOUNT; //글의 조회수
+	private String QNA_CONTENT;  //글 내용
+	private int    QNA_RE_REF;  // 답변 글 작성시 참조되는 글의 번호
+	private int    QNA_RE_LEV;  // 답변 글의 깊이
+	private int    QNA_RE_SEQ;  // 답변 글의 순서
 
-	private MultipartFile uploadFile; // db없음 
-	private String QNA_ORIGINAL; //파일이름
-	private String QNA_FILE; // 실제저장될 파일이름
+	private MultipartFile uploadfile; // 
+	private String QNA_ORIGINAL; //파일 이름
+	private String QNA_FILE; // 실제 저장된 파일이름
 
 	private int CNT;
 
@@ -110,12 +110,12 @@ public class Board_Qna {
 		QNA_DATE = qNA_DATE;
 	}
 
-	public MultipartFile getUploadFile() {
-		return uploadFile;
+	public MultipartFile getUploadfile() {
+		return uploadfile;
 	}
 
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
+	public void setUploadfile(MultipartFile uploadfile) {
+		this.uploadfile = uploadfile;
 	}
 
 	public String getQNA_ORIGINAL() {
