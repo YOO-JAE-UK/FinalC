@@ -297,11 +297,7 @@ h3>a{
 											
 
 					</div>
-					<c:if test="${id=='admin'}">	
-					<button type="button" class="btn btn-primary"
-						style="font-size: 1.2rem; border-radius: 10px; position: relative; top: 1px; background-color: #17a2b8">
-						상품 추가</button>
-					 </c:if>	 
+					
 					<div class="row mt-5">
 						<div class="col text-center">
 							<div class="block-27">
