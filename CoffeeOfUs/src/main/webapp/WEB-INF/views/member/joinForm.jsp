@@ -101,7 +101,7 @@
 			<label for="user_image" class="user_image" id="imgtext"> 
 			   <input type="file" name="uploadfile" class="user_image_choice"
 				      accept="image/gif, image/jpeg, image/png" >
-				<img id="user_image" src="resources/image/default.png" alt="image" 
+				<img id="user_image" src="../resources/img/join_default.jpg" alt="image" 
 				      width="130" height="130" class="avatar">
 			</label>
 		   </div>

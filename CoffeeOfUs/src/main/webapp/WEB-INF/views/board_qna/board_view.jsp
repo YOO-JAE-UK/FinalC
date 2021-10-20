@@ -101,7 +101,7 @@ form[action=down] > input[type=submit]{
                 </c:choose>
 
 		<table class="table table-striped" id="list_font">
-			<h4 style="text-align: center;">QNA 페이지</h4><br>
+			<h4 style="text-align: center;">QNA 게시글 보기</h4><br>
 			<tr >
 				<td>글쓴이</td>
 				<c:choose>

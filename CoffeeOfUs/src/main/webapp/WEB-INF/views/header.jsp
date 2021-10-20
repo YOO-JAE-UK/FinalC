@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="UTF-8"><!-- zxx -->
+<html lang="UTF-8"><!-- zxx --> 
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Directing Template">
@@ -101,7 +101,6 @@ $(document).ready(function(){
 		}else if(num==5){
 			$('.tour').addClass('active')
 		}
-		console.log("1");
 		
 })
 </script>
@@ -167,7 +166,7 @@ $(document).ready(function(){
                              <c:choose> 
                               <c:when test="${name==''}">
                               <li> <a href="${pageContext.request.contextPath}/member/logout" 
-	                        	        class="cus1" style="text-transform: lowercase !important;">${id} 님(로그아웃)</a> </li>
+	                        	        class="cus1" style="text-transform: lowercase !important; width:300px;">${id} 님(로그아웃)</a> </li>
                               </c:when>                             
                               <c:otherwise>                            
                               <li> <a href="${pageContext.request.contextPath}/member/logout" 
@@ -225,11 +224,8 @@ $(document).ready(function(){
                                 <li class="coffee"><a href="#">커피</a>
                               	  	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/coffee/Test">커피 취향테스트</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/coffee/Story">커피이야기</a></li>
                                         <li><a href="${pageContext.request.contextPath}/coffee/Fword">커피용어</a></li>
                                         <li><a href="${pageContext.request.contextPath}/coffee/Beans">원두</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/coffee/Machine">머신</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/coffee/Recipes">레시피</a></li>
                                     </ul>
                                 </li>
                                 <li class="event"><a href="#">이벤트</a>
@@ -239,17 +235,11 @@ $(document).ready(function(){
                                         <li><a href="${pageContext.request.contextPath}/point_store/list">포인트 스토어</a></li>
                                     </ul>
                                 </li>
-                                <li class="shopping"><a href="#">쇼핑검색</a>
-                                	<ul class="dropdown">
-                                        <li><a href="#">상품 검색</a></li>
-                                    </ul>
-                                </li>
                                  <li class="community"><a href="#">커뮤니티</a>
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/board_coffee/list">커피정보게시판</a></li>
                                         <li><a href="${pageContext.request.contextPath}/board_event/list">출석 게시판</a></li>
-                                        <li><a href="#">추천음악 게시판</a></li>
-                                        <li><a href="#">투어 게시판</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/tour/tour_board_list">투어 게시판</a></li>
                                         <li><a href="${pageContext.request.contextPath}/board_qna/list">Q & A</a></li>
                                     </ul>
                                 </li>
