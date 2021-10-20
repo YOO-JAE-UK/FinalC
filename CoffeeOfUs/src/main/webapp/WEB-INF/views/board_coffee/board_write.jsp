@@ -93,9 +93,11 @@ div.content {
 <div class="col-xs-12 col-sm-12 col-md-9">
 <h2 style="text-align: center;">MVC 게시판-write 페이지</h2>
 	<form action="add" method="post" enctype="multipart/form-data" name="boardform">
+	<input type="hidden" name="USER_ID" value="${id}">
 		<div class="form-group">
 			<label for="user_nickname">글쓴이</label>
-			<input name="USER_NICKNAME" id="user_nickname" value="관리자" readOnly
+			<input name="USER_NICKNAME" id="user_nickname" value="${name}" readOnly
+			
 			type="text" class="form-control"
 			placeholder="Enter board_name"><!-- ${id} -->
 		</div>

@@ -71,8 +71,6 @@ public class TourController {
 	public String add(Board_Tour board) throws Exception {
 		
 		MultipartFile uploadfile = board.getUploadfile();
-		board.setUSER_ID("admin");
-		board.setUSER_NICKNAME("관리자");
 		if(!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();//원래 파일명
 			board.setTOUR_ORIGINAL(fileName);//원래 파일명 저장
@@ -96,8 +94,7 @@ public class TourController {
 	public String add_admin(Board_Tour board, RedirectAttributes rattr) throws Exception {
 		
 		MultipartFile uploadfile = board.getUploadfile();
-		board.setUSER_ID("admin");
-		board.setUSER_NICKNAME("관리자");
+
 		if(!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();//원래 파일명
 			board.setTOUR_ORIGINAL(fileName);//원래 파일명 저장
@@ -271,8 +268,6 @@ public class TourController {
 		@GetMapping(value="/detail")
 		public ModelAndView Detail(int num,ModelAndView mv,
 					HttpServletRequest request, HttpSession session) {
-			String admin = "admin";
-			session.setAttribute("id", admin);
 			
 			Board_Tour board = Board_Tour_Service.getDetail(num);
 			if(board == null) {
