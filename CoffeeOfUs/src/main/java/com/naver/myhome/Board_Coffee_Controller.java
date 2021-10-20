@@ -72,8 +72,6 @@ public class Board_Coffee_Controller {
 			throws Exception{
 		//MultipartFile uploadfile,
 		MultipartFile uploadfile = board.getUploadfile();
-		board.setUSER_ID("admin");
-		board.setUSER_NICKNAME("관리자");
 		if(!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();//원래 파일명
 			board.setCOFFEE_ORIGINAL(fileName);//원래 파일명 저장
@@ -215,8 +213,6 @@ public class Board_Coffee_Controller {
 	@GetMapping(value="/detail")
 	public ModelAndView Detail(int num,ModelAndView mv,
 				HttpServletRequest request, HttpSession session) {
-		String admin = "admin";
-		session.setAttribute("id", admin);
 		
 		Board_Coffee board = Board_Coffee_Service.getDetail(num);
 		//board=null //error 페이지 이동 확인하고자 임의로 지정합니다.

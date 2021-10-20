@@ -210,7 +210,7 @@ map.fitBounds(bounds);
 				
 			<form action="add_admin" method="post" enctype="multipart/form-data">
   <input type="hidden" name="USER_ID" value="${id}">
-  <input type="hidden" name="USER_NICKNAME" value="${nickname}">
+  <input type="hidden" name="USER_NICKNAME" value="${name}">
   <input type="hidden" id="TOUR_ADDRESS" name="TOUR_ADDRESS">
   <input type="hidden" id="location" name="TOUR_LATNG">
   <div id="product-img">
