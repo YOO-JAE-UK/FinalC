@@ -15,7 +15,7 @@
 	var i1=<%=num%>;
 		//alert(i1+"i의 값");
 		
-		$(function(){
+$(function(){
   $('.carousel-item').eq(0).addClass('active');
   var total = $('.carousel-item').length;
   var current = 0;
@@ -51,8 +51,70 @@
     console.log('prev '+prev);
   }
 });
+
+
+function ajax(CRAWLER_NUM){
+	//num가지고와서 데이터뽑기
+	output="";
+	$.ajax({
+		type : "GET",
+		data : {"CRAWLER_NUM" : CRAWLER_NUM},
+		url : "detail_ajax",
+		dataType : "json",
+		cashe : false,
+		success : function(data) {
+		//	alert(JSON.stringify(data))
+			output="";
+			$("#main_img").empty();
+			output+="<img class='main_img' src='"+data.crawler.crawler_IMAGE+"''>"
+			$("#main_img").append(output);
+			
+			output="";
+			$("#main_content").empty();
+			output+="<div class='main_subject' >"+data.crawler.crawler_COVER_SUBJECT+"</div><br><br>"
+			output+="<div class='main_summary'>"+data.crawler.crawler_SUMMARY+"</div>"
+			output+='<a href="'+data.crawler.crawler_LINK+'" style="margin-top: 20px; float: right;background: #000000 !important; width: 80px !important;" class="btn btn-primary">자세히 </a>'
+			$("#main_content").append(output);
+			
+				
+			
+		}, //success end
+		error : function() {
+			console.log('에러')
+		}
+	})//ajax end
+}//function ajax end
+
+
+$(document).ready(function(){
+	$(".center_img1").click(function(){
+		location.href="../coffee/Test";
+	})
+	$(".center_img2").click(function(){
+		location.href="../event/attend_check";
+	})
+	$(".center_img3").click(function(){
+		location.href="../tour/tour_map";
+	})
+})
+
 </script>
 <style>
+.main_img{
+	width: 100%;
+	height: 100%;
+}
+.main_subject{
+	font-size: 20pt;
+	font-weight: bold;
+	text-align: left;
+}
+.main_summary{
+font-size: 12pt;
+	text-align: left;
+}
+
+
 	@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i');
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
@@ -288,6 +350,21 @@ transform: translateX(0);
 	display: flex !important;
 }
 	
+	
+.center_img1{
+    width: 130px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.center_img2{
+    width: 130px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.center_img3{
+    width: 105px;
+    margin-top: 20px;
+}
 </style>
 </head>
 <body style="display: block;">
@@ -380,19 +457,45 @@ transform: translateX(0);
  
  
  
-  <div class="col-xs-12 col-sm-12 col-md-10" style="border: 1px solid black;">
- 	<div style="width: 100%; height: 200px; border: 1px solid black;">
- 		<div style="border: 1px solid black; width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid black;width: 150px; height: 150px; margin: 0 auto"></div></div>
- 		<div style="border: 1px solid black; width: 34%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid black;width: 150px; height: 150px; margin: 0 auto"></div></div>
- 		<div style="border: 1px solid black; width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid black;width: 150px; height: 150px; margin: 0 auto"></div></div>
+  <div class="col-xs-12 col-sm-12 col-md-10" style="">
+ 	<div style="width: 100%; height: 200px; margin-top: 30px;margin-bottom: 20px;">
+ 		<div style=" width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img1" src="../resources/img/coffee.png"></div></div>
+ 		<div style=" width: 34%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img2" src="../resources/img/calendar.png"></div></div>
+ 		<div style=" width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img3" src="../resources/img/itinerary.png"></div></div>
  	</div>
  	<div style="width: 100%; height: 450px;">
- 	<c:forEach var="b" items="${boardlist}">
  	
- 		<div style="border: 1px solid black; width: 34%; height: 400px; float:left;"><img src="${b.CRAWLER_IMAGE}"width="100%" height="100%"></div>
- 		<div style="border: 1px solid black; width: 33%; height: 400px; float:left;">임시글 </div>
- 		<div style="border: 1px solid black; width: 33%; height: 400px; float:left;"> 게시글</div>
- 	</c:forEach>
+ 		<div style=" width: 34%; height: 400px; float:left; margin-top: 20px;" id="main_img"><img class='main_img' src='${boardlist.get(0).CRAWLER_IMAGE }'></div>
+ 		<div style=" width: 33%; height: 400px; float:left; margin-top: 20px; padding: 30px;background: #f9f9f9;" id="main_content">
+ 			<div class='main_subject' >${boardlist.get(0).CRAWLER_COVER_SUBJECT }</div><br><br>
+ 			<div class='main_summary'>${boardlist.get(0).CRAWLER_SUMMARY }
+ 			</div>
+ 		<a href="${boardlist.get(0).CRAWLER_LINK}" style="margin-top: 20px; float: right;background: #000000 !important; width: 80px !important;" class="btn btn-primary">자세히 </a>
+ 		</div>
+ 		<div style=" width: 33%; height: 400px;float:left; padding: 10px; ">
+ 		
+ 		
+ 		<h3 style="padding-bottom: 10px; ">최신뉴스</h3>
+ 			<table>
+ 				<thead>
+ 					<tr style="font-size: 13pt;">
+ 						<th style="padding-bottom: 10px;">제목</th><th>날짜</th>
+ 					</tr>
+ 				</thead>
+
+ 				<tbody>
+<c:forEach var="b" items="${boardlist}">
+ 					<tr>
+ 						<td style="padding: 5px;font-size: 10pt; text-align: left"><span onclick="javascript:ajax(${b.CRAWLER_NUM})">${b.CRAWLER_COVER_SUBJECT}</span></td>
+ 						<td style="padding: 5px;font-size: 9pt; text-align: left">${b.CRAWLER_DATE.substring(2)}</td>
+ 					</tr>
+ 					
+</c:forEach>
+ 				</tbody>
+ 			</table>
+ 		
+ 		</div>
+
  	</div>
  </div>
  <!-- 

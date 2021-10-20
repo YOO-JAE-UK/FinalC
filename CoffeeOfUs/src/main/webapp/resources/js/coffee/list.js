@@ -14,6 +14,7 @@ function setPaging(href, digit){
 	return output;
 }
 function ajax(sdata){
+	alert("test2");
 	console.log(sdata)
 	output="";
 	$.ajax({
@@ -94,10 +95,11 @@ function ajax(sdata){
 
 $(function() {
 	$("#viewcount").change(function() {
+		alert("test1");
 		go(1);//보여줄 페이지를 1페이지로 설정합니다.
 	}); //change end
 	
 	$("button").click(function(){
 		location.href="write";
-	})
-})
+	});
+});

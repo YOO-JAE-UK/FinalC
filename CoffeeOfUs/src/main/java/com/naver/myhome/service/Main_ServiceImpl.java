@@ -22,8 +22,13 @@ public class Main_ServiceImpl implements Main_Service {
 	}
 
 	@Override
-	public int insert(CRAWLER bean) {
-		return dao.insertList(bean);
+	public int update(CRAWLER bean) {
+		return dao.updateList(bean);
+	}
+
+	@Override
+	public CRAWLER getDetail(int num) {
+		return dao.getDetail(num);
 	}
 	
 

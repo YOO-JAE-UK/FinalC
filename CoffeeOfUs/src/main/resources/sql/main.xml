@@ -8,10 +8,26 @@
 	 <select id="list" resultType="crawler">
 	 		SELECT *FROM  CRAWLER
 	 </select>
-	 
+	<!--  
 	 <insert id="insert" parameterType="crawler">
 	 		insert into CRAWLER 
 	 		values(#{CRAWLER_NUM},#{CRAWLER_IMAGE},#{CRAWLER_COVER_SUBJECT},
 	 		#{CRAWLER_SUMMARY},#{CRAWLER_DATE},#{CRAWLER_LINK})
 	 </insert>
+	  -->
+	 <update id="update" parameterType="crawler">
+	 		update CRAWLER
+	 		set CRAWLER_IMAGE= #{CRAWLER_IMAGE},
+	 			CRAWLER_COVER_SUBJECT =#{CRAWLER_COVER_SUBJECT},
+	 			CRAWLER_SUMMARY =#{CRAWLER_SUMMARY},
+	 			CRAWLER_DATE =#{CRAWLER_DATE},
+	 			CRAWLER_LINK =#{CRAWLER_LINK}
+	 		where CRAWLER_NUM = #{CRAWLER_NUM}
+	 </update>
+	 
+	 
+	<select id="detail" parameterType="int" resultType="crawler">
+		SELECT *FROM CRAWLER
+		WHERE CRAWLER_NUM = #{num}
+	</select>
 </mapper>

@@ -6,39 +6,99 @@
 <head>
 <meta charset="UTF-8">
 <title>COFFEE_modify</title>
+<jsp:include page="../header.jsp">
+		 <jsp:param name="num" value="<%= 4 %>"/>
+	</jsp:include>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script src="../resources/js/coffee/modify.js"></script>
  <style>
  	h1{font-size: 1.5rem; text-align: center; color: #1a92b9}
 	.container{width:60%}
 	#upfile{display: none}
+	
+	   .sidebar {
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+	height: 100%;
+	overflow: auto;
+	min-height: 400px;
+}
+
+/* Sidebar links */
+.sidebar a {
+	display: block;
+	color: black;
+	padding: 20px;
+	position: relative;
+	top: 100px;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+/* Active/current link */
+.sidebar a.active {
+	background-color: #37586f;
+	color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:not(.active ):hover {
+	background-color: #9e9e9e;
+	color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+	margin-left: 200px;
+	padding: 1px 16px;
+	height: 1000px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+	.sidebar {
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
+	.sidebar a {
+		float: left;
+	}
+	div.content {
+		margin-left: 0;
+	}
+}
  </style>
 </head>
 <body>
-<jsp:include page="../header.jsp">
-		 <jsp:param name="num" value="<%= 4 %>"/>
-	</jsp:include>
 
-<h2 style="text-align: center;">Beans입니다.</h2>
-	 <section class="upcoming-classes spad">
-        <div class="container">
-         <div class="row">
-                 <div class="col-xs-12 col-sm-12 col-md-3">
-                	<ul>
-                		<li>커피 정보게시판</li>
-                		<li>출석 게시판</li>
-                		<li>추천 음악게시판</li>
-                		<li>투어 게시판</li>
-                		<li>Q & A</li>
-                	</ul>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-9">
-                	<form action="modifyAction" method="post" name="modifyform"
+
+<div class="row">
+		<div class="col-sm-3">
+			<div class="sidebar">
+				<a class="active" href="list">커피 정보 게시판</a> 
+				<a href="Fword">출석 게시판</a>
+				<a href="Beans">투어게시판</a>
+				<a href="Beans">Q & A</a>
+			</div>
+		</div>
+		<div class="container calendar-container col-sm-7"
+			style="position: relative; left: -5%; margin-top:30px; margin-bottom: 30px;">
+			
+			
+
+
+<div class="col-xs-12 col-sm-12 col-md-9">
+	<h2 style="text-align: center;">MVC 게시판 - 수정</h2>
+	
+	<form action="modifyAction" method="post" name="modifyform"
 					 enctype="multipart/form-data">
 					 <input type="hidden" name="COFFEE_NUM" value="${boarddata.COFFEE_NUM}">
 					<input type="hidden" name="COFFEE_FILE" value="${boarddata.COFFEE_FILE}">
 					<input type="hidden" name="before_file" value="${boarddata.COFFEE_FILE}">
-					<h1>MVC 게시판 - 수정</h1>
+					<h1></h1>
 					<div class="form-group">
 						<label for="board_name">글쓴이</label><input type="text"
 						 class="form-control" value="${boarddata.USER_ID}" readOnly>
@@ -81,10 +141,20 @@
 								onclick="history.go(-1)">취소</button>
 					</div>
 					</form>
-                </div>
-         </div><!--     <div class="row"> end -->
-        </div><!-- container end -->
-     </section>
+</div>
+
+
+
+		 	
+			
+			<div class="col-sm-2">
+			</div>
+			
+			
+			
+			
+		</div>
+	</div>
  
      <!-- footer -->
      <jsp:include page="../footer.jsp" />
