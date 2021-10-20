@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>COFFEE_write</title>
+<jsp:include page="../header.jsp">
+		 <jsp:param name="num" value="<%= 4 %>"/>
+	</jsp:include>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script src="../resources/js/coffee/list.js" charset="utf-8"></script>
  <style>
@@ -18,28 +21,80 @@
    body > div > table > thead > tr:nth-child(2) > th:nth-child(3){width:14%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(4){width:17%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(5){width:11%}
+   
+   .sidebar {
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+	height: 100%;
+	overflow: auto;
+	min-height: 400px;
+}
+
+/* Sidebar links */
+.sidebar a {
+	display: block;
+	color: black;
+	padding: 20px;
+	position: relative;
+	top: 100px;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+/* Active/current link */
+.sidebar a.active {
+	background-color: #37586f;
+	color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:not(.active ):hover {
+	background-color: #9e9e9e;
+	color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+	margin-left: 200px;
+	padding: 1px 16px;
+	height: 1000px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+	.sidebar {
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
+	.sidebar a {
+		float: left;
+	}
+	div.content {
+		margin-left: 0;
+	}
+}
  </style>
 </head>
 <body>
-<jsp:include page="../header.jsp">
-		 <jsp:param name="num" value="<%= 4 %>"/>
-	</jsp:include>
+<div class="row">
+		<div class="col-sm-3">
+			<div class="sidebar">
+				<a class="active" href="list">커피 정보 게시판</a> 
+				<a href="Fword">출석 게시판</a>
+				<a href="Beans">투어게시판</a>
+				<a href="Beans">Q & A</a>
+			</div>
+		</div>
+		<div class="container calendar-container col-sm-7"
+			style="position: relative; left: -5%; margin-top:30px; margin-bottom: 30px;">
+			
+			
 
-<h2 style="text-align: center;">Beans입니다.</h2>
-	 <section class="upcoming-classes spad">
-        <div class="container">
-         <div class="row">
-                 <div class="col-xs-12 col-sm-12 col-md-3">
-                	<ul>
-                	<li><a href="${pageContext.request.contextPath}/tour/test">이거</a></li>
-                		<li>커피 정보게시판</li>
-                		<li>출석 게시판</li>
-                		<li>추천 음악게시판</li>
-                		<li>투어 게시판</li>
-                		<li>Q & A</li>
-                	</ul>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-9">
+
+<div class="col-xs-12 col-sm-12 col-md-9">
                 	<span>줄보기</span>
 					<select class="form-control" id="viewcount">
 						<option value="1">1</option>
@@ -158,9 +213,19 @@
 					
 					<button type="button" class="btn btn-info float-right">글 쓰 기</button>
                 </div>
-         </div><!--     <div class="row"> end -->
-        </div><!-- container end -->
-     </section>
+
+
+
+		 	
+			
+			<div class="col-sm-2">
+			</div>
+			
+			
+			
+			
+		</div>
+	</div>
  
      <!-- footer -->
      <jsp:include page="../footer.jsp" />

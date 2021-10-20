@@ -18,8 +18,12 @@ public class Main_DAO {
 			return sqlSession.selectList("Main.list");
 		}
 
-		public int insertList(CRAWLER bean) {
-			return sqlSession.insert("Main.insert",bean);
+		public int updateList(CRAWLER bean) {
+			return sqlSession.update("Main.update",bean);
+		}
+
+		public CRAWLER getDetail(int num) {
+			return sqlSession.selectOne("Main.detail",num);
 		}
 		
 }

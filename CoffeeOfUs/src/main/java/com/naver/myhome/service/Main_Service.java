@@ -8,6 +8,8 @@ public interface Main_Service {
 
 	List<CRAWLER> getlist();
 
-	int insert(CRAWLER bean);
+	int update(CRAWLER bean);
+
+	CRAWLER getDetail(int num);
 
 }

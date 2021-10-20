@@ -7,9 +7,9 @@ $(document).ready(function() {
 			alert("로스팅 단계를 선택해주세요");
 			return false;
 		}
-		if($.trim($("input").eq(17).val()) == ""){
+		if($.trim($("#BEAN_NAME").val()) == ""){
 			alert("커피이름을 입력해주세요");
-			$("input:eq(17)").focus();
+			$("#BEAN_NAME").focus();
 			return false;
 		}
 		if($.trim($("textarea").val()) == ""){

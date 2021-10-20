@@ -49,10 +49,10 @@ public class SeleniumTask {
 	//second(초 : 0~59) minutes(분:0~59) hours(시:0~23) day(일:1~31)
 	//months(달:1~12) day of week(요일:0~6) year(optional)
 	//초 분 시 일 달 요일
-	@Scheduled(cron = "30 56 * * * *")
+	//@Scheduled(cron = "0 14 * * * *")
 	public void getSelenim() throws Exception {
 		logger.info("getSelenium");
-		System.out.println("hi");
+		System.out.println("hiSelenium");
 		
 		/*
 		 	SeleniumTest03_상영중영화보기 selTest = new SeleniumTest03_상영중영화보기();
@@ -69,6 +69,7 @@ public class SeleniumTask {
 		//       options.addArguments("--headless");				//
 		//         options.setProxy(null);							//
 		         options.setCapability("ignoreProtectedModeSettings", true);
+		         options.addArguments("headless");
 		         driver = new ChromeDriver(options);
 		        
 		         base_url="https://bwissue.com/coffeestory";
@@ -119,11 +120,11 @@ public class SeleniumTask {
 			    		
 			    		bean.setCRAWLER_NUM(7-i);
 			    		//저장 메서드 호출해야함
-			    		int result1 = Main_Service.insert(bean);
+			    		int result1 = Main_Service.update(bean);
 			    		if (result1 == 1) {
-			    			System.out.println("insert성공");
+			    			System.out.println("update성공");
 			    		}else {
-			    			System.out.println("insert실패");
+			    			System.out.println("update실패");
 			    		}
 		    		}
 		    		
