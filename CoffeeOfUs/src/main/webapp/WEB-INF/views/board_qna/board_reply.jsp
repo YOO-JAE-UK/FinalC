@@ -27,7 +27,7 @@
 	</jsp:include>
 	
 	 <section class="upcoming-classes spad">
-	   <h4 style="text-align: center;">QNA - 답변 게시판</h4>
+	   <h4 style="text-align: center;">QNA - 답변</h4>
         <div class="container">
          <div class="row">
                  
