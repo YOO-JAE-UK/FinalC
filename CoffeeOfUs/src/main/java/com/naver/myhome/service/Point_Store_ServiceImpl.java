@@ -179,6 +179,27 @@ public class Point_Store_ServiceImpl implements Point_Store_Service {
 		
 		dao.reduceProductQuantity(product);
 	}
+
+	@Override
+	public int getSearchWordListCount(String searchword) {
+		String rsearchword="%"+searchword+"%";	
+		
+		return dao.getSearchWordListCount(rsearchword);
+	}
+
+	@Override
+	public List<Product> getSearchWordList(int page, String searchword, int limit) {
+		Map<String,Object> map= new HashMap<String,Object>();
+		String rsearchword= "%"+searchword+"%";
+		int startrow=(page-1)*limit+1;
+		int endrow = startrow+limit-1;
+		
+		map.put("startrow",startrow);
+		map.put("endrow", endrow);
+		map.put("searchword",rsearchword);
+		
+		return dao.getSearchWordList(map);
+	}
 		
 
 }

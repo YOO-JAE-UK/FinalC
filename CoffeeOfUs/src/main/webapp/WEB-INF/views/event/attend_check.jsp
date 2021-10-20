@@ -143,13 +143,13 @@ div.content {
 </style>
 </head>
 <body>
-	<input id="id" type="hidden" value='b'>
+	<input id="id" type="hidden" value='${id }'>
 
 	<div class="row">
 		<div class="col-sm-3">
 			<div class="sidebar">
 				<a class="active" href="#home">출 석 체 크</a> <a href="roulette">룰
-					렛 포 인 트</a> <a href="#contact">포 인 트 스 토 어</a>
+					렛 포 인 트</a> <a href="${pageContext.request.contextPath}/point_store/list">포 인 트 스 토 어</a>
 
 			</div>
 		</div>

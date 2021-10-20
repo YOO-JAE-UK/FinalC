@@ -53,113 +53,120 @@
 	href="${pageContext.request.contextPath}/resources/css/point_store/style.css">
 
 <style>
-#buy,#cart{
-	border:none;
-	width:26.5%
-	
-}
-#cart{
-	
-	background:red !important;
-	color:white !important;
-	border-radius:.25rem !important;
-	height:40px !important;
-	padding-right:17px;
+#buy, #cart {
+	border: none;
+	width: 26.5%
 }
 
-#buy{
-   float:right;
-   position: relative;
-   bottom:56px;
-   right:143px;
-   background:#17a2b8 !important;
-	color:white !important;
-	border-radius:.25rem !important;
-	height:40px !important;
+#cart {
+	background: red !important;
+	color: white !important;
+	border-radius: .25rem !important;
+	height: 40px !important;
+	padding-right: 17px;
 }
 
-#cquantity{
-	margin-left:50px !important;
-	width:50px !important
+#buy {
+	float: right;
+	position: relative;
+	bottom: 56px;
+	right: 143px;
+	background: #17a2b8 !important;
+	color: white !important;
+	border-radius: .25rem !important;
+	height: 40px !important;
 }
-.quantity-left-minus{
-    margin-left:15px
+
+#cquantity {
+	margin-left: 50px !important;
+	width: 50px !important
 }
-.input-group{
-	margin-top:40px
+
+.quantity-left-minus {
+	margin-left: 15px
 }
-#back{
-	width:40px;
-	position:relative;
-	top:10px;
-	left:5px;
+
+.input-group {
+	margin-top: 40px
 }
-#perpoint{
-	width:20%;
-	border:none;
-	text-align:center;
-	padding-right:0px
+
+#back {
+	width: 40px;
+	position: relative;
+	top: 10px;
+	left: 5px;
 }
-#productname{
+
+#perpoint {
+	width: 20%;
+	border: none;
+	text-align: center;
+	padding-right: 0px
+}
+
+#productname {
 	
 }
-#remain{
-	position:relative;
-	top:48px;
-	left:44px;
-	font-size:14px
-}
-#plus{
-	position:relative;
-	right:1px;
-}
-#unitpoint{
-	color:gray;
-	font-size:14px;
-	position:relative;
-	left:18px;
-	bottom:1px;
-}
-#PayMount{
-	border:none !important;
-	border-radius:.25rem !important;
-	position:relative;
-	left:2xp !important;
-	bottom:2px !important;
-	height:10% !important;
-	background:#28a745 !important;
-	text-align:center !important
+
+#remain {
+	position: relative;
+	top: 48px;
+	left: 44px;
+	font-size: 14px
 }
 
+#plus {
+	position: relative;
+	right: 1px;
+}
+
+#unitpoint {
+	color: gray;
+	font-size: 14px;
+	position: relative;
+	left: 18px;
+	bottom: 1px;
+}
+
+#PayMount {
+	border: none !important;
+	border-radius: .25rem !important;
+	position: relative;
+	left: 2xp !important;
+	bottom: 2px !important;
+	height: 10% !important;
+	background: #28a745 !important;
+	text-align: center !important
+}
 </style>
 </head>
 <body>
-	<input id="id" type="hidden"  value='b'>
+
 	<img src="../resources/img/back.png" class="img-fluid" id="back"
-						alt="Colorlib Template" onclick="location.href='list'">
-	<form action="addtoCart" method="post" >
-	<c:set var="p" value="${product}"/>	
-	<input type="hidden" name="id" id="id" value="${id}">
-	<input type="hidden" name="ccode" id="ccode" value="${p.code }">
-	<input type="hidden" name="cdescription" id="cdescription" value="${p.description }">
-	<input type="hidden" name="cproductname" id="cproductname" value="${p.productname }">
-	<input type="hidden" name="cremain" id="cremain" value="${p.quantity }">
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row">
-				
-				<div class="col-lg-6 mb-5 ftco-animate">
-					<a href="../upload${p.img}" class="image-popup"><img
-						src="../upload${p.img}" class="img-fluid"
-						alt="Colorlib Template" >
-						<input type="hidden" name="cimg" value="${p.img}"></a>
-				</div>
-				
-				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-					<h3>${p.productname}</h3>
-					<br>
-					<br>
-					<!-- 별<div class="rating d-flex">
+		alt="Colorlib Template" onclick="location.href='list'">
+	<form action="addtoCart" method="post">
+		<c:set var="p" value="${product}" />
+		<input type="hidden" name="id" id="id" value="${id}"> <input
+			type="hidden" name="ccode" id="ccode" value="${p.code }"> <input
+			type="hidden" name="cdescription" id="cdescription"
+			value="${p.description }"> <input type="hidden"
+			name="cproductname" id="cproductname" value="${p.productname }">
+		<input type="hidden" name="cremain" id="cremain"
+			value="${p.quantity }">
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-lg-6 mb-5 ftco-animate">
+						<a href="../upload${p.img}" class="image-popup"><img
+							src="../upload${p.img}" class="img-fluid" alt="Colorlib Template">
+							<input type="hidden" name="cimg" value="${p.img}"></a>
+					</div>
+
+					<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+						<h3>${p.productname}</h3>
+						<br> <br>
+						<!-- 별<div class="rating d-flex">
 							<p class="text-left mr-4">
 								<a href="#" class="mr-2">5.0</a>
 								<a href="#"><span class="ion-ios-star-outline"></span></a>
@@ -175,64 +182,65 @@
 								<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
 							</p>
 						</div> -->
-					<p class="price">
-						<span><input type="text" readonly name="cperpoint" value="${p.perpoint}" id="perpoint">P 
-								</span><span id="unitpoint">(개당 포인트)</span>
-					</p>
-					<br>
-					<h6 Style="margin-bottom:6px">Description</h6>
-					<p>${p.description}</p>
-					<div class="row mt-4">
-						
-						<div class="w-100"></div>
-						<div class="input-group col-md-7 d-flex mb-5">
-							<span class="input-group-btn mr-2">
-								<button type="button" class="quantity-left-minus btn" id="minus"
-									data-type="minus" data-field="">
-									<i class="ion-ios-remove"></i>
-								</button>
-							</span> <input type="text" id="cquantity" name="cquantity" readonly
-								class="form-control input-number" value="1" min="1" max="100"
-								>
-							<span class="input-group-btn ml-2">
-								<button type="button" class="quantity-right-plus btn" id="plus"
-									data-type="plus" data-field="">
-									<i class="ion-ios-add"></i>
-								</button>
-								
-							</span>
-							
-						</div>
-						<span id="remain">(남은수량:${p.quantity }개)</span>
-						<div class="w-100"></div>
+						<p class="price">
+							<span><input type="text" readonly name="cperpoint"
+								value="${p.perpoint}" id="perpoint">P </span><span
+								id="unitpoint">(개당 포인트)</span>
+						</p>
+						<br>
+						<h6 Style="margin-bottom: 6px">Description</h6>
+						<p>${p.description}</p>
+						<div class="row mt-4">
 
+							<div class="w-100"></div>
+							<div class="input-group col-md-7 d-flex mb-5">
+								<span class="input-group-btn mr-2">
+									<button type="button" class="quantity-left-minus btn"
+										id="minus" data-type="minus" data-field="">
+										<i class="ion-ios-remove"></i>
+									</button>
+								</span> <input type="text" id="cquantity" name="cquantity" readonly
+									class="form-control input-number" value="1" min="1" max="100">
+								<span class="input-group-btn ml-2">
+									<button type="button" class="quantity-right-plus btn" id="plus"
+										data-type="plus" data-field="">
+										<i class="ion-ios-add"></i>
+									</button>
+
+								</span>
+
+							</div>
+							<span id="remain">(남은수량:${p.quantity }개)</span>
+							<div class="w-100"></div>
+
+						</div>
+						<div>
+							<b style="font-size: 12px; position: relative; bottom: 18px">(결
+								제 포 인 트)</b> <input type="text" readonly
+								style="background: #28a745; color: white; border: none; text-align: center; position: relative; bottom: 15px; left: 2px; width: 50%; height: 40px; border-radius: .25rem; font-size: 20px;"
+								id="PayAmount" value="${p.perpoint }">
+						</div>
+						<div class="button">
+							<p>
+
+								<button type="submit" class="btn btn-success" id="cart">장바구니
+									추가</button>
+							</p>
+							<p>
+
+
+								<button type="button" class="btn btn-info" id="buy">결제하기</button>
+							</p>
+						</div>
 					</div>
-					<div><b style="font-size:12px;position:relative;bottom:18px">(결 제 포 인 트)</b>
-					        <input type="text"  readonly style="background:#28a745;
-					        color:white;border:none;text-align:center;position:relative;bottom:15px;left:2px;width:50%;height:40px;
-					        border-radius:.25rem;font-size:20px;" 
-							id="PayAmount" value="${p.perpoint }">
-					</div>		
-					<div class="button">
-					<p>
-						<!-- <a href="cart.html" id="cart" class="btn btn-danger py-3 px-5">Add to
-							Cart</a> -->
-						<button type="submit" class="btn btn-success" id="cart">장바구니 추가</button>
-					</p>
-					<p>
-						
-						<!-- <a href="payment" id="buy" class="btn btn-info py-3 px-5">Buy Now</a> -->
-						<button type="button" class="btn btn-info" id="buy">결제하기</button>
-					</p>
-				</div>	
+
 				</div>
-			
 			</div>
-		</div>
-		
-	</section>
-</form>
-	<script src="../resources/js/point_store/product_detail.js" charset="utf-8"></script>  	
+
+		</section>
+	</form>
+	<script src="../resources/js/point_store/product_detail.js"
+		charset="utf-8"></script>
 	<jsp:include page="../footer.jsp" />
 
 	<script
@@ -267,7 +275,7 @@
 		src="${pageContext.request.contextPath}/resources/js/point_store/google-map.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/point_store/main.js"></script>
- 
+
 </body>
 
 

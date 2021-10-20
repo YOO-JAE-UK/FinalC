@@ -6,7 +6,7 @@ drop table cart CASCADE CONSTRAINTS;
 create table cart (
 	id			varchar2(20) references member(user_id) on delete cascade ,
     ccode 		number primary key,
-    cproductname varchar2(20) not null,
+    cproductname varchar2(50) not null,
     cdescription varchar2(50) not null,
     cperpoint	number not null,
     cquantity 	number(2) not null,
@@ -22,7 +22,7 @@ create table cart (
 
 
 --위에 테이블만 생성해주시면 됩니다.
-
+delete from cart
 drop sequence event_seq
 select * from cart
 select * from PRODUCT

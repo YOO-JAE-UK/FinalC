@@ -15,8 +15,8 @@ drop sequence event_seq
 
 --위 테이블,시퀀스까지 생성해주시면 됩니다.
 insert into member values('b','1234','aaf문','aardans25d','aajw89082f@gmail.com','11111','안양시','010-1111-1111',null,'i.png','1',sysdate)
-insert into attend_check values (4,'b','2021-10-06','N',30)
-≈
+insert into attend_check values (9,'b','2021-10-06','N',3000)
+
 insert into attend_check values(event_seq.nextval,'a','2021-10-06','N',
                               nvl((select point from attend_check
                                    where num=(select nvl(max(num),0)

@@ -213,7 +213,7 @@ body>div>table>tbody tr:last-child {
     background: #17a2b8;
     color: white;
     border-radius: 30%;
-   	width:10px;
+   	width:13px;
    	text-align:center;
    	left:34px;
 }
@@ -235,17 +235,28 @@ h3>a{
 	padding-bottom:33px !important;
 	
 }
+.block-27 ul li a:hover{
+	background:#17a2b8 !important;
+	color:white !important
+}
+.ftco-section{
+	margin-bottom:6em;
+	padding-top:2em;
+	position:relative;
+	top:83px;
+	
+}
 
 </style>
 </head>
 <body>
-	<input id="id" type="hidden" value='b'>
+	<input id="id" type="hidden" value='${id}'>
 
 	<div class="row">
-		<div class="col-sm-2">
+		<div class="col-sm-1">
 			<div class="sidebar">
-				<a href="attendCheck">출 석 체 크</a> <a class="active" href="#news">룰
-					렛 포 인 트</a> <a href="#contact">포 인 트 스 토 어</a>
+				<a href="${pageContext.request.contextPath}/event/attendCheck">출 석 체 크</a> <a  href="${pageContext.request.contextPath}/event/roulette">룰
+					렛 포 인 트</a> <a class="active" href="#home">포 인 트 스 토 어</a>
 
 			</div>
 		</div>
@@ -258,14 +269,24 @@ h3>a{
 				<div id="mypoint">0P</div>
 
 			</div>
+			
+			<div id="search" style="position:relative;right:68px;height:10px">
+			<input type="text" id="searchword" name="searchword" style=" 
+			   position:relative;top:50px;left:250px;height:30px">
+			
+			<button class="btn btn-info" id="searchwordbtn" style="position:relative;top:50px;right:316px;
+			width:89px;border:none;height:30px">검색</button>
+			</div>
+			
+		
 
-			<div class="cartImg">
+			<div class="cartImg" >
 				<a href="cartListView" class="link" id="cartListView"
 					title="장바구니 이동"><img
 					src="../resources/img/cart.svg"
 					alt="" class="image"></a>
 					<div id="cartcount">
-					<sup >0</sup>
+					<sup style="width:30%">0</sup>
 					</div>
 			</div>
 

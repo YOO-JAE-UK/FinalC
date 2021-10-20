@@ -53,6 +53,10 @@ public interface Point_Store_Service {
 
 	void reduceProductQuantity(Product product);
 
+	int getSearchWordListCount(String searchword);
+
+	List<Product> getSearchWordList(int page, String searchword, int limit);
+
 	
 
 	

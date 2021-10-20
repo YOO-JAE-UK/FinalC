@@ -21,7 +21,7 @@ CREATE TABLE COFFEE(
 	COFFEE_RE_LEV		NUMBER CHECK(COFFEE_RE_LEV IN(0,1)),--답변 글의 깊이
 	COFFEE_RE_SEQ		NUMBER,								--답변 글의 순서
 	PRIMARY KEY(COFFEE_NUM)	
-);
+)
 
 insert into COFFEE values(1,'1234','첫번째 게시글제목','admin','관리자','내용입니다.',NULL,NULL,SYSDATE,0,0,0,0);
 SELECT *FROM COFFEE;

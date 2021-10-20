@@ -29,11 +29,7 @@
   </update>
   
   <select id="getCartList" parameterType="map" resultType="cart">
-  	<!-- select * from 
-  			(select rownum rnum,b.* from
-  			     (select * from cart where id=#{id}
-  			     order by cdate desc)b)
-  	 where rnum &gt;= #{start} and rnum &lt;= #{end}  -->
+  	
   	 
   	 select * from 
   			(select rownum rnum,b.* from

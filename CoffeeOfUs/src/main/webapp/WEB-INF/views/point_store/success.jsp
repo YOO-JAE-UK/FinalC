@@ -18,13 +18,44 @@
 	position:relative;
 	right:341px;
 }
+.od{
+	font-size:17px;
+	position:relative;
+	left:111px;
+	bottom:25px
+}
+#tex{
+	resize:none;
+	height:78px;
+	width:179px;
+	border:none
+}
+#text{
+	resize:none;
+	height:78px;
+	width:285px;
+	border:none
+}
+.order{
+	font-size:17px
+}
+#rec{
+	position:relative;
+	left:464px;
+	bottom:258px
+}
+#back{
+  position:relative;
+  bottom:167px;
+  right:538px
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
     
-   
-	<form  id="joinform"
+   <div class="container" style="width:60%">
+	<form  id="successform"
 		action="${pageContext.request.contextPath }/point_store/finalPay"
 		method="post" >
 		<c:set var="r" value="${addressInfo}"/>
@@ -35,38 +66,45 @@
 		<input type="hidden" name="quantity" value="${product.quantity }">
 		<input type="hidden" name="perpoint" value="${product.perpoint }"> 
 		<input type="hidden" name="point" value="${point}"> 
-		<h1 class="titlefont">주문정보</h1>
+		<h1 class="titlefont">결제가 완료되었습니다</h1>
 
-		<div id="idwap">
-			<em style="color: red; float: left">*</em> <b id="idtext">주문자 ID</b>
-			<input type="text" name="id" id="input_id" readonly value="${id}"
-				>
+		<div class="order" id="orderid" >
+			<b>주문자 아이디:</b>
+			<span class="od" >${id }</span>
+		</div> 
+		<div class="order" id="ordername" >
+			<b>주문자 이름:</b>
+			<span class="od" >${member.USER_NICKNAME }</span>
 		</div>
-
-		<div id="wap">
-			<em style="color: red; float: left; margin: 53px 0 0 0;">*</em> <b
-				id="nametext">주문자 이름</b> <input type="text" name="USER_NICKNAME" class="tx"
-				id="input_name" value="${member.USER_NICKNAME }" readonly>
+		<div class="order" id="ordetel" >
+			<b>주문자 연락처:</b>
+			<span class="od" >${member.USER_PHONE }</span>
 		</div>
-		<div></div>
-		<div id="email_wap">
-			<em style="color: red; float: left; margin: -3px 0 0 0;">*</em> <b
-				id="mailtext" style="width: 50%">이메일 주소</b> <input type="text"
-				name="USER_EMAIL" class="tx" id="input_email" value="${member.USER_EMAIL }"
-			readonly>
+		<div class="order" id="orderemail" >
+			<b>주문자 이메일:</b>
+			<textarea rows="3" cols="9" id="text">${member.USER_EMAIL }</textarea>
 		</div>
-
-
-		<div id="tel_wap">
-			<em style="color: red; float: left; margin: 37px 0px 0 0px;">*</em> <label
-				for="tel_1"><b id="teltext">연&nbsp;락&nbsp;처</b></label><br> <input
-				type="text"  name="USER_PHONE" class="tx" value="${member.USER_PHONE }"
-				id="input_tel" readonly>
+		
+		<div id="rec">
+		<div id="recename" class="order">
+			<b>받는분 이름:</b>
+			<span class="od" >${r.rname}</span>
 		</div>
-		<br> <br>
-		<h1 class="titlefont2">상품정보</h1>
-		<div id="product">
-			<table class="table table-striped">
+		
+		<div id="rectel" class="order">
+			<b>받는 연락처:</b>
+			<span class="od" >${r.rtel}</span>
+		</div>
+		<div id="recieveemail" class="order">
+			<b>받는분 주소:</b>
+			<textarea rows="3" cols="9" id="tex">${r.raddress}</textarea>
+		</div>
+	  </div>
+		
+		
+		<div id="product" style="position:relative;bottom:239px">
+		<h1 class="titlefont2" >상품정보</h1>
+			<table class="table table-striped" style="margin-bottom:-7rem">
 				<thead>
 					<tr>
 						<th>상품명</th>
@@ -100,95 +138,24 @@
 
 			</table>
 		</div>
-		<h1 class="titlefont2"></h1>
-
-		<div id="recievewap">
-			<em style="color: red; float: left">*</em> <b id="idtext">받는분 성함:</b>
-			<input type="text" name="rname" id="recievename" value="${r.rname}" required
-				maxLength="14">
-		</div>
-		<br>
-		<div id="recievewap">
-			<em style="color: red; float: left">*</em> <b id="idtext">받는분 연락처:</b>
-			<input type="text" name="rtel" id="recievetel" value="${r.rtel}"required
-				maxLength="14">
-		</div>
-		<div id="recievewap">
-			<em style="color: red; float: left">*</em> <b id="idtext">받는 곳:</b>
-			<input type="text" name="rplace" id="recieveaddress" value="${r.rplace}"required
-				maxLength="14">
-		</div>
-		<br> <b>최근 배송지</b>
-        <div id="juso">
-		 <c:if test="${addressList!=null}">
-		   <c:forEach var="add" items="${addressList}">
-		      <c:if test="${add.rcheck==1}">
-		      <div class="form-check form-check-inline">
-			   <input class="form-check-input" type="radio"
-				name="rplace" id="inlineRadio1" value="${add.raddress}" checked >
-				<input type="hidden" name="rpost" value="${add.rpost}">
-				<input type="hidden" name="rname" value="${add.rname}">
-				<input type="hidden" name="rtel" value="${add.rtel}">
-			   <label class="form-check-label" for="inlineRadio1">${add.rplace}</label>
-		      </div>
-		      </c:if>
-		    <c:if test="${add.rcheck==0}">
-		     	<div class="form-check form-check-inline">
-			   <input class="form-check-input" type="radio"
-				name="rplace" id="inlineRadio1" value="${add.raddress} " >
-				<input type="hidden" name="rpost" value="${add.rpost}">
-				<input type="hidden" name="rname" value="${add.rname}">
-				<input type="hidden" name="rtel" value="${add.rtel}">
-			   <label class="form-check-label" for="inlineRadio1">${add.rplace}</label>
-		      </div>
-		      </c:if>	      
-		   </c:forEach>
-		 </c:if> 
-		</div>
 		
-		<!-- <div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio"
-				name="address" id="inlineRadio1" value="option1" >
-			<label class="form-check-label" for="inlineRadio1">집</label>
-		</div>
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio"
-				name="address" id="inlineRadio2" value="option2">
-			<label class="form-check-label" for="inlineRadio2">회사</label>
-		</div>
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio"
-				name="address" id="inlineRadio3" value="option3">
-			<label class="form-check-label" for="inlineRadio3">학교 </label>
-		</div> -->
+		
+		
 		<br>
 
-		<div class="clearfix">
+		<div class="clearfix" style="position:relative;bottom:15px">
 
 
-			<em style="color: red; float: left; margin: 25px 0 0 0;">*</em> <b
-				id="addtext">받는분 주소</b> <input type="text"
-				size="10" maxLength="10" name="rpost" class="tx" id="post1" value="${r.rpost}"required>
-			<div id="add_wap">
-				<input type="button" value="우편검색" id='postcode'
-					onclick="execDaumPostcode()"> <input type="text" size="50"
-					name="raddress" class="tx" id="address" value="${r.raddress }" required>
-			</div>
-			<button type="button" class="btn btn-info addaddress" id="addAddress">기본 배송지로 설정</button>
-			<div class="totalPoint">
-			<div id="totalpointwap">
-			<em style="color: red; float: left">*</em> <b id="idtext">총결제 포인트:</b>
-			<input type="text" name="totalPoint" id="totalpoint" required value="${totalPoint }"
-			  readonly	maxLength="14">
-		</div>
-			</div>
-
-			<button type="reset" class="cancelbtn" onClick="history.go(-1)">←
-				취소</button>
-			<button type="submit" class="submitbtn">결제</button>
+			<div id="point" class="order" style="position:relative;left:575px;bottom:123px">
+			<b>결제된 포인트:</b>
+			<span class="od" >${totalPoint }</span>
+		   </div>
+					
+			<button type="button" class="submitbtn" id="back" onclick="location.href='list'" >스토어로 돌아가</button>
 		</div>
 
 	</form>
+</div>	
 <script src="../resources/js/point_store/payment.js" charset="utf-8"></script> 
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>

@@ -4,36 +4,54 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="product">
-	
-  <select id="getListCount" resultType="int">
-  	select count(*) from product
-  
-  </select>
-  
-  <select id="getList" parameterType="map" resultType="product">
-  
-  	select * from
-  	( select rownum rnum, b.*
-  	 from 
-  	 	(select * from product
-  	 	 order by num desc
-  	 	 ) b
-  	 )
-  	 
-  	 where rnum &gt;=#{startrow} and rnum &lt;= #{endrow}		
-  
-  
-  </select>
-  
-  <select id="getProductInfo" parameterType="product" resultType="product">
-  
-  			select * from product where code=#{code}
-  
-  
-  </select>
-  <update id="reduceProductQuantity" parameterType="product">
-  	update product set quantity= quantity-#{quantity} where code=#{code}
-  
-  </update>
- 
+
+	<select id="getListCount" resultType="int">
+		select count(*) from product
+
+	</select>
+
+	<select id="getList" parameterType="map" resultType="product">
+
+		select * from
+		( select rownum rnum, b.*
+		from
+		(select * from product
+		order by num desc
+		) b
+		)
+
+		where rnum &gt;=#{startrow} and rnum &lt;= #{endrow}
+
+
+	</select>
+
+	<select id="getProductInfo" parameterType="product"
+		resultType="product">
+
+		select * from product where code=#{code}
+
+
+	</select>
+	<update id="reduceProductQuantity" parameterType="product">
+		update product set quantity= quantity-#{quantity} where code=#{code}
+
+	</update>
+
+	<select id="getSearchWordListCount" parameterType="String"
+		resultType="int">
+		select count(*) from product where productname like #{searchword}
+
+	</select>
+
+	<select id="getSearchWordList" parameterType="map"
+		resultType="product">
+		select * from (select rownum rnum,b.* from
+		(select * from product
+		where productname like #{searchword}
+		order by num desc)b
+		)
+		where rnum &gt;=#{startrow} and rnum &lt;= #{endrow}
+
+	</select>
+
 </mapper>

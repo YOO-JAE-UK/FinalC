@@ -53,90 +53,98 @@
 	href="${pageContext.request.contextPath}/resources/css/point_store/style.css">
 
 <style>
-
-body{
-	font-size:15px !important
-}
-#quantity{
-	margin-left:47px !important;
-	
+body {
+	font-size: 15px !important
 }
 
-
-.thead-primary{
-	background:#17a2b8 !important
+#quantity {
+	margin-left: 47px !important;
 }
-.table .thead-primary tr th{
-	font:15px !important;
+
+.thead-primary {
+	background: #17a2b8 !important
+}
+
+.table .thead-primary tr th {
+	font: 15px !important;
 	font-family: "Poppins", Arial, sans-serif !important;
 }
-#total{
-	border:1px solid  rgba(0, 0, 0, 0.05);
-	text-align:center;
-	color:#17a2b8;
-}
-b{
-	font-wight:400;
-	color: #607d8b
-}
-.payment{
-	float:right;
-	position:relative;
-	right:123px;
-	
-}
-#pay{
-	width:100%;
-	color: white !important;
-	height: 40px !important;
-	margin-top:10px;
-	
-}
-.productNum{
-	position:relative;
-	right:75px;
-	bottom:15px
+
+#total {
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	text-align: center;
+	color: #17a2b8;
 }
 
-#submessage{
-	margin-left:80px;
-	cursor:pointer;
-	font-size:1.7rem
+b {
+	font-wight: 400;
+	color: #607d8b
 }
-.table{
-	min-height:350px !important;
-	min-width:800px !important
-	
+
+.payment {
+	float: right;
+	position: relative;
+	right: 123px;
 }
-#message{
-	position:relative;
-	top:-167px;
-	left:400px;
-	font-size:2rem
+
+#pay {
+	width: 100%;
+	color: white !important;
+	height: 40px !important;
+	margin-top: 10px;
 }
-button[type=button]{
-	cursor:pointor
+
+.productNum {
+	position: relative;
+	right: 75px;
+	bottom: 15px
 }
-a:hover{
-	background:#17a2b8 !important
+
+#submessage {
+	margin-left: 80px;
+	cursor: pointer;
+	font-size: 1.7rem
 }
-i{
-	color:#17a2b8 !important
+
+.table {
+	min-height: 350px !important;
+	min-width: 800px !important
 }
-#backtolist{
-	color:white !important;
-	position:relative !important;
-	top:37px;
-	left:156px;
-	width:10%;
-	height:40px !important;
+
+#message {
+	position: relative;
+	top: -167px;
+	left: 400px;
+	font-size: 2rem
 }
-#rmain{
-	font-size:12px;
-	color:gray;
-	position:relative;
-	bottom:9px;
-	left:9px;
+
+button[type=button] {
+	cursor: pointor
+}
+
+a:hover {
+	background: #17a2b8 !important
+}
+
+i {
+	color: #17a2b8 !important
+}
+
+#backtolist {
+	color: white !important;
+	position: relative !important;
+	top: 37px;
+	left: 156px;
+	width: 10%;
+	height: 40px !important;
+}
+
+#rmain {
+	font-size: 12px;
+	color: gray;
+	position: relative;
+	bottom: 9px;
+	left: 9px;
 }
 </style>
 
@@ -146,126 +154,56 @@ i{
 
 <body>
 
-	<input id="id" type="hidden" value='b'>
-	 <section class="ftco-section ftco-cart">
-	 	<div class="container">
-	 		<div class="row">
-    			<div class="col-md-12 ftco-animate">
-    				<div class="cart-list">
-	    				<table class="table">
-						    <thead class="thead-primary">
-						      <tr class="text-center">
-						        <th>&nbsp;</th>
-						        <th>&nbsp;</th>
-						        <th>상 품 명</th>
-						        <th>포 인 트</th>
-						        <th>수 량</th>
-						        <th>합 계</th>
-						      </tr>
-						    </thead>
-						    <tbody>
-						     
-						 
-						
-						
-<!-- 						  <tr class="text-center">
-						    
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style="background-image:url(../resources/img/point_store/product-3.jpg);"></div></td>
-						        
-						        <td class="product-name">
-						        	<h3>땅 콩</h3>
-						        	<p>Far far away, behind the word mountains, far from the countries</p>
-						        </td>
-						        
-						        <td class="price">50P</td>
-						        
-						        <td class="quantity">
-						        	<div id="rmain">(남은 수량:50)</div>
-						        	<div class="input-group col-md-10 mb-2">
-					             	<span class="input-group-btn mr-2">
-								<button type="button" class="quantity-left-minus btn"
-									data-type="minus" data-field="">
-									<i class="ion-ios-remove"></i>
-								</button>
-							</span> <input type="text" id="quantity" name="quantity"
-								class="form-control input-number" value="1" min="1" max="100"
-								>
-							<span class="input-group-btn ml-2">
-								<button type="button" class="quantity-right-plus btn"
-									data-type="plus" data-field="">
-									<i class="ion-ios-add"></i>
-								</button>
-							</span>
-					          	   </div>
-					          </td>
-						        
-						        <td class="total">50P</td>
-						      </tr>
+	<input id="id" type="hidden" value='${id }'>
+	<section class="ftco-section ftco-cart">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 ftco-animate">
+					<div class="cart-list">
+						<table class="table">
+							<thead class="thead-primary">
+								<tr class="text-center">
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+									<th>상 품 명</th>
+									<th>포 인 트</th>
+									<th>수 량</th>
+									<th>합 계</th>
+								</tr>
+							</thead>
+							<tbody>
 
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style="background-image:url(../resources/img/point_store/product-4.jpg);"></div></td>
-						        
-						        <td class="product-name">
-						        	<h3>배 추</h3>
-						        	<p>Far far away, behind the word mountains, far from the countries</p>
-						        </td>
-						        
-						        <td class="price">50P</td>
-						        
-						        <td class="quantity">
-						        	<div class="input-group col-md-10 mb-2">
-					             	<span class="input-group-btn mr-2">
-								<button type="button" class="quantity-left-minus btn"
-									data-type="minus" data-field="">
-									<i class="ion-ios-remove"></i>
-								</button>
-							</span> <input type="text" id="quantity" name="quantity"
-								class="form-control input-number" value="1" min="1" max="100"
-								>
-							<span class="input-group-btn ml-2">
-								<button type="button" class="quantity-right-plus btn"
-									data-type="plus" data-field="">
-									<i class="ion-ios-add"></i>
-								</button>
-							</span>
-					          		</div>
-					          </td>
-						        
-						        <td class="total">50P</td>
- -->						      </tr>  
- 						    </tbody>
-						  </table>
-					  </div>
-    			</div>
-    		</div>
-	 		<div id="message"></div>
-	 		<div id="submessage"></div>
-	 	</div>
-	 	
-	 	<button type='button' class="btn btn-info"id="backtolist">스토어로 가기</button>
-	 	<div  class="payment" id="payment">
-	 	<div class="Tpoint">
-	 	<b>총 결 제 포 인 트</b> &nbsp;
-	 	<input type="text" name="total" id="total"
-	 			value="100P" readonly>
-	 	</div>
-	 	<div class="cashpay">
-	 	<button id="pay" type="button" class="btn btn-info" >바 로 결 제</button>
-	 	</div>
-	   </div>
-	  
-	 </section>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="message"></div>
+			<div id="submessage"></div>
+		</div>
+
+		<button type='button' class="btn btn-info" id="backtolist">스토어로
+			가기</button>
+		<div class="payment" id="payment">
+			<div class="Tpoint">
+				<b>총 결 제 포 인 트</b> &nbsp; <input type="text" name="total" id="total"
+					value="100P" readonly>
+			</div>
+			<div class="cashpay">
+				<button id="pay" type="button" class="btn btn-info">바 로 결
+					제</button>
+			</div>
+		</div>
+
+	</section>
 
 
 
 
-	
-	
-	<script src="../resources/js/point_store/cart.js" charset="utf-8"></script>  
+
+
+	<script src="../resources/js/point_store/cart.js" charset="utf-8"></script>
 	<jsp:include page="../footer.jsp" />
 
 	<script
@@ -300,7 +238,7 @@ i{
 		src="${pageContext.request.contextPath}/resources/js/point_store/google-map.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/point_store/main.js"></script>
-	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </body>
 

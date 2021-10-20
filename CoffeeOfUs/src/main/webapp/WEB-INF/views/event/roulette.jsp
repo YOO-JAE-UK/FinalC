@@ -32,7 +32,8 @@ body {
 	left: 230px;
 	z-index: 9999;
 	background-size: 100px !important;
-	width: 100%; height : 100%;
+	width: 100%;
+	height: 100%;
 	background: url(../resources/img/pin.png) no-repeat;
 	height: 100%;
 }
@@ -88,27 +89,34 @@ body {
 	height: 100%;
 	overflow: auto;
 }
-#point{
-    float: left;border:1px solid lightgray;
-    width:40%;height:50px;
-	padding-top:13px;
-	text-align:center;
-	border-radius:5px 0 0 5px;
-	color:white;
-	background-color:#607d8b
+
+#point {
+	float: left;
+	border: 1px solid lightgray;
+	width: 40%;
+	height: 50px;
+	padding-top: 13px;
+	text-align: center;
+	border-radius: 5px 0 0 5px;
+	color: white;
+	background-color: #607d8b
 }
-#mypoint{
-	float: left;border:1px solid lightgray;
-	border-left:none;width:40%;
-	padding-top:13px;
-	height:50px;
-	text-align:center;
-	border-radius:0 5px 5px 0;
-	color:white;
-	background-color:#17a2b8
+
+#mypoint {
+	float: left;
+	border: 1px solid lightgray;
+	border-left: none;
+	width: 40%;
+	padding-top: 13px;
+	height: 50px;
+	text-align: center;
+	border-radius: 0 5px 5px 0;
+	color: white;
+	background-color: #17a2b8
 }
-.point{
-	margin-left:20px
+
+.point {
+	margin-left: 20px
 }
 
 /* Sidebar links */
@@ -128,7 +136,7 @@ body {
 }
 
 /* Links on mouse-over */
-.sidebar a:not(.active ):hover {
+.sidebar a:not (.active ):hover {
 	background-color: #9e9e9e;
 	color: white;
 }
@@ -165,21 +173,21 @@ div.content {
 </style>
 </head>
 <body>
-	<input id="id" type="hidden" value='b'>
+	<input id="id" type="hidden" value='${id }'>
 
 	<div class="row">
 		<div class="col-sm-3">
 			<div class="sidebar">
 				<a href="attendCheck">출 석 체 크</a> <a class="active" href="#news">룰
-					렛 포 인 트</a> <a href="#contact">포 인 트 스 토 어</a>
+					렛 포 인 트</a> <a href="${pageContext.request.contextPath}/point_store/list">포 인 트 스 토 어</a>
 
 			</div>
 		</div>
 		<div class="container calendar-container col-sm-5"
 			style="position: relative; right: 30px">
-			
+
 			<div id="wrapper" class="corver_rullet">
-				
+
 				<!-- WPR-3090 -->
 				<div class="pin"></div>
 				<a href="javascript:void(0);" onclick="rotation();"
@@ -196,17 +204,18 @@ div.content {
 
 				</div>
 			</div>
-			
+
 		</div>
-		<div class="col-sm-3 point" style="float: left;position:relative;top:20px;right:50px">
-		   	
-			<div id="point" >My 포인트</div>
-			<div id="mypoint" >${point}&nbsp;P</div>
-		   							
+		<div class="col-sm-3 point"
+			style="float: left; position: relative; top: 20px; right: 50px">
+
+			<div id="point">My 포인트</div>
+			<div id="mypoint">${point}&nbsp;P</div>
+
 		</div>
 
 	</div>
-	
+
 	<script src="../resources/js/event/roulette.js" charset="utf-8"></script>
 	<jsp:include page="../footer.jsp" />
 </body>
