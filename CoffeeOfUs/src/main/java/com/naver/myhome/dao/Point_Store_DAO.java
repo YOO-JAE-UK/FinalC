@@ -129,6 +129,16 @@ public class Point_Store_DAO {
 		
 	}
 
+	public int getSearchWordListCount(String searchword) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("product.getSearchWordListCount",searchword);
+	}
+
+	public List<Product> getSearchWordList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("product.getSearchWordList",map);
+	}
+
 	
 	
 

@@ -1,19 +1,18 @@
-
 id = $('#id').val();
- date = $("#calendar").fullCalendar('getDate');
- year = moment(date).format("YYYY");
- month = moment(date).format("MM")
- 
+date = $("#calendar").fullCalendar('getDate');
+year = moment(date).format("YYYY");
+month = moment(date).format("MM")
+
 function getCalendar() {
 
 	$('#calendar').fullCalendar(
 			{
 				height : 680,
 				aspectRatio : 2,
-				handleWindowResize: true,
+				handleWindowResize : true,
 				header : {
 					right : 'custom2 prevYear,prev,next,nextYear',
-					center: 'custom3'	
+					center : 'custom3'
 				},
 
 				views : {
@@ -51,13 +50,22 @@ function getCalendar() {
 
 									if (data.result == 1) {
 										alert("출석체크 완료하였습니다.")
-										                                   
-										$("#calendar").fullCalendar('destroy');//두번째 부터는 empty 하면 생성이 않되니깐 아예 초기화하고 다시 생
+
+										$("#calendar").fullCalendar('destroy');// 두번째
+																				// 부터는
+																				// empty
+																				// 하면
+																				// 생성이
+																				// 않되니깐
+																				// 아예
+																				// 초기화하고
+																				// 다시 생
 										getCalendar();
-										$("#calendar>div:nth-child(n+3)").remove();
+										$("#calendar>div:nth-child(n+3)")
+												.remove();
 										isCheck();
 										attendCount();
-										
+
 									}
 
 								}
@@ -69,7 +77,7 @@ function getCalendar() {
 					custom3 : {
 						text : 'Today',
 						id : 'today',
-						
+
 					}
 				},
 
@@ -79,7 +87,7 @@ function getCalendar() {
 					if (event.imageurl) {
 						eventElement.prepend("<img src='" + event.imageurl
 								+ "' width='85' height='50'>");
-						
+
 					}
 				}
 			});
@@ -113,7 +121,8 @@ function isCheck() {
 };
 
 function attendCount() {
-			$.ajax({
+	$
+			.ajax({
 				url : "attendCount",
 				type : "post",
 				async : false,
@@ -140,26 +149,24 @@ function attendCount() {
 			})
 }
 
+$('body').on('click', '.fc-prev-button', function() {
 
-$('body').on('click','.fc-prev-button',function(){
-	
-	if(month==1){
-		month=12;
+	if (month == 1) {
+		month = 12;
 		year--;
-	}else{
+	} else {
 		month--;
 	}
 	console.log("prevYear:" + year);
 	console.log("prevMonth:" + month)
 	attendCount();
-	
-	
+
 });
-$('body').on('click','.fc-next-button',function(){
-	if(month==12){
-		month=1;
+$('body').on('click', '.fc-next-button', function() {
+	if (month == 12) {
+		month = 1;
 		year++;
-	}else{
+	} else {
 		month++;
 	}
 	console.log("nextYear:" + year);
@@ -167,47 +174,50 @@ $('body').on('click','.fc-next-button',function(){
 	attendCount();
 });
 
-$('body').on('click','.fc-nextYear-button',function(){
-	
+$('body').on('click', '.fc-nextYear-button', function() {
+
 	year++;
 	console.log("nextYearbutton:" + year);
 	console.log("nextMonthbutton:" + month)
 	attendCount();
 });
-$('body').on('click','.fc-prevYear-button',function(){
+$('body').on('click', '.fc-prevYear-button', function() {
 	year--;
 	console.log("prevYearbutton:" + year);
 	console.log("prevMonthbutton:" + month)
 	attendCount();
 });
-$('body').on('click','.fc-custom3-button',function(){
-	getCalendar(); //두번째까지 생성될수 있다 그다음부터는 생성되지 않는다 즉 (두개까지만 만들수 있다고 생각하면 된다)작동하지 않는다.때문에 위에empty를 쓰면 두번째는 없어진다.
+$('body').on('click', '.fc-custom3-button', function() {
+	getCalendar(); // 두번째까지 생성될수 있다 그다음부터는 생성되지 않는다 즉 (두개까지만 만들수 있다고 생각하면
+					// 된다)작동하지 않는다.때문에 위에empty를 쓰면 두번째는 없어진다.
 	$("#calendar>div:nth-child(n+3)").remove();
-	$("#calendar").fullCalendar('today'); 
-	 date = $("#calendar").fullCalendar('getDate'); //두번째 캘린더 생성후부터 현재페이지의 날짜를 가져올수 있다. 첫번째는 그달의 날짜로 지정되고 두번째부터 현재페이지 날짜로 설정된다.
-	 year = moment(date).format("YYYY");
-	 month = moment(date).format("MM");
-//	 $("#calendar>div:nth-child(n+3)").remove();
-//	console.log("todayYear:" + year);
-//	console.log("todayMonth:" + month);
-//	getCalendar();
-//	console.log("getCalendar 후:");
-//	$("#calendar>div:nth-child(n+3)").remove();
-//	$("#calendar").fullCalendar('today');
-//	 date = $("#calendar").fullCalendar('getDate');
-//	 year = moment(date).format("YYYY");
-//	 month = moment(date).format("MM");
+	$("#calendar").fullCalendar('today');
+	date = $("#calendar").fullCalendar('getDate'); // 두번째 캘린더 생성후부터 현재페이지의 날짜를
+													// 가져올수 있다. 첫번째는 그달의 날짜로
+													// 지정되고 두번째부터 현재페이지 날짜로
+													// 설정된다.
+	year = moment(date).format("YYYY");
+	month = moment(date).format("MM");
+	// $("#calendar>div:nth-child(n+3)").remove();
+	// console.log("todayYear:" + year);
+	// console.log("todayMonth:" + month);
+	// getCalendar();
+	// console.log("getCalendar 후:");
+	// $("#calendar>div:nth-child(n+3)").remove();
+	// $("#calendar").fullCalendar('today');
+	// date = $("#calendar").fullCalendar('getDate');
+	// year = moment(date).format("YYYY");
+	// month = moment(date).format("MM");
 	isCheck();
 	attendCount();
 });
-
 
 function getAttendData() {
 	// var date = $("#calendar").fullCalendar('getDate');
 	// var year = moment(date).format("YYYY");
 	// var month = moment(date).format("MM")
 	// console.log(month);
-	var items=[];
+	var items = [];
 	var id = $('#id').val();
 	$.ajax({
 
@@ -220,7 +230,7 @@ function getAttendData() {
 		},
 		success : function(rdata) {
 			if (rdata != null) {
-				
+
 				$.each(rdata, function(index, element) {
 					items.push({
 

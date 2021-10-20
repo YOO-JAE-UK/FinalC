@@ -4,57 +4,64 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="recieveAddress">
-	
-  <select id="getAddressList"  parameterType="String" resultType="recieve">
-     select * from raddress where id=#{id} 
-     
-     order by rcheck desc, rdate desc
-  
-  </select>
-  
-  <select id="getCheckAddressInfo" resultType="recieve" parameterType="String">
-     select * from raddress where id=#{id} and rcheck=1
-  
-  </select>
-  <select id="isAddress" parameterType="recieve" resultType="recieve">
-  		select * from raddress where id=#{id} and raddress=#{raddress}
-        and rplace=#{rplace} and rtel=#{rtel} and rname=#{rname}
-  </select>
-  
- <update id="updateAddressFirst" parameterType="recieve">
- 	update raddress set rcheck=0 where id=#{id} 
- 
- </update>
-  
-  <update id="updateAddress" parameterType="recieve" >
-    update raddress set rcheck=1 where id=#{id} and raddress=#{raddress} and rname=#{rname}
-    and rtel=#{rtel} and rplace=#{rplace} 
-  
-  
-  </update>
-  
-  <insert id="addAddress" parameterType="recieve">
-  	insert into raddress values(raddress_seq.nextval,#{id},#{rname},#{rtel},#{rplace},#{rpost},
-  	#{raddress},sysdate,1)
-  
-  
-  </insert>
-  
-  <insert id="insert" parameterType="recieve">
-  	insert into raddress values(raddress_seq.nextval,#{id},#{rname},#{rtel},#{rplace},#{rpost},
-  	#{raddress},sysdate,0)
-  
-  </insert>
-  
-  <update id="reduceQuantity" parameterType="String">
-    update (select product.quantity,product.code
-               from product join cart on cart.ccode=product.code
-								where cart.id=#{id})
-			set quantity = quantity -(select cquantity from cart 
-										where code=ccode)
-   
-  
-  </update>
- 
- 
+
+	<select id="getAddressList" parameterType="String"
+		resultType="recieve">
+		select * from raddress where id=#{id}
+
+		order by rcheck desc, rdate desc
+
+	</select>
+
+	<select id="getCheckAddressInfo" resultType="recieve"
+		parameterType="String">
+		select * from raddress where id=#{id} and rcheck=1
+
+	</select>
+	<select id="isAddress" parameterType="recieve"
+		resultType="recieve">
+		select * from raddress where id=#{id}
+		and rplace=#{rplace} and rtel=#{rtel} and rname=#{rname} and
+		raddress=#{raddress}
+	</select>
+
+	<update id="updateAddressFirst" parameterType="recieve">
+		update raddress set rcheck=0 where id=#{id}
+
+	</update>
+
+	<update id="updateAddress" parameterType="recieve">
+		update raddress set rcheck=1 where id=#{id} and raddress=#{raddress} and
+		rname=#{rname}
+		and rtel=#{rtel} and rplace=#{rplace}
+
+
+	</update>
+
+	<insert id="addAddress" parameterType="recieve">
+		insert into raddress
+		values(raddress_seq.nextval,#{id},#{rname},#{rtel},#{rplace},#{rpost},
+		#{raddress},sysdate,1)
+
+
+	</insert>
+
+	<insert id="insert" parameterType="recieve">
+		insert into raddress
+		values(raddress_seq.nextval,#{id},#{rname},#{rtel},#{rplace},#{rpost},
+		#{raddress},sysdate,0)
+
+	</insert>
+
+	<update id="reduceQuantity" parameterType="String">
+		update (select product.quantity,product.code
+		from product join cart on cart.ccode=product.code
+		where cart.id=#{id})
+		set quantity = quantity -(select cquantity from cart
+		where code=ccode)
+
+
+	</update>
+
+
 </mapper>
