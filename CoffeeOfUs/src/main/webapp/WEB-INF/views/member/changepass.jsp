@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
 <title>비밀번호 변경</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script src="../resources/js/member/changepass.js" charset="utf-8"></script>
