@@ -91,7 +91,7 @@ $(document).ready(function(){
 		location.href="../coffee/Test";
 	})
 	$(".center_img2").click(function(){
-		location.href="../event/attend_check";
+		location.href="../event/attendCheck";
 	})
 	$(".center_img3").click(function(){
 		location.href="../tour/tour_map";
@@ -459,9 +459,9 @@ transform: translateX(0);
  
   <div class="col-xs-12 col-sm-12 col-md-10" style="">
  	<div style="width: 100%; height: 200px; margin-top: 30px;margin-bottom: 20px;">
- 		<div style=" width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img1" src="../resources/img/coffee.png"></div></div>
- 		<div style=" width: 34%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img2" src="../resources/img/calendar.png"></div></div>
- 		<div style=" width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img3" src="../resources/img/itinerary.png"></div></div>
+ 		<div style=" width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img1" src="${pageContext.request.contextPath}/resources/img/coffee.png"></div></div>
+ 		<div style=" width: 34%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img2" src="${pageContext.request.contextPath}/resources/img/calendar.png"></div></div>
+ 		<div style=" width: 33%; height: 180px; float:left; padding-top: 15px;"><div style="border-radius: 50%; border:1px solid #e5e5e5;width: 150px; height: 150px; margin: 0 auto"><img class="center_img3" src="${pageContext.request.contextPath}/resources/img/itinerary.png"></div></div>
  	</div>
  	<div style="width: 100%; height: 450px;">
  	

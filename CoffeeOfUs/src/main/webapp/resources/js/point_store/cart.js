@@ -3,7 +3,7 @@ var page=1;
 
 function getList(currentpage){
 	console.log("currentpage="+currentpage)
-	var id= $("#id").val 
+	var id= $("#id").val(); 
 	output=""
 		
 		 $.ajax({

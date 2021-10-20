@@ -125,10 +125,11 @@ function getList(page, searchword) {
 					} else {
 						if (searchword == '') {
 							output += '<div id="no_product"><font size=5>등록된 상품이 없습니다.</font></div>'
-						}
+						}else {
 						output += '<div id="no_product"><font size=5>검색한 상품이 존재하지 않습니다.</font></div>'
 						$("#product_list").append(output);
 						$("#ul_paging").empty();
+						}
 					}
 				}
 			})

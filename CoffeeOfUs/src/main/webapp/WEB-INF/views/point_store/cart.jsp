@@ -122,7 +122,7 @@ button[type=button] {
 	cursor: pointor
 }
 
-a:hover {
+tbody a:hover {
 	background: #17a2b8 !important
 }
 

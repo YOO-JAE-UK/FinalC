@@ -47,11 +47,16 @@ $("#content")
 
 $("#write").click(function() {
 	var content = $("#content").val();
+	var id=$("#id").val();
 	if (!content) {
 		alert("게시글을 입력하시오");
 		return;
 	}
-
+	if(id==''){
+		alert("로그인후 사용해주세요");
+		location.href="../member/login";
+	}else{
+    
 	$.ajax({
 		url : 'add',
 		data : {
@@ -69,6 +74,8 @@ $("#write").click(function() {
 	})
 	$("#content").val('');
 	$(".float-left").text('총 50자까지 가능합니다.');
+   }
+	
 })
 
 function getList(page, state) {
