@@ -5,7 +5,7 @@ drop table cart CASCADE CONSTRAINTS;
 
 create table cart (
 	id			varchar2(20) references member(user_id) on delete cascade ,
-    ccode 		number primary key,
+    ccode 		number primary key references PRODUCT(code) on delete cascade,
     cproductname varchar2(50) not null,
     cdescription varchar2(50) not null,
     cperpoint	number not null,

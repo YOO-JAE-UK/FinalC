@@ -238,7 +238,7 @@ $(document).ready(function(){
                                  <li class="community"><a href="#">커뮤니티</a>
                                 	<ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/board_coffee/list">커피정보게시판</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/board_event/list">출석 게시판</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/board_event/list">이벤트 게시판</a></li>
                                         <li><a href="${pageContext.request.contextPath}/tour/tour_board_list">투어 게시판</a></li>
                                         <li><a href="${pageContext.request.contextPath}/board_qna/list">Q & A</a></li>
                                     </ul>
