@@ -144,7 +144,7 @@ body>div>table>tbody tr:last-child {
 				<button class="btn btn-warning float-left"
 					style="border: none; width: 25%">총 50자까지 가능합니다.</button>
 
-			<c:if test="${!empty id}">
+			<c:if test="${!empty aid}">
 				<button class="btn btn-info"
 					style="border: none; margin-left: 86px; width: 30%">${id}님
 					환영홥니다.</button>
