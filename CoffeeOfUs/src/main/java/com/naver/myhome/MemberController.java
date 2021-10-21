@@ -49,7 +49,7 @@ import com.naver.myhome.service.MemberService;
 import com.naver.myhome.task.EmailSender;
 import com.naver.myhome.task.SendMail;
 
-
+  
 /* Model(값만넣음)- m 담고 String으로리턴
    ModelAndView(값넣고보여줌)- setViewName보여줌, addObject담음  */
 
