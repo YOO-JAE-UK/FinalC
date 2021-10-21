@@ -106,7 +106,7 @@
 			</label>
 		   </div>
 		</div>
-		<br> 		
+		<br> 		  
         
             <button type="reset" class="cancelbtn"
                     onClick="history.go(-1)">← 취소</button>
