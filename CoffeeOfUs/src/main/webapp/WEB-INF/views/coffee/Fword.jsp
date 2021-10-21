@@ -583,8 +583,16 @@ div.content {
 			</div><!-- class="modal end"  <div class="modal" id="myModal">-->
 
 
-				<!-- 모달 end -->	
+
+
+<c:if test="${id=='admin' }">
+	<!-- 모달 end -->	
 		 	<button style="font-size: 12pt;" type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#myModal">단어 추가하기</button> 
+
+</c:if>
+				
+				
+			
 			
 			<div class="col-sm-2">
 			</div>

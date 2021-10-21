@@ -164,8 +164,12 @@ $(document).on("click","#more",function(){
 
 
 $(document).on("click","#write_btn",function(){
-
+	if(id!=""){
 		location.href="tour_board_write";
+	}else{
+		alert("로그인을 해주세요");
+	}
+		
 })
 
 $(document).on("click",".searchButton",function(){

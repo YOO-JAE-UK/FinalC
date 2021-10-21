@@ -91,6 +91,7 @@ div.content {
 <script>
 $(document).ready(function(){
 	$("#board_tour_modify_btn").click(function(){
+
 		location.href="tour_board_modifyView?num="+${boarddata.TOUR_NUM};
 	});
 	$("#modal_submit").on("click", function() {
@@ -251,11 +252,18 @@ function initMap() {
  	
  	<div style="margin-top: 40px;">
  		<button style="float:left; margin-top:13px" class="btn btn-light" onclick="history.go(-1)">취소</button>
- 		<button style="float:right; margin-top:13px" class="btn btn-primary" id=board_tour_modify_btn>수정</button>
  		
- 		<a href="#">
+ 		<c:if test="${id=='admin' }">
+					<button style="float:right; margin-top:13px" class="btn btn-primary" id=board_tour_modify_btn>수정</button>
+		</c:if>	
+ 		<c:if test="${id=='admin' || boarddata.USER_ID==id}">
+					<a href="#">
 			<button style="float:right; margin-top:13px; margin-right:10px;" id="board_tour_delete_btn"  class="btn btn-danger" data-toggle="modal" data-target="#myModal">삭제</button>
 		</a>
+		</c:if>	
+ 		
+ 		
+ 		
  		
  	</div>
  	</div><!-- 오른쪽 content 자리 -->  

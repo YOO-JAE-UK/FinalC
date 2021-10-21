@@ -300,10 +300,14 @@ $(document).ready(function(){
 							</div>	
 						</div>
 						
-						
+<c:if test="${id=='admin' }">
 				<div style="clear: both;">
 					<button type="button" id="modify_btn" class="btn btn-info float-right">수정</button> 
-				</div>		
+				</div>
+</c:if>					
+					
+						
+						
 		 	
 			
 			<div class="col-sm-2">

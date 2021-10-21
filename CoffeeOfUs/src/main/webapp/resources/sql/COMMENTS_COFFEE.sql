@@ -2,7 +2,7 @@ drop table COMMENTS_COFFEE CASCADE CONSTRAINTS;
 
 create table COMMENTS_COFFEE(
 	NUM			number		primary key,
-	ID			varchar2(30), --references member2(id),
+	ID			varchar2(30), references member(USER_ID),
 	CONTENT		varchar2(200),
 	REG_DATE	date,
 	COFFEE_NUM	number references COFFEE(COFFEE_NUM)

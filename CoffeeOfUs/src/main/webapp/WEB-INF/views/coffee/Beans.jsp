@@ -193,10 +193,14 @@ $(document).ready(function(){
 	 등록된 글이 없습니다.
 </c:if>
 					
-				<div style="clear: both;">
+					
+<c:if test="${id=='admin' }">
+			<div style="clear: both;">
 					<button style="font-size: 12pt;" id="bean_write" type="button" class="btn btn-info float-right">원두 등록하기</button> 
-				</div>	
-			
+				</div>		
+</c:if>
+					
+		
 					
 					
 					

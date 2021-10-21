@@ -28,6 +28,7 @@ if(result == 'deleteFail'){
 }else if(result == 'deleteSuccess'){
 	alert("삭제 성공!");
 }
+ id="${id}";
 
 
 </script>
