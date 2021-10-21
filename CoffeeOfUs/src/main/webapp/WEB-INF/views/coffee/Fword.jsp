@@ -605,4 +605,6 @@ div.content {
 
 	<jsp:include page="../footer.jsp" />
 </body>
+<script src="../resources/js/coffee/jquery-ui.js"></script>
+<script src="../resources/js/coffee/jquery-ui.min.js"></script>
 </html>
