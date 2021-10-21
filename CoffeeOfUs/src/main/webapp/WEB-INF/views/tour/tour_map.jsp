@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -231,7 +232,7 @@ $(".dg-map svg").mouseover(function(event) {
 					  output +="<div class='list_map_right'>";
 	
 				      <!--별  -->
-				      output+='		      <div class="star-input"> ';
+				      output+='		     <div class="star-input"> ';
 				      <!-- <p class="score"><b>0</b>점</p>  -->
 				      output+='				      	<span class="input"> ';
 //1
@@ -451,8 +452,12 @@ $(".dg-map svg").mouseover(function(event) {
 					
 					</div><!-- map_main끝 -->
 					<div style="position: absolute; top:90%;left:80%; width: 260px;">
-						<button style="float: right;margin-right: 10px; font-size: 12pt;" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
+					
+<c:if test="${id=='admin' }">
+					<button style="float: right;margin-right: 10px; font-size: 12pt;" id="add_admin" type="button" class="btn btn-info">관리자 글등록</button>
 						<button style="float: right;margin-right: 10px; font-size: 12pt;" id="manage_list" type="button" class="btn btn-info">관리자 글관리</button>
+</c:if>	
+						
 						
 					</div>
 		</div><!-- 7 end -->

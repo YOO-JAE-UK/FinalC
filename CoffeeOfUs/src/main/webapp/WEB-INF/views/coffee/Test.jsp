@@ -161,10 +161,11 @@
 	    text-align: center;
 	}
 	/*  */
-	a:link {
+
+.a1:link{
 	color:black;
 }
-a:hover {
+.a1:hover {
 	color:black !important;
 }
 </style>
@@ -235,7 +236,7 @@ $(document).ready(function(){
 			//$("table").find("font").text("글 개수 : " + data.listcount);
 			output="";
 			output +='<div><h3><a href="bean_detail?num='+data.board.bean_NUM+'">'+data.board.bean_NAME+'</a></h3></div>'
-			output +='<a href="bean_detail?num='+data.board.bean_NUM+'"> <img src="../upload'+data.board.bean_FILE+'" alt="chocolate cake"></a>'
+			output +='<a class="a1" href="bean_detail?num='+data.board.bean_NUM+'"> <img src="../upload'+data.board.bean_FILE+'" alt="chocolate cake"></a>'
 			output +='<div style=" width: 250px; height:250px; margin-left: 5%">'
 			output +='	<canvas id="myChart" width="250px" height="250px" style="margin-left: 60px;"></canvas>'
 			output +='</div>'
@@ -406,7 +407,7 @@ function sendLinkKakao(){
 						
 						<!-- <p class="main_content">상큼한 과일향이 나는 레몬케이크</p> -->
 						<span class="sociallink ml-1">
-					    <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
+					    <a class="a1" href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
 					        <img src="//k.kakaocdn.net/14/dn/btqc6xrxbuT/7VJk7YSWITkz9K9pbXEffk/o.jpg" width=36 alt="Kakaotalk"
 							style="width: 30px; height: 30px; margin-left: 87% ">
 					    </a>
